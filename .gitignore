@@ -15,3 +15,10 @@ tmp/
 *.ntvs*
 *.njsproj
 *.sln
+
+# Dependencies
+node_modules/
+
+# Android Build Outputs
+.gradle/
+android/app/build/
