@@ -1,0 +1,36 @@
+{
+  "name": "SwingerSphere",
+  "short_name": "SwingerSphere",
+  "description": "La comunidad lifestyle más segura del mundo",
+  "start_url": "./app.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#060608",
+  "theme_color": "#060608",
+  "categories": ["social", "lifestyle"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%23c4813a'/><text x='96' y='130' font-size='100' font-weight='900' text-anchor='middle' fill='white' font-family='Inter,sans-serif'>SS</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Descubrir",
+      "url": "./app.html#discover",
+      "description": "Buscar nuevos perfiles"
+    },
+    {
+      "name": "Eventos",
+      "url": "./app.html#events",
+      "description": "Ver eventos cercanos"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "lang": "es",
+  "dir": "ltr"
+}

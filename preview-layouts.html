@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwingerSphere — Desktop & Mobile Previews</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-void: #060608; --bg-deep: #0d0d10; --bg-surface: #141416;
+      --bg-elevated: #1a1a1e; --bg-card: #1e1e22;
+      --copper: #c4813a; --copper-light: #e09455; --copper-border: rgba(196,129,58,0.30);
+      --copper-glow: rgba(196,129,58,0.18);
+      --white: #f2f2f7; --silver: #a0a0b0; --silver-dark: #6a6a7a;
+      --graphite: #3a3a44; --border: rgba(255,255,255,0.08); --border-md: rgba(255,255,255,0.12);
+      --verified: #30d158; --danger: #ff453a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Inter',sans-serif; background:var(--bg-void);
+      color:var(--white); min-height:100vh;
+      display:flex; flex-direction:column; align-items:center; gap:4rem;
+      padding:3rem 1.5rem;
+    }
+    .page-title {
+      font-size:0.7rem; color:var(--silver-dark); text-transform:uppercase;
+      letter-spacing:0.2em; text-align:center;
+    }
+    .section-head {
+      font-size:0.65rem; color:var(--copper); text-transform:uppercase;
+      letter-spacing:0.15em; text-align:center; margin-bottom:1.5rem;
+    }
+
+    /* ══════════════════════════════════════════
+       MOBILE PREVIEW
+    ══════════════════════════════════════════ */
+    .phone-frame {
+      width:375px;
+      background:var(--bg-void);
+      border-radius:48px;
+      border:2px solid rgba(255,255,255,0.1);
+      box-shadow: 0 0 0 6px #111, 0 0 0 8px #1a1a1e, 0 40px 80px rgba(0,0,0,0.8), 0 0 80px rgba(196,129,58,0.1);
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* notch */
+    .phone-notch {
+      position:absolute; top:0; left:50%; transform:translateX(-50%);
+      width:120px; height:30px;
+      background:#060608;
+      border-radius:0 0 20px 20px;
+      z-index:10;
+      display:flex; align-items:flex-end; justify-content:center; padding-bottom:4px;
+      gap:6px;
+    }
+    .notch-cam { width:8px;height:8px;border-radius:50%;background:#1a1a1e; }
+    .notch-mic { width:36px;height:4px;border-radius:2px;background:#1a1a1e; }
+
+    .phone-screen { padding:0; }
+
+    /* Topbar */
+    .topbar {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0.75rem 1rem; padding-top:2.5rem;
+      border-bottom:1px solid var(--border);
+      background:rgba(13,13,16,0.9); backdrop-filter:blur(20px);
+      position:sticky; top:0; z-index:5;
+    }
+    .topbar-logo { display:flex;align-items:center;gap:0.5rem; }
+    .logo-text { font-size:0.95rem;font-weight:800;letter-spacing:-0.02em;
+      background:linear-gradient(135deg,#f2f2f7,#c4813a);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+    .topbar-globe { border-radius:50%; }
+    .topbar-acts { display:flex;gap:0.5rem; }
+    .icon-btn { width:34px;height:34px;border-radius:50%;
+      background:rgba(255,255,255,0.05);border:1px solid var(--border);
+      display:flex;align-items:center;justify-content:center;font-size:0.9rem; }
+
+    /* Feed */
+    .scroll-area { padding:1rem; display:flex;flex-direction:column;gap:0.75rem; }
+
+    /* Quote banner */
+    .quote-banner {
+      background:linear-gradient(135deg,rgba(196,129,58,0.12),rgba(224,148,85,0.06));
+      border:1px solid var(--copper-border); border-radius:16px; padding:1rem;
+    }
+    .quote-label { font-size:0.6rem;color:var(--copper);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.5rem; }
+    .quote-text { font-size:0.85rem;font-style:italic;line-height:1.5;color:var(--white); }
+
+    /* Tabs */
+    .tabs-row { display:flex;gap:0.4rem;overflow-x:auto;scrollbar-width:none;padding:0 1rem; }
+    .tabs-row::-webkit-scrollbar{display:none;}
+    .tab-pill { padding:0.35rem 0.85rem;border-radius:9999px;font-size:0.7rem;font-weight:600;
+      white-space:nowrap; }
+    .tab-pill.active { background:var(--copper-glow);border:1px solid var(--copper-border);color:var(--copper-light); }
+    .tab-pill:not(.active) { color:var(--silver-dark); }
+
+    /* Post card */
+    .post-card {
+      background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:0.875rem;
+    }
+    .post-header { display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem; }
+    .avatar-circle {
+      width:40px;height:40px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:0.75rem;font-weight:700;flex-shrink:0;
+    }
+    .post-name { font-size:0.875rem;font-weight:600; }
+    .post-time { font-size:0.65rem;color:var(--silver-dark); }
+    .post-body { font-size:0.825rem;color:var(--silver);line-height:1.55;margin-bottom:0.6rem; }
+    .post-actions { display:flex;gap:0.75rem;align-items:center; }
+    .post-act-btn { font-size:0.75rem;color:var(--silver-dark); }
+
+    /* Bottom nav */
+    .bottom-nav {
+      display:flex;border-top:1px solid var(--border);
+      background:rgba(13,13,16,0.9);backdrop-filter:blur(20px);
+    }
+    .nav-tab { flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+      padding:0.6rem 0; }
+    .nav-tab-icon { font-size:1.15rem; }
+    .nav-tab-lbl { font-size:9px;text-transform:uppercase;letter-spacing:0.04em;font-weight:600; }
+    .nav-tab.active .nav-tab-icon, .nav-tab.active .nav-tab-lbl { color:var(--copper); }
+    .nav-tab:not(.active) .nav-tab-icon, .nav-tab:not(.active) .nav-tab-lbl { color:var(--silver-dark); }
+
+    /* FAB */
+    .fab-pos { position:relative; }
+    .fab {
+      position:absolute; bottom:70px; right:16px;
+      width:52px;height:52px;border-radius:50%;
+      background:linear-gradient(135deg,var(--copper),var(--copper-light));
+      display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+      box-shadow:0 4px 20px rgba(196,129,58,0.45);
+    }
+
+    /* ══════════════════════════════════════════
+       DESKTOP PREVIEW
+    ══════════════════════════════════════════ */
+    .desktop-frame {
+      width:100%; max-width:1200px;
+      background:var(--bg-void);
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 40px 100px rgba(0,0,0,0.8), 0 0 100px rgba(196,129,58,0.08);
+      overflow:hidden;
+    }
+
+    /* Browser chrome */
+    .browser-chrome {
+      background:#111; padding:0.75rem 1rem;
+      display:flex; align-items:center; gap:0.75rem;
+      border-bottom:1px solid rgba(255,255,255,0.06);
+    }
+    .browser-dots { display:flex;gap:6px; }
+    .browser-dots span { width:12px;height:12px;border-radius:50%; }
+    .dot-red { background:#ff5f57; }
+    .dot-yellow { background:#febc2e; }
+    .dot-green { background:#28c840; }
+    .browser-url {
+      flex:1;background:rgba(255,255,255,0.05);border-radius:6px;
+      padding:0.3rem 0.75rem;font-size:0.7rem;color:var(--silver-dark);
+      display:flex;align-items:center;gap:0.4rem;
+    }
+
+    /* Desktop app layout */
+    .desktop-app {
+      display:grid;
+      grid-template-columns:240px 1fr 320px;
+      height:680px;
+      overflow:hidden;
+    }
+
+    /* Left sidebar */
+    .sidebar-left {
+      background:var(--bg-deep);
+      border-right:1px solid var(--border);
+      padding:1.5rem 1rem;
+      display:flex;flex-direction:column;gap:1.5rem;
+    }
+    .sidebar-logo { display:flex;align-items:center;gap:0.6rem;padding-bottom:1rem;
+      border-bottom:1px solid var(--border); }
+    .sidebar-logo .logo-text { font-size:1rem;font-weight:800; }
+    .sidebar-nav { display:flex;flex-direction:column;gap:0.25rem; }
+    .sidebar-nav-item {
+      display:flex;align-items:center;gap:0.75rem;
+      padding:0.625rem 0.875rem;border-radius:10px;
+      font-size:0.825rem;font-weight:500;color:var(--silver);
+      transition:all 0.2s;cursor:pointer;
+    }
+    .sidebar-nav-item:hover { background:rgba(255,255,255,0.05);color:var(--white); }
+    .sidebar-nav-item.active { background:var(--copper-glow);color:var(--copper-light);
+      border:1px solid var(--copper-border); }
+    .sidebar-nav-item .nav-ico { font-size:1rem; width:20px;text-align:center; }
+    .sidebar-mini-profile {
+      margin-top:auto; padding:0.75rem;
+      background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;
+      display:flex;align-items:center;gap:0.75rem;
+    }
+
+    /* Center content */
+    .center-content {
+      display:flex;flex-direction:column;overflow:hidden;
+    }
+    .center-topbar {
+      padding:0.875rem 1.5rem;
+      border-bottom:1px solid var(--border);
+      background:rgba(13,13,16,0.8);backdrop-filter:blur(20px);
+      display:flex;align-items:center;justify-content:space-between;
+      flex-shrink:0;
+    }
+    .center-feed {
+      flex:1;overflow-y:auto;padding:1.25rem 1.5rem;
+      display:flex;flex-direction:column;gap:1rem;
+      scrollbar-width:thin;scrollbar-color:var(--graphite) transparent;
+    }
+
+    /* Desktop quote banner - wider */
+    .desktop-quote {
+      background:linear-gradient(135deg,rgba(196,129,58,0.1),rgba(224,148,85,0.04));
+      border:1px solid var(--copper-border);border-radius:16px;padding:1.25rem 1.5rem;
+      display:flex;align-items:center;gap:1rem;
+    }
+
+    /* Desktop post - wider */
+    .desktop-post {
+      background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.25rem;
+    }
+
+    /* Right sidebar */
+    .sidebar-right {
+      background:var(--bg-deep);
+      border-left:1px solid var(--border);
+      padding:1.25rem 1rem;
+      display:flex;flex-direction:column;gap:1rem;
+      overflow-y:auto;scrollbar-width:none;
+    }
+    .sidebar-right::-webkit-scrollbar{display:none;}
+    .panel-title {
+      font-size:0.65rem;text-transform:uppercase;letter-spacing:0.12em;
+      color:var(--silver-dark);margin-bottom:0.75rem;
+    }
+    .online-user-row {
+      display:flex;align-items:center;gap:0.625rem;padding:0.5rem 0;
+      border-bottom:1px solid var(--border);
+    }
+    .online-dot { width:7px;height:7px;border-radius:50%;background:var(--verified);
+      box-shadow:0 0 6px var(--verified);flex-shrink:0; }
+    .event-mini {
+      background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;
+      padding:0.625rem;margin-bottom:0.4rem;
+    }
+
+    /* Trust score mini */
+    .trust-mini {
+      background:var(--bg-surface);border:1px solid var(--copper-border);border-radius:12px;
+      padding:0.875rem;text-align:center;
+    }
+    .trust-number { font-size:2rem;font-weight:900;
+      background:linear-gradient(135deg,var(--copper),var(--copper-light));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+
+    /* Verify badge */
+    .vbadge {
+      display:inline-flex;align-items:center;gap:3px;
+      padding:2px 7px;border-radius:9999px;font-size:9px;font-weight:700;
+      text-transform:uppercase;letter-spacing:0.06em;
+    }
+    .vbadge-gold { background:rgba(255,215,0,0.12);color:#ffd700;border:1px solid rgba(255,215,0,0.3); }
+    .vbadge-copper { background:var(--copper-glow);color:var(--copper-light);border:1px solid var(--copper-border); }
+    .vbadge-green { background:rgba(48,209,88,0.1);color:var(--verified);border:1px solid rgba(48,209,88,0.2); }
+
+    /* Status indicator */
+    .live-badge {
+      display:inline-flex;align-items:center;gap:6px;
+      background:rgba(48,209,88,0.1);border:1px solid rgba(48,209,88,0.2);
+      border-radius:9999px;padding:0.2rem 0.6rem;font-size:0.65rem;color:var(--verified);
+    }
+    .live-dot { width:6px;height:6px;border-radius:50%;background:var(--verified);
+      box-shadow:0 0 6px var(--verified);animation:blink 1.5s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+    /* ══════════════════════════════════════════
+       LAYOUT SWITCHER
+    ══════════════════════════════════════════ */
+    .previews-row {
+      display:flex; flex-direction:column; align-items:center; gap:4rem; width:100%;max-width:1200px;
+    }
+    .preview-section { width:100%; }
+    .preview-label {
+      text-align:center;margin-bottom:1.5rem;
+      display:flex;align-items:center;justify-content:center;gap:0.75rem;
+    }
+    .preview-label h2 { font-size:1rem;font-weight:700; }
+    .preview-label span { font-size:0.7rem;color:var(--silver-dark); }
+    .badge-tag {
+      background:var(--copper-glow);border:1px solid var(--copper-border);
+      color:var(--copper-light);padding:3px 8px;border-radius:9999px;
+      font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;
+    }
+    .phone-center { display:flex;justify-content:center; }
+  </style>
+</head>
+<body>
+
+<p class="page-title">SwingerSphere · Interface Previews · June 2026</p>
+
+<!-- ══ MOBILE ══ -->
+<div class="previews-row">
+  <div class="preview-section">
+    <div class="preview-label">
+      <h2>📱 Vista Mobile</h2>
+      <span>375 × 812px · iPhone 14 Pro</span>
+      <span class="badge-tag">PWA Ready</span>
+    </div>
+    <div class="phone-center">
+      <div class="phone-frame">
+        <div class="phone-notch">
+          <div class="notch-cam"></div>
+          <div class="notch-mic"></div>
+          <div class="notch-cam"></div>
+        </div>
+
+        <!-- Topbar -->
+        <div class="topbar">
+          <div class="topbar-logo">
+            <canvas id="mob-globe" class="topbar-globe" width="30" height="30"></canvas>
+            <span class="logo-text">SwingerSphere</span>
+          </div>
+          <div class="topbar-acts">
+            <div class="live-badge"><div class="live-dot"></div>342 online</div>
+            <div class="icon-btn">🔔</div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="scroll-area">
+          <!-- Quote -->
+          <div class="quote-banner">
+            <div class="quote-label">✦ Frase del día · IA Oráculo</div>
+            <p class="quote-text">"El respeto es el lenguaje universal de la libertad compartida."</p>
+          </div>
+
+          <!-- Tabs -->
+          <div class="tabs-row">
+            <div class="tab-pill active">Cercanos</div>
+            <div class="tab-pill">Globales</div>
+            <div class="tab-pill">Parejas</div>
+            <div class="tab-pill">Solteros</div>
+            <div class="tab-pill">Eventos</div>
+          </div>
+
+          <!-- Posts -->
+          <div class="post-card">
+            <div class="post-header">
+              <div class="avatar-circle" style="background:linear-gradient(135deg,#c4813a33,#c4813a77);border:2px solid #c4813a55;color:#c4813a;">VM</div>
+              <div style="flex:1;">
+                <div class="post-name">Valentina & Marco <span class="vbadge vbadge-gold">🏆 Presencial</span></div>
+                <div class="post-time">2h · Madrid · TS 94</div>
+              </div>
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--verified);box-shadow:0 0 6px var(--verified);"></div>
+            </div>
+            <p class="post-body">Increíble fin de semana en Ibiza. La comunidad nunca deja de sorprendernos 🏝️</p>
+            <div class="post-actions">
+              <div class="post-act-btn">❤️ 124</div>
+              <div class="post-act-btn">💬 18</div>
+              <div class="post-act-btn">🔗</div>
+            </div>
+          </div>
+
+          <div class="post-card">
+            <div class="post-header">
+              <div class="avatar-circle" style="background:linear-gradient(135deg,#0a84ff33,#0a84ff77);border:2px solid #0a84ff55;color:#0a84ff;">EJ</div>
+              <div style="flex:1;">
+                <div class="post-name">Erik & Jana <span class="vbadge vbadge-gold">🏆</span></div>
+                <div class="post-time">5h · Berlín · TS 98</div>
+              </div>
+            </div>
+            <p class="post-body">Berghain esta noche 🖤 ¿Alguien más en Berlín este finde?</p>
+            <div class="post-actions">
+              <div class="post-act-btn">❤️ 87</div>
+              <div class="post-act-btn">💬 34</div>
+              <div class="post-act-btn">🔗</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom nav -->
+        <div class="bottom-nav">
+          <div class="nav-tab active">
+            <div class="nav-tab-icon">🏠</div>
+            <div class="nav-tab-lbl">Inicio</div>
+          </div>
+          <div class="nav-tab">
+            <div class="nav-tab-icon">🔭</div>
+            <div class="nav-tab-lbl">Descubrir</div>
+          </div>
+          <div class="nav-tab">
+            <div class="nav-tab-icon">💬</div>
+            <div class="nav-tab-lbl">Comunidad</div>
+          </div>
+          <div class="nav-tab">
+            <div class="nav-tab-icon">🎉</div>
+            <div class="nav-tab-lbl">Eventos</div>
+          </div>
+          <div class="nav-tab">
+            <div class="nav-tab-icon">👤</div>
+            <div class="nav-tab-lbl">Perfil</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ DESKTOP ══ -->
+  <div class="preview-section">
+    <div class="preview-label">
+      <h2>🖥️ Vista Desktop</h2>
+      <span>1200px · 3 columnas · Layout pendiente de implementar</span>
+      <span class="badge-tag">Fase 2</span>
+    </div>
+
+    <div class="desktop-frame">
+      <!-- Browser chrome -->
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="dot-red"></span>
+          <span class="dot-yellow"></span>
+          <span class="dot-green"></span>
+        </div>
+        <div class="browser-url">
+          🔒 <span>swingersphere.com/app#home</span>
+        </div>
+        <div class="live-badge"><div class="live-dot"></div>Live</div>
+      </div>
+
+      <!-- App -->
+      <div class="desktop-app">
+
+        <!-- LEFT SIDEBAR -->
+        <div class="sidebar-left">
+          <div class="sidebar-logo">
+            <canvas id="desk-globe" class="topbar-globe" width="32" height="32"></canvas>
+            <span class="logo-text">SwingerSphere</span>
+          </div>
+
+          <nav class="sidebar-nav">
+            <div class="sidebar-nav-item active"><span class="nav-ico">🏠</span> Inicio</div>
+            <div class="sidebar-nav-item"><span class="nav-ico">🔭</span> Descubrir</div>
+            <div class="sidebar-nav-item"><span class="nav-ico">💬</span> Comunidad</div>
+            <div class="sidebar-nav-item"><span class="nav-ico">🎉</span> Eventos</div>
+            <div class="sidebar-nav-item"><span class="nav-ico">🗺️</span> Mapa Global</div>
+            <div class="sidebar-nav-item"><span class="nav-ico">🛍️</span> Marketplace</div>
+            <div class="sidebar-nav-item"><span class="nav-ico">🏛️</span> Clubs PRO</div>
+            <div class="sidebar-nav-item"><span class="nav-ico">🔮</span> Oráculo IA</div>
+          </nav>
+
+          <div class="sidebar-mini-profile">
+            <div class="avatar-circle" style="width:36px;height:36px;font-size:0.7rem;background:linear-gradient(135deg,#c4813a33,#c4813a77);border:2px solid #c4813a55;color:#c4813a;flex-shrink:0;">AS</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.75rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Alex & Sara</div>
+              <div style="font-size:0.6rem;color:var(--copper);">TS 94 · 🏆</div>
+            </div>
+            <div style="font-size:0.75rem;cursor:pointer;color:var(--silver-dark);">⚙️</div>
+          </div>
+        </div>
+
+        <!-- CENTER -->
+        <div class="center-content">
+          <div class="center-topbar">
+            <div>
+              <div style="font-size:1rem;font-weight:700;">Tu Feed</div>
+              <div style="font-size:0.7rem;color:var(--silver-dark);">Lunes, 15 Junio 2026</div>
+            </div>
+            <div style="display:flex;gap:0.5rem;align-items:center;">
+              <div class="live-badge"><div class="live-dot"></div>342 online ahora</div>
+              <div class="icon-btn" style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.85rem;">🔔</div>
+              <div class="icon-btn" style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.85rem;">💬</div>
+            </div>
+          </div>
+
+          <div class="center-feed">
+            <!-- Quote -->
+            <div class="desktop-quote">
+              <div style="font-size:1.75rem;">🔮</div>
+              <div>
+                <div style="font-size:0.6rem;color:var(--copper);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;">✦ Frase del día · IA Oráculo</div>
+                <p style="font-size:0.875rem;font-style:italic;line-height:1.5;">"El respeto es el lenguaje universal de la libertad compartida."</p>
+              </div>
+            </div>
+
+            <!-- Tabs -->
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+              <div class="tab-pill active" style="padding:0.35rem 1rem;">Cercanos</div>
+              <div class="tab-pill" style="padding:0.35rem 1rem;">Globales</div>
+              <div class="tab-pill" style="padding:0.35rem 1rem;">Parejas</div>
+              <div class="tab-pill" style="padding:0.35rem 1rem;">Solteros</div>
+              <div class="tab-pill" style="padding:0.35rem 1rem;">Eventos</div>
+            </div>
+
+            <!-- Desktop posts -->
+            <div class="desktop-post">
+              <div class="post-header">
+                <div class="avatar-circle" style="width:44px;height:44px;font-size:0.8rem;background:linear-gradient(135deg,#c4813a33,#c4813a77);border:2px solid #c4813a55;color:#c4813a;">VM</div>
+                <div style="flex:1;">
+                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.2rem;">
+                    <span class="post-name">Valentina & Marco</span>
+                    <span class="vbadge vbadge-gold">🏆 Verificados Presencial</span>
+                    <span class="vbadge vbadge-green">● Online</span>
+                  </div>
+                  <div class="post-time">Madrid · hace 2h · 📍 3km · TS 94/100</div>
+                </div>
+                <div style="font-size:0.7rem;color:var(--silver-dark);cursor:pointer;">···</div>
+              </div>
+              <p style="font-size:0.875rem;color:var(--silver);line-height:1.6;margin-bottom:0.75rem;">Increíble fin de semana en Ibiza. La comunidad nunca deja de sorprendernos 🏝️ ¿Alguien estará en Cap d'Agde en Septiembre?</p>
+              <div style="display:flex;gap:1rem;align-items:center;">
+                <div class="post-act-btn" style="font-size:0.8rem;">❤️ Me gusta · 124</div>
+                <div class="post-act-btn" style="font-size:0.8rem;">💬 Comentar · 18</div>
+                <div class="post-act-btn" style="font-size:0.8rem;">🔗 Compartir</div>
+                <div style="flex:1;"></div>
+                <div style="font-size:0.65rem;color:var(--silver-dark);">🔒 Solo amigos</div>
+              </div>
+            </div>
+
+            <div class="desktop-post">
+              <div class="post-header">
+                <div class="avatar-circle" style="width:44px;height:44px;font-size:0.8rem;background:linear-gradient(135deg,#0a84ff33,#0a84ff77);border:2px solid #0a84ff55;color:#0a84ff;">EJ</div>
+                <div style="flex:1;">
+                  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.2rem;">
+                    <span class="post-name">Erik & Jana</span>
+                    <span class="vbadge vbadge-gold">🏆 Verificados Presencial</span>
+                  </div>
+                  <div class="post-time">Berlín · hace 5h · 📍 1.840km · TS 98/100</div>
+                </div>
+              </div>
+              <p style="font-size:0.875rem;color:var(--silver);line-height:1.6;margin-bottom:0.75rem;">Berghain esta noche 🖤 Si alguien más está en Berlín este fin de semana, escribidnos.</p>
+              <div style="display:flex;gap:1rem;align-items:center;">
+                <div class="post-act-btn" style="font-size:0.8rem;">❤️ 87</div>
+                <div class="post-act-btn" style="font-size:0.8rem;">💬 34</div>
+                <div class="post-act-btn" style="font-size:0.8rem;">🔗 Compartir</div>
+                <div style="flex:1;"></div>
+                <div style="font-size:0.65rem;color:var(--silver-dark);">🌍 Público</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT SIDEBAR -->
+        <div class="sidebar-right">
+          <!-- Trust score -->
+          <div class="trust-mini">
+            <div style="font-size:0.6rem;color:var(--silver-dark);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;">Tu TrustScore™</div>
+            <div class="trust-number">94</div>
+            <div style="font-size:0.65rem;color:var(--copper-light);margin-top:0.25rem;">🏆 Verificado Presencial</div>
+          </div>
+
+          <!-- Online users -->
+          <div>
+            <div class="panel-title">🟢 Usuarios Online</div>
+            <div class="online-user-row">
+              <div class="online-dot"></div>
+              <div class="avatar-circle" style="width:28px;height:28px;font-size:0.55rem;background:linear-gradient(135deg,#c4813a33,#c4813a77);color:#c4813a;border:1px solid #c4813a55;">VM</div>
+              <div>
+                <div style="font-size:0.75rem;font-weight:500;">Valentina & Marco</div>
+                <div style="font-size:0.6rem;color:var(--silver-dark);">Madrid · TS 94</div>
+              </div>
+            </div>
+            <div class="online-user-row">
+              <div class="online-dot"></div>
+              <div class="avatar-circle" style="width:28px;height:28px;font-size:0.55rem;background:linear-gradient(135deg,#0a84ff33,#0a84ff77);color:#0a84ff;border:1px solid #0a84ff55;">EJ</div>
+              <div>
+                <div style="font-size:0.75rem;font-weight:500;">Erik & Jana</div>
+                <div style="font-size:0.6rem;color:var(--silver-dark);">Berlín · TS 98</div>
+              </div>
+            </div>
+            <div class="online-user-row">
+              <div class="online-dot"></div>
+              <div class="avatar-circle" style="width:28px;height:28px;font-size:0.55rem;background:linear-gradient(135deg,#30d15833,#30d15877);color:#30d158;border:1px solid #30d15855;">CB</div>
+              <div>
+                <div style="font-size:0.75rem;font-weight:500;">Carlos</div>
+                <div style="font-size:0.6rem;color:var(--silver-dark);">Barcelona · TS 73</div>
+              </div>
+            </div>
+            <div style="font-size:0.65rem;color:var(--copper);margin-top:0.5rem;cursor:pointer;">Ver todos los 342 online →</div>
+          </div>
+
+          <!-- Upcoming events -->
+          <div>
+            <div class="panel-title">🎉 Próximos Eventos</div>
+            <div class="event-mini">
+              <div style="font-size:0.75rem;font-weight:600;">🌙 Noche Ámbar</div>
+              <div style="font-size:0.65rem;color:var(--silver-dark);">20 Jun · Madrid · 78/120</div>
+            </div>
+            <div class="event-mini">
+              <div style="font-size:0.75rem;font-weight:600;">🏝️ Villa Sonica Ibiza</div>
+              <div style="font-size:0.65rem;color:var(--silver-dark);">15 Ago · Ibiza · 340/400</div>
+            </div>
+            <div class="event-mini">
+              <div style="font-size:0.75rem;font-weight:600;">🌊 Cap d'Agde Festival</div>
+              <div style="font-size:0.65rem;color:var(--silver-dark);">1-7 Sep · Francia · 1.2k/2k</div>
+            </div>
+          </div>
+
+          <!-- AI Oraculo mini -->
+          <div style="background:var(--bg-surface);border:1px solid var(--copper-border);border-radius:12px;padding:0.875rem;">
+            <div style="font-size:0.65rem;color:var(--copper);margin-bottom:0.4rem;">🔮 Oráculo IA</div>
+            <p style="font-size:0.7rem;color:var(--silver);line-height:1.5;">"Hay 3 eventos cerca de ti este fin de semana. ¿Quieres que te los muestre?"</p>
+            <button style="margin-top:0.5rem;width:100%;padding:0.35rem;background:var(--copper-glow);border:1px solid var(--copper-border);border-radius:8px;font-size:0.65rem;color:var(--copper-light);cursor:pointer;">Explorar →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Globe renderer (same class as app.html) ── */
+class SwingerGlobe {
+  constructor(canvas, opts={}) {
+    this.cv=canvas; this.ctx=canvas.getContext('2d');
+    this.sz=canvas.width; this.cx=this.sz/2; this.cy=this.sz/2; this.r=this.sz/2-1;
+    this.angle=0; this.tilt=0.35; this.speed=opts.speed||0.004;
+    this.userCount=opts.userCount||(this.sz>60?30:8);
+    this.gridN=opts.gridN||(this.sz>60?6:3);
+    this.land=this._genLand(); this.dots=this._genDots(); this.raf=null;
+  }
+  _genLand(){
+    const cl=[{lt:0.7,ln:-1.5,n:8,s:0.5},{lt:0.2,ln:-1.8,n:7,s:0.6},{lt:0.8,ln:1.5,n:10,s:0.7},{lt:-0.3,ln:2.0,n:5,s:0.4},{lt:0.5,ln:-4.5,n:7,s:0.5},{lt:-0.5,ln:-4.0,n:5,s:0.5}];
+    const pts=[]; cl.forEach(c=>{for(let i=0;i<c.n;i++)pts.push({lt:c.lt+(Math.random()-.5)*c.s,ln:c.ln+(Math.random()-.5)*c.s,sz:Math.random()*1.8+1});}); return pts;
+  }
+  _genDots(){return Array.from({length:this.userCount},()=>({lt:(Math.random()-.5)*Math.PI,ln:Math.random()*Math.PI*2,online:Math.random()>.3,bp:Math.random()*Math.PI*2,bs:1+Math.random()*2,sz:Math.random()*1.2+0.8}));}
+  _proj(lt,ln){
+    const al=ln+this.angle,x3=Math.cos(lt)*Math.sin(al),y3=Math.sin(lt),z3=Math.cos(lt)*Math.cos(al);
+    const y2=y3*Math.cos(this.tilt)-z3*Math.sin(this.tilt),z2=y3*Math.sin(this.tilt)+z3*Math.cos(this.tilt);
+    return{x:this.cx+x3*this.r,y:this.cy-y2*this.r,v:z2>0,d:(z2+1)/2};
+  }
+  draw(ts){
+    const ctx=this.ctx,r=this.r,cx=this.cx,cy=this.cy;
+    ctx.clearRect(0,0,this.sz,this.sz);
+    ctx.save();ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
+    const g=ctx.createRadialGradient(cx-r*.25,cy-r*.25,r*.05,cx,cy,r);
+    g.addColorStop(0,'#1a2a3a');g.addColorStop(.5,'#0d1520');g.addColorStop(1,'#060810');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();
+    const at=ctx.createRadialGradient(cx,cy,r*.8,cx,cy,r);
+    at.addColorStop(0,'rgba(0,120,200,0)');at.addColorStop(1,'rgba(0,60,140,0.3)');
+    ctx.fillStyle=at;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();
+    ctx.lineWidth=0.4;ctx.strokeStyle='rgba(100,160,220,0.12)';
+    for(let i=0;i<this.gridN;i++){const lt=(i/this.gridN)*Math.PI-Math.PI/2;ctx.beginPath();let s=false;for(let j=0;j<=50;j++){const p=this._proj(lt,(j/50)*Math.PI*2);if(!p.v){s=false;continue;}s?ctx.lineTo(p.x,p.y):(ctx.moveTo(p.x,p.y),s=true);}ctx.stroke();}
+    for(let i=0;i<this.gridN;i++){const ln=(i/this.gridN)*Math.PI*2;ctx.beginPath();let s=false;for(let j=0;j<=50;j++){const p=this._proj((j/50)*Math.PI-Math.PI/2,ln);if(!p.v){s=false;continue;}s?ctx.lineTo(p.x,p.y):(ctx.moveTo(p.x,p.y),s=true);}ctx.stroke();}
+    const sc=r/100;
+    this.land.forEach(pt=>{const p=this._proj(pt.lt,pt.ln);if(!p.v)return;ctx.beginPath();ctx.arc(p.x,p.y,pt.sz*sc,0,Math.PI*2);ctx.fillStyle=`rgba(30,110,70,${.4+p.d*.5})`;ctx.fill();});
+    this.dots.forEach(d=>{
+      const p=this._proj(d.lt,d.ln);if(!p.v)return;
+      const bk=Math.sin(ts*.001*d.bs+d.bp),al=.5+bk*.5,dsz=(d.sz+Math.max(0,bk)*.8)*sc;
+      const col=d.online?`rgba(48,209,88,${al})`:`rgba(255,69,58,${al*.7})`;
+      const glow=d.online?`rgba(48,209,88,${al*.35})`:`rgba(255,69,58,${al*.25})`;
+      ctx.beginPath();ctx.arc(p.x,p.y,dsz*2.5,0,Math.PI*2);ctx.fillStyle=glow;ctx.fill();
+      ctx.beginPath();ctx.arc(p.x,p.y,dsz,0,Math.PI*2);ctx.fillStyle=col;ctx.fill();
+    });
+    const sp=ctx.createRadialGradient(cx-r*.38,cy-r*.38,0,cx-r*.2,cy-r*.2,r*.55);
+    sp.addColorStop(0,'rgba(255,255,255,0.10)');sp.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=sp;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();
+    ctx.restore();
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.strokeStyle='rgba(196,129,58,0.4)';ctx.lineWidth=1.5;ctx.stroke();
+    this.angle+=this.speed;
+  }
+  start(){const a=ts=>{this.draw(ts);this.raf=requestAnimationFrame(a);};this.raf=requestAnimationFrame(a);return this;}
+}
+
+new SwingerGlobe(document.getElementById('mob-globe'), {speed:0.005,userCount:12,gridN:3}).start();
+new SwingerGlobe(document.getElementById('desk-globe'), {speed:0.004,userCount:15,gridN:4}).start();
+</script>
+</body>
+</html>

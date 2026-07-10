@@ -1,0 +1,17 @@
+# System files
+.DS_Store
+Thumbs.db
+*.log
+
+# Temp and scratch directories
+scratch/
+temp/
+tmp/
+
+# IDE / Editor configuration
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>SwingerSphere — Normas de Comunidad & Distribución de Fondos</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+  :root {
+    --copper: #c4813a; --bg: #080a0f; --surface: #111318; --border: rgba(255,255,255,0.08);
+    --text: #f2f2f7; --silver: #aeaeb2;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; padding:2rem 1rem; }
+  .container { max-width:760px; margin:0 auto; }
+  .header { text-align:center; padding:3rem 0 2rem; border-bottom:1px solid var(--border); margin-bottom:3rem; }
+  .logo { font-size:3rem; margin-bottom:1rem; }
+  h1 { font-size:2.2rem; font-weight:900; background:linear-gradient(135deg,#f2f2f7,#c4813a); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:0.5rem; }
+  .subtitle { color:var(--silver); font-size:0.9rem; letter-spacing:0.05em; }
+  .meta { display:flex; gap:1rem; justify-content:center; margin-top:1rem; flex-wrap:wrap; }
+  .meta span { background:rgba(196,129,58,0.12); border:1px solid rgba(196,129,58,0.25); border-radius:9999px; padding:4px 12px; font-size:0.75rem; color:var(--copper); }
+  section { margin-bottom:2.5rem; }
+  h2 { font-size:1.3rem; font-weight:700; color:var(--copper); margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border); }
+  h3 { font-size:1rem; font-weight:600; margin:1.25rem 0 0.5rem; color:var(--text); }
+  p { font-size:0.9rem; color:var(--silver); margin-bottom:0.75rem; }
+  .rule-list { list-style:none; display:flex; flex-direction:column; gap:0.75rem; }
+  .rule-list li { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1rem; display:flex; gap:0.875rem; align-items:flex-start; }
+  .rule-num { background:rgba(196,129,58,0.15); color:var(--copper); width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; flex-shrink:0; }
+  .rule-text strong { display:block; font-size:0.88rem; font-weight:600; margin-bottom:0.2rem; }
+  .rule-text span { font-size:0.8rem; color:var(--silver); }
+  .fund-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  @media(max-width:560px) { .fund-grid { grid-template-columns:1fr; } }
+  .fund-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.25rem; }
+  .fund-percent { font-size:2.5rem; font-weight:900; color:var(--copper); line-height:1; margin-bottom:0.4rem; }
+  .fund-card h4 { font-size:0.95rem; font-weight:700; margin-bottom:0.4rem; }
+  .fund-card p { font-size:0.78rem; color:var(--silver); margin:0; }
+  .fund-card.highlight { border-color:rgba(196,129,58,0.4); background:rgba(196,129,58,0.06); }
+  .how-grid { display:flex; flex-direction:column; gap:0.75rem; }
+  .how-step { display:flex; gap:1rem; align-items:flex-start; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:0.875rem; }
+  .how-icon { font-size:1.4rem; flex-shrink:0; width:36px; text-align:center; }
+  .how-step strong { font-size:0.88rem; font-weight:600; display:block; margin-bottom:0.15rem; }
+  .how-step span { font-size:0.78rem; color:var(--silver); }
+  .alert { background:rgba(255,69,58,0.08); border:1px solid rgba(255,69,58,0.2); border-radius:12px; padding:1rem 1.25rem; font-size:0.85rem; }
+  .alert strong { color:#ff453a; }
+  .privacy-pills { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+  .pill { background:var(--surface); border:1px solid var(--border); border-radius:9999px; padding:5px 12px; font-size:0.75rem; color:var(--silver); }
+  .pill.active { border-color:rgba(196,129,58,0.35); color:var(--copper); background:rgba(196,129,58,0.08); }
+  .footer { text-align:center; padding:2rem 0; border-top:1px solid var(--border); margin-top:3rem; color:var(--silver); font-size:0.8rem; }
+  .footer strong { color:var(--copper); }
+  table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+  th { background:rgba(196,129,58,0.1); padding:0.6rem 0.875rem; text-align:left; font-weight:600; border-bottom:1px solid var(--border); }
+  td { padding:0.6rem 0.875rem; border-bottom:1px solid rgba(255,255,255,0.04); color:var(--silver); }
+  tr:last-child td { border-bottom:none; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:9999px; font-size:0.68rem; font-weight:600; }
+  .badge-green { background:rgba(48,209,88,0.12); color:#30d158; }
+  .badge-copper { background:rgba(196,129,58,0.12); color:var(--copper); }
+  .badge-red { background:rgba(255,69,58,0.12); color:#ff453a; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="logo">🌍</div>
+    <h1>SwingerSphere</h1>
+    <div class="subtitle">NORMAS DE COMUNIDAD · DISTRIBUCIÓN DE FONDOS · PRIVACIDAD</div>
+    <div class="meta">
+      <span>🏢 Madrid, España</span>
+      <span>⚖️ GDPR · LOPD · DSA · MiCA</span>
+      <span>₿ Crypto-Friendly</span>
+      <span>v1.2 · Junio 2025</span>
+    </div>
+  </div>
+
+  <!-- NORMAS -->
+  <section>
+    <h2>📋 Normas de Comunidad</h2>
+    <p>SwingerSphere es una comunidad privada para adultos mayores de 18 años. El uso de la plataforma implica la aceptación íntegra de las siguientes normas. El incumplimiento puede resultar en suspensión o expulsión permanente.</p>
+    <ul class="rule-list">
+      <li><div class="rule-num">1</div><div class="rule-text"><strong>Consentimiento Explícito — Siempre</strong><span>Toda interacción requiere consentimiento expreso de todas las partes. "No" significa No en cualquier momento, sin necesidad de explicación. El sistema ConsentVault™ registra cada consentimiento digitalmente.</span></div></li>
+      <li><div class="rule-num">2</div><div class="rule-text"><strong>Verificación +18 Obligatoria</strong><span>Antes de cualquier interacción privada es obligatorio completar la verificación de edad. El proceso es anónimo y no almacena datos de identificación. Acceso automáticamente bloqueado para menores.</span></div></li>
+      <li><div class="rule-num">3</div><div class="rule-text"><strong>Privacidad Mutua Garantizada</strong><span>Prohibido compartir fotos, videos o información de otros miembros sin ConsentVault™ firmado. Las fotos en chat se autodestruyen en 30 minutos (una sola vista). Cualquier filtración es rastreada por fingerprint digital.</span></div></li>
+      <li><div class="rule-num">4</div><div class="rule-text"><strong>Cero Presión y Cero Acoso</strong><span>No se permiten mensajes no solicitados sin el sistema OK-Previo. No se toleran comentarios despectivos, racistas, transfóbicos ni excluyentes. La comunidad es un espacio seguro para todas las orientaciones e identidades.</span></div></li>
+      <li><div class="rule-num">5</div><div class="rule-text"><strong>Un Perfil Auténtico por Persona/Pareja</strong><span>Prohibido crear perfiles falsos, usar fotos de otras personas o hacerse pasar por otra identidad. Los sistemas anti-bot analizan el comportamiento 24/7. Los bots son expulsados automáticamente.</span></div></li>
+      <li><div class="rule-num">6</div><div class="rule-text"><strong>Respeto al Espacio Común</strong><span>Los chats globales son espacios moderados por IA. El spam, la publicidad no autorizada y el contenido fuera del contexto lifestyle están prohibidos. La moderación humana revisa casos complejos.</span></div></li>
+      <li><div class="rule-num">7</div><div class="rule-text"><strong>Contenido Legal Únicamente</strong><span>Contenido ilegal = expulsión permanente e inmediata + reporte a autoridades competentes. Esto incluye contenido CSAM, sin consentimiento grabado, o que viole leyes locales aplicables.</span></div></li>
+      <li><div class="rule-num">8</div><div class="rule-text"><strong>Discreción como Valor Central</strong><span>Lo que ocurre en SwingerSphere permanece en SwingerSphere. Compartir información sobre otros miembros fuera de la plataforma, incluso sin fotos, es una violación grave de las normas.</span></div></li>
+    </ul>
+  </section>
+
+  <!-- DISTRIBUCIÓN DE FONDOS -->
+  <section>
+    <h2>💰 Distribución de Fondos (10€/mes por socio)</h2>
+    <p>La cuota mensual de 10€ (IVA incluido: ~12,10€) es única e igualitaria para todos los socios. No existen cuotas diferenciadas por género, orientación o nivel de actividad. La distribución es transparente y auditable en blockchain.</p>
+    <div class="fund-grid">
+      <div class="fund-card highlight">
+        <div class="fund-percent">40%</div>
+        <h4>🏛️ Fondo Convenios Clubes</h4>
+        <p>Destinado exclusivamente a firmar acuerdos con clubs verificados. Los socios obtienen descuentos del 20-50% en entrada y consumición. Los socios votan qué clubs incluir.</p>
+      </div>
+      <div class="fund-card">
+        <div class="fund-percent">30%</div>
+        <h4>⚙️ Operaciones</h4>
+        <p>Servidores en la UE, seguridad, soporte humano, moderación, mantenimiento de infraestructura y cumplimiento legal continuo.</p>
+      </div>
+      <div class="fund-card">
+        <div class="fund-percent">20%</div>
+        <h4>🚀 Desarrollo</h4>
+        <p>Nuevas funcionalidades, mejoras de IA, seguridad avanzada, expansión geográfica y desarrollo del ecosistema de partners.</p>
+      </div>
+      <div class="fund-card">
+        <div class="fund-percent">10%</div>
+        <h4>🏦 Treasury Reserve</h4>
+        <p>Fondo de reserva corporativo en USDC. Garantía de continuidad del servicio ante imprevistos. No se distribuye como dividendo.</p>
+      </div>
+    </div>
+    <h3>Clubs con Convenio Activo (muestra)</h3>
+    <table>
+      <tr><th>Club</th><th>País</th><th>Rating</th><th>Descuento Socios</th><th>Estado</th></tr>
+      <tr><td>Cap d'Agde Resort</td><td>🇫🇷 Francia</td><td>9.8/10</td><td>25% entrada</td><td><span class="badge badge-green">Activo</span></td></tr>
+      <tr><td>La Suite Club</td><td>🇪🇸 España</td><td>9.3/10</td><td>30% entrada + copa</td><td><span class="badge badge-green">Activo</span></td></tr>
+      <tr><td>Trapeze Club</td><td>🇺🇸 EEUU</td><td>9.5/10</td><td>20% entrada</td><td><span class="badge badge-copper">Negociando</span></td></tr>
+      <tr><td>Melrose Amsterdam</td><td>🇳🇱 Holanda</td><td>9.2/10</td><td>35% entrada</td><td><span class="badge badge-green">Activo</span></td></tr>
+      <tr><td>Le Pluriel</td><td>🇫🇷 Francia</td><td>9.1/10</td><td>25% entrada</td><td><span class="badge badge-green">Activo</span></td></tr>
+      <tr><td>Desire Resorts</td><td>🇲🇽 México</td><td>8.9/10</td><td>15% estancia</td><td><span class="badge badge-copper">Negociando</span></td></tr>
+      <tr><td>Amazonia Club</td><td>🇪🇸 España</td><td>8.8/10</td><td>30% entrada</td><td><span class="badge badge-green">Activo</span></td></tr>
+      <tr><td>Base London</td><td>🇬🇧 UK</td><td>8.7/10</td><td>20% entrada</td><td><span class="badge badge-copper">Negociando</span></td></tr>
+    </table>
+  </section>
+
+  <!-- CÓMO CREAR CHATS -->
+  <section>
+    <h2>💬 Cómo Crear Chats Comunitarios</h2>
+    <div class="how-grid">
+      <div class="how-step"><div class="how-icon">1️⃣</div><div><strong>Ve a Comunidad → Mis Chats</strong><span>Accede desde la barra de navegación inferior y selecciona la pestaña "Mis Chats".</span></div></div>
+      <div class="how-step"><div class="how-icon">2️⃣</div><div><strong>Toca "+ Chat" o el bloque "Crear nuevo chat"</strong><span>El formulario de creación te guiará en 60 segundos.</span></div></div>
+      <div class="how-step"><div class="how-icon">3️⃣</div><div><strong>Configura: Nombre, Tema, Privacidad</strong><span>Elige si el chat es Público (todos pueden ver), Solo Verificados (TrustScore ≥60), o Privado (solo por invitación directa).</span></div></div>
+      <div class="how-step"><div class="how-icon">4️⃣</div><div><strong>Activa ConsentVault™ y Fotos Efímeras</strong><span>Recomendado para chats de adultos. Cada miembro firma digitalmente al entrar. Las fotos se destruyen a los 30 min.</span></div></div>
+      <div class="how-step"><div class="how-icon">5️⃣</div><div><strong>Firma el contrato de comunidad</strong><span>Como creador, aceptas las normas de moderación y la responsabilidad de mantener el espacio seguro.</span></div></div>
+      <div class="how-step"><div class="how-icon">6️⃣</div><div><strong>Invita y modera</strong><span>Comparte el enlace o QR del chat. Nombra moderadores de confianza. La IA te asistirá automáticamente.</span></div></div>
+    </div>
+    <h3>Capacidades por tipo de chat</h3>
+    <table>
+      <tr><th>Tipo</th><th>Miembros máx.</th><th>ConsentVault™</th><th>Fotos efímeras</th><th>Moderación IA</th></tr>
+      <tr><td>🌐 Público</td><td>500</td><td>Opcional</td><td>Opcional</td><td>Siempre activa</td></tr>
+      <tr><td>✓ Solo Verificados</td><td>250</td><td>Obligatorio</td><td>Opcional</td><td>Siempre activa</td></tr>
+      <tr><td>🔒 Privado</td><td>100</td><td>Obligatorio</td><td>Obligatorio</td><td>Siempre activa</td></tr>
+    </table>
+  </section>
+
+  <!-- FOTOS EFÍMERAS -->
+  <section>
+    <h2>💥 Garantías de Fotos Efímeras</h2>
+    <p>Las fotos efímeras tienen el mayor nivel de protección técnica disponible en una aplicación web/móvil:</p>
+    <div class="privacy-pills">
+      <div class="pill active">🕐 TTL: 30 minutos</div>
+      <div class="pill active">👁️ 1 sola vista</div>
+      <div class="pill active">🚫 Sin descarga</div>
+      <div class="pill active">🧠 Solo RAM</div>
+      <div class="pill active">🔏 Canvas-based</div>
+      <div class="pill active">🔍 Fingerprint LSB</div>
+      <div class="pill active">👻 Sin servidor</div>
+      <div class="pill active">🛡️ Firma digital</div>
+    </div>
+    <div class="alert" style="margin-top:1rem;">
+      <strong>⚠️ Nota de transparencia:</strong> Ninguna tecnología puede prevenir al 100% que alguien fotografíe su pantalla con otro dispositivo. Sin embargo, SwingerSphere registra el fingerprint de cada imagen enviada. Si una foto filtrada aparece en internet, el sistema puede identificar criptográficamente qué usuario la filtró, lo que tiene consecuencias legales documentadas en el ConsentVault™.
+    </div>
+  </section>
+
+  <!-- LEGAL -->
+  <section>
+    <h2>⚖️ Marco Legal & Contabilidad Crypto</h2>
+    <table>
+      <tr><th>Aspecto</th><th>Detalle</th></tr>
+      <tr><td>Entidad legal</td><td>SwingerSphere S.L. — Registro Mercantil de Madrid</td></tr>
+      <tr><td>Sede operativa</td><td>Madrid, Comunidad de Madrid, España (UE)</td></tr>
+      <tr><td>Contabilidad</td><td>En USDC — No dependiente de ningún banco nacional</td></tr>
+      <tr><td>Política crypto</td><td>Crypto-friendly por diseño corporativo. Cumple MiCA (UE 2023)</td></tr>
+      <tr><td>Privacidad datos</td><td>GDPR · LOPD · DSA — DPO designado: dpo@swingersphere.com</td></tr>
+      <tr><td>Pagos fiat</td><td>Auto-conversión a USDC. Usuarios no-crypto no excluidos</td></tr>
+      <tr><td>Jurisdicción fiscal</td><td>España (UE). IVA 21% incluido en cuota. Sin impuestos ocultos</td></tr>
+      <tr><td>Transparencia</td><td>Distribución de fondos auditada on-chain trimestralmente</td></tr>
+    </table>
+  </section>
+
+  <div class="footer">
+    <p><strong>SwingerSphere S.L.</strong> · Madrid, España · <a href="mailto:legal@swingersphere.com" style="color:var(--copper)">legal@swingersphere.com</a></p>
+    <p style="margin-top:0.75rem;font-size:0.75rem;">💼 Billetera Corporativa Oficial (ERC-20 / Polygon / BNB)</p>
+    <p style="font-family:monospace;font-size:0.72rem;background:rgba(196,129,58,0.1);border:1px solid rgba(196,129,58,0.25);border-radius:8px;padding:0.5rem 1rem;display:inline-block;margin-top:0.4rem;color:#c4813a;word-break:break-all;">0x78230a63d7d6ec90dd4feb69936af37fe27f6f20</p>
+    <p style="margin-top:0.75rem;">Documento v1.2 · Junio 2025 · Revisión trimestral · Auditoría on-chain</p>
+  </div>
+
+</div>
+</body>
+</html>

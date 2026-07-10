@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwingerSphere — Globe Logo Preview</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #060608;
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: #f2f2f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      gap: 3rem;
+    }
+
+    h1 { font-size: 0.75rem; color: #6a6a7a; text-transform: uppercase; letter-spacing: 0.15em; }
+
+    /* ── GLOBE CONTAINER ──────────────────────────────── */
+    .globe-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .globe-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+
+    .globe-canvas { border-radius: 50%; }
+
+    /* Glow ring */
+    .globe-ring {
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 1px solid rgba(196,129,58,0.2);
+      animation: ring-pulse 3s ease-in-out infinite;
+    }
+    .globe-ring-2 {
+      position: absolute;
+      inset: -24px;
+      border-radius: 50%;
+      border: 1px solid rgba(196,129,58,0.08);
+      animation: ring-pulse 3s ease-in-out infinite 0.5s;
+    }
+
+    @keyframes ring-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.04); opacity: 1; }
+    }
+
+    /* Logo text below globe */
+    .logo-text-wrap {
+      text-align: center;
+    }
+    .logo-name {
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #f2f2f7 0%, #c4813a 50%, #e09455 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .logo-tagline {
+      font-size: 0.65rem;
+      color: #6a6a7a;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-top: 0.25rem;
+    }
+
+    /* ── SIZE VARIANTS ────────────────────────────────── */
+    .variants {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .variant-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 2rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 24px;
+    }
+
+    .variant-label {
+      font-size: 0.65rem;
+      color: #6a6a7a;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* Inline logo (horizontal) */
+    .logo-inline {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-inline .logo-name {
+      font-size: 1.1rem;
+    }
+
+    /* Mini variant */
+    .logo-mini {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Stats bar */
+    .live-stats {
+      display: flex;
+      gap: 2rem;
+      padding: 1rem 2rem;
+      background: rgba(196,129,58,0.07);
+      border: 1px solid rgba(196,129,58,0.15);
+      border-radius: 9999px;
+      font-size: 0.75rem;
+    }
+
+    .live-stat {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #c4813a;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #30d158;
+      box-shadow: 0 0 6px #30d158;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Section label */
+    .section-label {
+      font-size: 0.65rem;
+      color: #6a6a7a;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      text-align: center;
+      padding: 1rem 0 0.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      width: 100%;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>SwingerSphere · Logo System</h1>
+
+<!-- Main large globe -->
+<div class="globe-wrap">
+  <div class="globe-container">
+    <div class="globe-ring"></div>
+    <div class="globe-ring-2"></div>
+    <canvas id="globe-main" class="globe-canvas" width="200" height="200"></canvas>
+  </div>
+  <div class="logo-text-wrap">
+    <div class="logo-name">SwingerSphere</div>
+    <div class="logo-tagline">Global Lifestyle Community</div>
+  </div>
+  <div class="live-stats">
+    <div class="live-stat"><div class="live-dot"></div><span id="online-count">342</span> online</div>
+    <div class="live-stat">🌍 <span id="country-count">67</span> países</div>
+    <div class="live-stat">⭐ <span id="event-count">3</span> eventos hoy</div>
+  </div>
+</div>
+
+<div class="section-label">Variantes del Logo</div>
+
+<!-- All variants -->
+<div class="variants">
+
+  <!-- Horizontal Inline -->
+  <div class="variant-card">
+    <div class="variant-label">Topbar · Horizontal</div>
+    <div class="logo-inline">
+      <canvas id="globe-sm" width="36" height="36" class="globe-canvas"></canvas>
+      <div class="logo-name" style="font-size:1.1rem;">SwingerSphere</div>
+    </div>
+  </div>
+
+  <!-- Medium standalone -->
+  <div class="variant-card">
+    <div class="variant-label">App Icon · 96px</div>
+    <div class="logo-mini">
+      <canvas id="globe-md" width="96" height="96" class="globe-canvas"></canvas>
+      <div class="logo-name" style="font-size:0.75rem;">SwingerSphere</div>
+    </div>
+  </div>
+
+  <!-- Favicon size -->
+  <div class="variant-card">
+    <div class="variant-label">Favicon · 32px</div>
+    <canvas id="globe-xs" width="32" height="32" class="globe-canvas"></canvas>
+  </div>
+
+  <!-- Large splash -->
+  <div class="variant-card">
+    <div class="variant-label">Splash Screen · 140px</div>
+    <div class="logo-mini">
+      <canvas id="globe-lg" width="140" height="140" class="globe-canvas"></canvas>
+      <div class="logo-name" style="font-size:1rem;margin-top:0.5rem;">SwingerSphere</div>
+      <div class="logo-tagline">Global Lifestyle Community</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   SWINGERSPHERE GLOBE RENDERER
+   WebGL-free Canvas 2D spinning globe
+═══════════════════════════════════════════════════════ */
+
+class SwingerGlobe {
+  constructor(canvas, options = {}) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.size = canvas.width;
+    this.cx = this.size / 2;
+    this.cy = this.size / 2;
+    this.r = this.size / 2 - 2;
+
+    this.options = Object.assign({
+      rotationSpeed: 0.003,
+      dotCount: options.size > 80 ? 18 : 6,
+      userCount: options.size > 80 ? 40 : 12,
+      gridLines: options.size > 60 ? 8 : 4,
+    }, options);
+
+    this.angle = 0;
+    this.tilt = 0.35; // radial tilt in radians
+
+    // Grid lines (latitude / longitude arcs)
+    this.gridLines = [];
+    for (let i = 0; i < this.options.gridLines; i++) {
+      this.gridLines.push({
+        lat: (i / this.options.gridLines) * Math.PI - Math.PI / 2,
+        type: 'lat',
+      });
+    }
+    for (let i = 0; i < this.options.gridLines; i++) {
+      this.gridLines.push({
+        lon: (i / this.options.gridLines) * Math.PI * 2,
+        type: 'lon',
+      });
+    }
+
+    // Continent-like landmass points (simplified)
+    this.landPoints = this._generateLand();
+
+    // User dots (green = online, red = away)
+    this.userDots = this._generateUserDots();
+
+    // Blink timers
+    this.blinkTimers = this.userDots.map(() => Math.random() * 4000);
+
+    this.lastTime = 0;
+    this.animFrame = null;
+  }
+
+  _generateLand() {
+    // Clusters of points to simulate continents
+    const clusters = [
+      { lat: 0.7, lon: -1.5, count: 12, spread: 0.5 },  // Europe
+      { lat: 0.2, lon: -1.8, count: 10, spread: 0.6 },  // Africa
+      { lat: 0.8, lon: 1.5, count: 14, spread: 0.7 },   // Asia
+      { lat: -0.3, lon: 2.0, count: 8, spread: 0.5 },   // Australia
+      { lat: 0.5, lon: -4.5, count: 10, spread: 0.5 },  // N.America
+      { lat: -0.5, lon: -4.0, count: 7, spread: 0.5 },  // S.America
+    ];
+    const points = [];
+    clusters.forEach(c => {
+      for (let i = 0; i < c.count; i++) {
+        points.push({
+          lat: c.lat + (Math.random() - 0.5) * c.spread,
+          lon: c.lon + (Math.random() - 0.5) * c.spread,
+          size: Math.random() * 2 + 1.5,
+        });
+      }
+    });
+    return points;
+  }
+
+  _generateUserDots() {
+    const dots = [];
+    for (let i = 0; i < this.options.userCount; i++) {
+      dots.push({
+        lat: (Math.random() - 0.5) * Math.PI,
+        lon: Math.random() * Math.PI * 2,
+        status: Math.random() > 0.35 ? 'online' : 'away',
+        blinkPhase: Math.random() * Math.PI * 2,
+        blinkSpeed: 1 + Math.random() * 2,
+        size: Math.random() * 1.5 + 1,
+      });
+    }
+    return dots;
+  }
+
+  // Project 3D point to 2D canvas
+  _project(lat, lon) {
+    const adjustedLon = lon + this.angle;
+    const x3 = Math.cos(lat) * Math.sin(adjustedLon);
+    const y3 = Math.sin(lat);
+    const z3 = Math.cos(lat) * Math.cos(adjustedLon);
+
+    // Apply tilt
+    const y2 = y3 * Math.cos(this.tilt) - z3 * Math.sin(this.tilt);
+    const z2 = y3 * Math.sin(this.tilt) + z3 * Math.cos(this.tilt);
+
+    const px = this.cx + x3 * this.r;
+    const py = this.cy - y2 * this.r;
+    const visible = z2 > 0;
+    const depth = (z2 + 1) / 2; // 0..1, 1 = front
+
+    return { x: px, y: py, visible, depth };
+  }
+
+  _drawGradientSphere() {
+    const ctx = this.ctx;
+
+    // Deep ocean base
+    const grad = ctx.createRadialGradient(
+      this.cx - this.r * 0.25, this.cy - this.r * 0.25, this.r * 0.05,
+      this.cx, this.cy, this.r
+    );
+    grad.addColorStop(0, '#1a2a3a');
+    grad.addColorStop(0.5, '#0d1520');
+    grad.addColorStop(1, '#060810');
+
+    ctx.beginPath();
+    ctx.arc(this.cx, this.cy, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Atmosphere glow at edges
+    const atmo = ctx.createRadialGradient(
+      this.cx, this.cy, this.r * 0.8,
+      this.cx, this.cy, this.r
+    );
+    atmo.addColorStop(0, 'rgba(0,120,200,0)');
+    atmo.addColorStop(1, 'rgba(0,60,140,0.3)');
+    ctx.beginPath();
+    ctx.arc(this.cx, this.cy, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = atmo;
+    ctx.fill();
+  }
+
+  _drawGrid() {
+    const ctx = this.ctx;
+    const steps = 60;
+
+    ctx.save();
+    ctx.lineWidth = 0.4;
+    ctx.strokeStyle = 'rgba(100,160,220,0.12)';
+
+    // Latitude lines
+    const latCount = this.options.gridLines > 4 ? 6 : 3;
+    for (let li = 0; li < latCount; li++) {
+      const lat = (li / latCount) * Math.PI - Math.PI / 2;
+      ctx.beginPath();
+      let started = false;
+      for (let s = 0; s <= steps; s++) {
+        const lon = (s / steps) * Math.PI * 2;
+        const pt = this._project(lat, lon);
+        if (!pt.visible) { started = false; continue; }
+        if (!started) { ctx.moveTo(pt.x, pt.y); started = true; }
+        else ctx.lineTo(pt.x, pt.y);
+      }
+      ctx.stroke();
+    }
+
+    // Longitude lines
+    const lonCount = this.options.gridLines > 4 ? 8 : 4;
+    for (let li = 0; li < lonCount; li++) {
+      const lon = (li / lonCount) * Math.PI * 2;
+      ctx.beginPath();
+      let started = false;
+      for (let s = 0; s <= steps; s++) {
+        const lat = (s / steps) * Math.PI - Math.PI / 2;
+        const pt = this._project(lat, lon);
+        if (!pt.visible) { started = false; continue; }
+        if (!started) { ctx.moveTo(pt.x, pt.y); started = true; }
+        else ctx.lineTo(pt.x, pt.y);
+      }
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+
+  _drawLand() {
+    const ctx = this.ctx;
+    this.landPoints.forEach(pt => {
+      const proj = this._project(pt.lat, pt.lon);
+      if (!proj.visible) return;
+
+      const alpha = 0.4 + proj.depth * 0.5;
+      const s = pt.size * (this.r / 100);
+
+      ctx.beginPath();
+      ctx.arc(proj.x, proj.y, s, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(30, 110, 70, ${alpha})`;
+      ctx.fill();
+    });
+  }
+
+  _drawUsers(timestamp) {
+    const ctx = this.ctx;
+    this.userDots.forEach((dot, i) => {
+      const proj = this._project(dot.lat, dot.lon);
+      if (!proj.visible) return;
+
+      const blink = Math.sin(timestamp * 0.001 * dot.blinkSpeed + dot.blinkPhase);
+      const alpha = 0.5 + blink * 0.5;
+      const s = (dot.size + (blink > 0 ? blink * 0.8 : 0)) * (this.r / 100);
+
+      const isOnline = dot.status === 'online';
+      const color = isOnline ? `rgba(48, 209, 88, ${alpha})` : `rgba(255, 69, 58, ${alpha * 0.7})`;
+      const glow = isOnline ? `rgba(48, 209, 88, ${alpha * 0.4})` : `rgba(255, 69, 58, ${alpha * 0.3})`;
+
+      // Glow ring
+      ctx.beginPath();
+      ctx.arc(proj.x, proj.y, s * 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = glow;
+      ctx.fill();
+
+      // Core dot
+      ctx.beginPath();
+      ctx.arc(proj.x, proj.y, s, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    });
+  }
+
+  _drawHighlight() {
+    const ctx = this.ctx;
+    // Specular highlight
+    const spec = ctx.createRadialGradient(
+      this.cx - this.r * 0.38, this.cy - this.r * 0.38, 0,
+      this.cx - this.r * 0.2, this.cy - this.r * 0.2, this.r * 0.55
+    );
+    spec.addColorStop(0, 'rgba(255,255,255,0.10)');
+    spec.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.beginPath();
+    ctx.arc(this.cx, this.cy, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = spec;
+    ctx.fill();
+
+    // Copper equator line
+    const eqPts = [];
+    for (let i = 0; i <= 60; i++) {
+      const lon = (i / 60) * Math.PI * 2;
+      const pt = this._project(0, lon);
+      if (pt.visible) eqPts.push(pt);
+    }
+    if (eqPts.length > 1) {
+      ctx.beginPath();
+      ctx.moveTo(eqPts[0].x, eqPts[0].y);
+      eqPts.forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.strokeStyle = 'rgba(196,129,58,0.25)';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    }
+  }
+
+  _clipToSphere() {
+    this.ctx.save();
+    this.ctx.beginPath();
+    this.ctx.arc(this.cx, this.cy, this.r, 0, Math.PI * 2);
+    this.ctx.clip();
+  }
+
+  draw(timestamp) {
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, this.size, this.size);
+
+    // Clip to sphere
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(this.cx, this.cy, this.r, 0, Math.PI * 2);
+    ctx.clip();
+
+    this._drawGradientSphere();
+    this._drawGrid();
+    this._drawLand();
+    this._drawUsers(timestamp);
+    this._drawHighlight();
+
+    ctx.restore();
+
+    // Outer border glow
+    ctx.beginPath();
+    ctx.arc(this.cx, this.cy, this.r, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(196,129,58,0.3)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Advance rotation
+    this.angle += this.options.rotationSpeed;
+  }
+
+  start() {
+    const animate = (ts) => {
+      this.draw(ts);
+      this.animFrame = requestAnimationFrame(animate);
+    };
+    this.animFrame = requestAnimationFrame(animate);
+    return this;
+  }
+
+  stop() {
+    if (this.animFrame) cancelAnimationFrame(this.animFrame);
+  }
+}
+
+// ── INSTANTIATE ALL GLOBES ──────────────────────────
+const globeMain = new SwingerGlobe(document.getElementById('globe-main'), {
+  rotationSpeed: 0.003,
+  userCount: 45,
+  gridLines: 8,
+  size: 200,
+}).start();
+
+const globeSm = new SwingerGlobe(document.getElementById('globe-sm'), {
+  rotationSpeed: 0.004,
+  userCount: 8,
+  gridLines: 4,
+  size: 36,
+}).start();
+
+const globeMd = new SwingerGlobe(document.getElementById('globe-md'), {
+  rotationSpeed: 0.003,
+  userCount: 20,
+  gridLines: 6,
+  size: 96,
+}).start();
+
+const globeXs = new SwingerGlobe(document.getElementById('globe-xs'), {
+  rotationSpeed: 0.005,
+  userCount: 4,
+  gridLines: 3,
+  size: 32,
+}).start();
+
+const globeLg = new SwingerGlobe(document.getElementById('globe-lg'), {
+  rotationSpeed: 0.003,
+  userCount: 30,
+  gridLines: 7,
+  size: 140,
+}).start();
+
+// Animate live stats
+function animateStats() {
+  const onlineEl = document.getElementById('online-count');
+  const baseOnline = 342;
+  setInterval(() => {
+    const delta = Math.floor(Math.random() * 10) - 5;
+    const current = parseInt(onlineEl.textContent) + delta;
+    onlineEl.textContent = Math.max(300, Math.min(450, current));
+  }, 3000);
+}
+animateStats();
+</script>
+</body>
+</html>

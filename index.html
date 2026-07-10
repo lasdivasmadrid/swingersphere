@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#060608">
+  <title>SwingerSphere — La comunidad lifestyle más segura del mundo</title>
+  <meta name="description" content="La primera red social lifestyle global donde la privacidad, la reputación verificable y la comunidad están por encima del negocio.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/design-system.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/screens.css">
+
+  <style>
+    body { overflow-x: hidden; }
+
+    /* Scanline decorative effect */
+    .scan-line {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(196,129,58,0.4), transparent);
+      animation: copper-scan 6s linear infinite;
+      pointer-events: none;
+    }
+
+    /* Features hover glow */
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-xl);
+      opacity: 0;
+      background: radial-gradient(circle at center, var(--copper-glow) 0%, transparent 70%);
+      transition: opacity var(--duration-base);
+    }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-card { position: relative; }
+
+    /* Privacy showcase */
+    .privacy-card {
+      background: var(--bg-glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      backdrop-filter: blur(16px);
+      transition: all var(--duration-base) var(--ease-out);
+    }
+    .privacy-card:hover {
+      border-color: var(--copper-border);
+      transform: translateX(8px);
+      background: var(--copper-glow);
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, var(--copper) 0%, var(--copper-pale) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Lang dropdown */
+    .lang-dropdown {
+      position: relative;
+    }
+    .lang-options {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      min-width: 160px;
+      z-index: 100;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .lang-options.show { display: block; animation: scale-in 0.2s var(--ease-spring); }
+    .lang-opt {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: background 0.15s;
+    }
+    .lang-opt:hover { background: var(--bg-glass-md); }
+    .lang-opt.selected { color: var(--copper); }
+  </style>
+</head>
+<body>
+
+<!-- Particle Canvas -->
+<canvas id="landing-canvas"></canvas>
+
+<div class="landing-page">
+  <div class="landing-content">
+
+    <!-- Navigation -->
+    <nav class="landing-nav">
+      <div class="landing-logo">
+        <div class="landing-logo-mark">SS</div>
+        <span class="landing-logo-text">SwingerSphere</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <!-- Language Selector -->
+        <div class="lang-dropdown">
+          <button class="lang-selector" id="lang-btn">
+            <span id="lang-flag">🇪🇸</span>
+            <span id="lang-name">ES</span>
+            <span style="font-size:0.7rem;color:var(--silver-dark);">▾</span>
+          </button>
+          <div class="lang-options" id="lang-options">
+            <div class="lang-opt selected" data-lang="es" data-flag="🇪🇸" data-name="ES">🇪🇸 Español</div>
+            <div class="lang-opt" data-lang="en" data-flag="🇬🇧" data-name="EN">🇬🇧 English</div>
+            <div class="lang-opt" data-lang="fr" data-flag="🇫🇷" data-name="FR">🇫🇷 Français</div>
+            <div class="lang-opt" data-lang="de" data-flag="🇩🇪" data-name="DE">🇩🇪 Deutsch</div>
+            <div class="lang-opt" data-lang="it" data-flag="🇮🇹" data-name="IT">🇮🇹 Italiano</div>
+            <div class="lang-opt" data-lang="pt" data-flag="🇵🇹" data-name="PT">🇵🇹 Português</div>
+          </div>
+        </div>
+        <a href="app.html" class="btn btn-secondary btn-sm" id="nav-enter">Entrar</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="landing-hero">
+      <div class="landing-badge">
+        <span id="hero-badge">🛡️ La red más segura del lifestyle</span>
+      </div>
+      <h1 class="landing-title">
+        <span id="hero-title1">La comunidad lifestyle</span><br>
+        <span class="landing-title-accent" id="hero-title2">más segura del mundo</span>
+      </h1>
+      <p class="landing-subtitle" id="hero-subtitle">
+        Privacidad extrema, reputación verificable y comunidad real.
+        El lugar donde la confianza se construye, no se asume.
+      </p>
+      <div class="landing-cta-row">
+        <a href="app.html" class="btn btn-primary btn-lg" id="cta-register">
+          🔮 Unirme ahora
+        </a>
+        <a href="app.html" class="btn btn-secondary btn-lg" id="cta-enter">
+          Explorar la app →
+        </a>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="landing-stats reveal">
+      <div class="stat-item">
+        <span class="stat-number" data-target="284" data-suffix="K">0</span>
+        <span class="stat-label" id="stat-members">Miembros</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="1240" data-suffix="">0</span>
+        <span class="stat-label" id="stat-events">Eventos</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="67" data-suffix="">0</span>
+        <span class="stat-label" id="stat-countries">Países</span>
+      </div>
+    </div>
+
+    <!-- Feature Cards -->
+    <section class="landing-features reveal" style="animation-delay:0.2s">
+      <div class="feature-card">
+        <span class="feature-icon">⭐</span>
+        <div class="feature-title" data-feat="feat1_title">TrustScore™</div>
+        <div class="feature-desc" data-feat="feat1_desc">Tu reputación en tiempo real. Basada en verificaciones, actividad y eventos reales. Como Airbnb, pero para el lifestyle.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔐</span>
+        <div class="feature-title" data-feat="feat2_title">Consent Vault™</div>
+        <div class="feature-desc" data-feat="feat2_desc">Cada interacción genera un consentimiento verificable. Tus datos, tus reglas. Siempre.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">✈️</span>
+        <div class="feature-title" data-feat="feat3_title">Passport Lifestyle™</div>
+        <div class="feature-desc" data-feat="feat3_desc">Colecciona sellos de cada club, evento y destino. Tu estatus sin exponer tu intimidad.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🕵️</span>
+        <div class="feature-title" data-feat="feat4_title">Privacidad Extrema</div>
+        <div class="feature-desc" data-feat="feat4_desc">Cada foto tiene hash único y fingerprint invisible. Si se filtra, sabemos quién la recibió y cuándo la abrió.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">👻</span>
+        <div class="feature-title" data-feat="feat5_title">Modo Fantasma</div>
+        <div class="feature-desc" data-feat="feat5_desc">Tú decides cuándo aparecer. Navega completamente invisible hasta que estés listo/a.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔮</span>
+        <div class="feature-title" data-feat="feat6_title">Limoncito 🍋</div>
+        <div class="feature-desc" data-feat="feat6_desc">Tu asistente permanente. Traduce, recomienda, detecta perfiles sospechosos y te guía en la comunidad.</div>
+      </div>
+    </section>
+
+    <!-- Privacy Showcase -->
+    <section style="width:100%;max-width:900px;padding:0 var(--space-6) var(--space-12);" class="reveal">
+      <h2 style="font-size:1.75rem;font-weight:800;text-align:center;margin-bottom:0.75rem;letter-spacing:-0.03em;">
+        Tu privacidad, <span class="gradient-text">bajo tu control</span>
+      </h2>
+      <p style="text-align:center;color:var(--silver);margin-bottom:2rem;font-size:0.9rem;">
+        6 niveles de privacidad para cada pieza de contenido
+      </p>
+      <div style="display:flex;flex-direction:column;gap:0.75rem;max-width:560px;margin:0 auto;">
+        <div class="privacy-card"><span class="privacy-lock privacy-public">🔓 Público</span><span style="font-size:0.85rem;color:var(--silver);">Visible para toda la comunidad</span></div>
+        <div class="privacy-card"><span class="privacy-lock privacy-friends">👥 Solo amigos</span><span style="font-size:0.85rem;color:var(--silver);">Solo para personas que sigues</span></div>
+        <div class="privacy-card"><span class="privacy-lock privacy-approved">🔒 Contactos aprobados</span><span style="font-size:0.85rem;color:var(--silver);">Solo quienes tú apruebes manualmente</span></div>
+        <div class="privacy-card"><span class="privacy-lock privacy-temporal">⏱ Temporal</span><span style="font-size:0.85rem;color:var(--silver);">Desaparece automáticamente tras X horas</span></div>
+        <div class="privacy-card"><span class="privacy-lock privacy-once">1️⃣ Una sola vez</span><span style="font-size:0.85rem;color:var(--silver);">Se destruye tras ser visto una vez</span></div>
+        <div class="privacy-card"><span class="privacy-lock privacy-destruct">💥 Autodestrucción</span><span style="font-size:0.85rem;color:var(--silver);">Se elimina del servidor tras abrirse</span></div>
+      </div>
+    </section>
+
+        <!-- CTA Banner -->
+    <section style="width:100%;max-width:900px;padding:0 var(--space-6) var(--space-16);text-align:center;" class="reveal">
+      <div style="
+        background:linear-gradient(135deg,rgba(196,129,58,0.1) 0%,rgba(196,129,58,0.04) 50%,rgba(196,129,58,0.1) 100%);
+        border:1px solid var(--copper-border);
+        border-radius:var(--radius-2xl);
+        padding:var(--space-12) var(--space-8);
+      ">
+        <h2 style="font-size:2rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:1rem;">
+          Únete a la revolución<br>del <span class="gradient-text">lifestyle responsable</span>
+        </h2>
+        <p style="color:var(--silver);margin-bottom:2rem;font-size:0.9rem;line-height:1.7;">
+          100% gratis para usuarios. Siempre.<br>
+          Porque el negocio no debe estar entre tú y la comunidad.
+        </p>
+        <a href="app.html" class="btn btn-primary btn-lg" style="display:inline-flex;">
+          🔮 Crear mi cuenta gratis
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="landing-footer">
+      <p>© 2026 SwingerSphere · Todos los derechos reservados · Solo para adultos +18</p>
+      <p style="margin-top:0.5rem;">
+        <span style="color:var(--copper);">🛡️ TrustScore™</span> ·
+        <span style="color:var(--copper);">🔐 Consent Vault™</span> ·
+        <span style="color:var(--copper);">✈️ Passport Lifestyle™</span>
+      </p>
+    </footer>
+
+  </div>
+</div>
+
+<!-- Scan line decorative -->
+<div class="scan-line" style="top:0;"></div>
+
+<script>
+/* ═══ LANDING PAGE SCRIPTS ═══════════════════════════════ */
+
+// ── PARTICLE CANVAS ──────────────────────────────────────
+(function initParticles() {
+  const canvas = document.getElementById('landing-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let mouse = { x: -999, y: -999 };
+  let animId;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function createParticles() {
+    particles = [];
+    const count = Math.min(80, Math.floor(window.innerWidth / 15));
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        size: Math.random() * 2 + 0.5,
+        opacity: Math.random() * 0.5 + 0.1,
+        color: Math.random() > 0.6 ? '#c4813a' : '#6a6a7a',
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Connect nearby particles
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(196, 129, 58, ${(1 - dist / 120) * 0.15})`;
+          ctx.lineWidth = 0.5;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+
+      // Mouse connection
+      const mdx = particles[i].x - mouse.x;
+      const mdy = particles[i].y - mouse.y;
+      const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+      if (mdist < 150) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(196, 129, 58, ${(1 - mdist / 150) * 0.35})`;
+        ctx.lineWidth = 1;
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+      }
+    }
+
+    // Draw particles
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = p.color === '#c4813a'
+        ? `rgba(196, 129, 58, ${p.opacity})`
+        : `rgba(106, 106, 122, ${p.opacity})`;
+      ctx.fill();
+
+      // Move
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Mouse repulsion
+      const mdx = p.x - mouse.x;
+      const mdy = p.y - mouse.y;
+      const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+      if (mdist < 80) {
+        const force = (80 - mdist) / 80 * 0.5;
+        p.x += (mdx / mdist) * force;
+        p.y += (mdy / mdist) * force;
+      }
+
+      // Wrap edges
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+    });
+
+    animId = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  window.addEventListener('touchmove', e => {
+    mouse.x = e.touches[0].clientX;
+    mouse.y = e.touches[0].clientY;
+  });
+  window.addEventListener('resize', () => { resize(); createParticles(); });
+
+  resize();
+  createParticles();
+  draw();
+})();
+
+// ── COUNTER ANIMATION ────────────────────────────────────
+function animateCounter(el, target, suffix) {
+  const duration = 2000;
+  const start = performance.now();
+  function update(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(ease * target);
+    el.textContent = current + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+// ── SCROLL REVEAL ────────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Animate counters when stats come into view
+      if (entry.target.classList.contains('landing-stats')) {
+        entry.target.querySelectorAll('.stat-number').forEach(el => {
+          animateCounter(el, parseInt(el.dataset.target), el.dataset.suffix || '');
+        });
+      }
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── LANGUAGE SELECTOR ────────────────────────────────────
+const LANDING_TRANSLATIONS = {
+  es: { badge:'🛡️ La red más segura del lifestyle', t1:'La comunidad lifestyle', t2:'más segura del mundo', sub:'Privacidad extrema, reputación verificable y comunidad real. El lugar donde la confianza se construye, no se asume.', enter:'Entrar', members:'Miembros', events:'Eventos', countries:'Países', join:'Unirme ahora', explore:'Explorar la app →' },
+  en: { badge:'🛡️ The safest lifestyle network', t1:'The safest lifestyle', t2:'community in the world', sub:'Extreme privacy, verifiable reputation and real community. Where trust is built, not assumed.', enter:'Enter', members:'Members', events:'Events', countries:'Countries', join:'Join now', explore:'Explore the app →' },
+  fr: { badge:'🛡️ Le réseau lifestyle le plus sûr', t1:'La communauté lifestyle', t2:'la plus sûre au monde', sub:'Confidentialité extrême, réputation vérifiable et vraie communauté.', enter:'Entrer', members:'Membres', events:'Événements', countries:'Pays', join:"Rejoindre", explore:'Explorer →' },
+  de: { badge:'🛡️ Das sicherste Lifestyle-Netzwerk', t1:'Die sicherste Lifestyle', t2:'Community der Welt', sub:'Extreme Privatsphäre, überprüfbarer Ruf und echte Community.', enter:'Einloggen', members:'Mitglieder', events:'Events', countries:'Länder', join:'Jetzt beitreten', explore:'App erkunden →' },
+  it: { badge:'🛡️ La rete lifestyle più sicura', t1:'La comunità lifestyle', t2:'più sicura al mondo', sub:'Privacy estrema, reputazione verificabile e vera comunità.', enter:'Entra', members:'Membri', events:'Eventi', countries:'Paesi', join:'Iscriviti ora', explore:'Esplora →' },
+  pt: { badge:'🛡️ A rede lifestyle mais segura', t1:'A comunidade lifestyle', t2:'mais segura do mundo', sub:'Privacidade extrema, reputação verificável e comunidade real.', enter:'Entrar', members:'Membros', events:'Eventos', countries:'Países', join:'Entrar agora', explore:'Explorar →' },
+};
+
+const langBtn = document.getElementById('lang-btn');
+const langOptions = document.getElementById('lang-options');
+
+langBtn.addEventListener('click', () => {
+  langOptions.classList.toggle('show');
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.lang-dropdown')) langOptions.classList.remove('show');
+});
+
+langOptions.querySelectorAll('.lang-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const lang = opt.dataset.lang;
+    const T = LANDING_TRANSLATIONS[lang] || LANDING_TRANSLATIONS.es;
+
+    document.getElementById('lang-flag').textContent = opt.dataset.flag;
+    document.getElementById('lang-name').textContent = opt.dataset.name;
+    langOptions.classList.remove('show');
+
+    document.querySelectorAll('.lang-opt').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+
+    // Update text
+    if (document.getElementById('hero-badge')) document.getElementById('hero-badge').textContent = T.badge;
+    if (document.getElementById('hero-title1')) document.getElementById('hero-title1').textContent = T.t1;
+    if (document.getElementById('hero-title2')) document.getElementById('hero-title2').textContent = T.t2;
+    if (document.getElementById('hero-subtitle')) document.getElementById('hero-subtitle').textContent = T.sub;
+    if (document.getElementById('nav-enter')) document.getElementById('nav-enter').textContent = T.enter;
+    if (document.getElementById('cta-register')) document.getElementById('cta-register').textContent = '🔮 ' + T.join;
+    if (document.getElementById('cta-enter')) document.getElementById('cta-enter').textContent = T.explore;
+    if (document.getElementById('stat-members')) document.getElementById('stat-members').textContent = T.members;
+    if (document.getElementById('stat-events')) document.getElementById('stat-events').textContent = T.events;
+    if (document.getElementById('stat-countries')) document.getElementById('stat-countries').textContent = T.countries;
+
+    // Store for app
+    localStorage.setItem('ss_lang', lang);
+  });
+});
+
+// Init lang from storage
+const savedLang = localStorage.getItem('ss_lang');
+if (savedLang && savedLang !== 'es') {
+  const opt = langOptions.querySelector(`[data-lang="${savedLang}"]`);
+  if (opt) opt.click();
+}
+</script>
+
+<!-- Age Verification Overlay -->
+<div id="age-gate" style="position:fixed;inset:0;z-index:99999;background:rgba(6,6,8,0.97);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:1rem;">
+  <div style="background:linear-gradient(135deg,#111318,#0d1520);border:1px solid rgba(196,129,58,0.3);border-radius:24px;padding:2.5rem 2rem;max-width:380px;width:100%;text-align:center;box-shadow:0 0 80px rgba(196,129,58,0.08);">
+    <div style="font-size:3rem;margin-bottom:1rem;">🔞</div>
+    <h2 style="font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#f2f2f7,#c4813a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.5rem;">Acceso restringido</h2>
+    <p style="font-size:0.85rem;color:#aeaeb2;margin-bottom:1.75rem;line-height:1.6;">SwingerSphere es una plataforma <strong style="color:#f2f2f7;">exclusivamente para adultos</strong>. El acceso, visualización y uso de este sitio está restringido a personas mayores de 18 años.</p>
+    <label style="display:flex;align-items:flex-start;gap:0.75rem;background:rgba(196,129,58,0.06);border:1px solid rgba(196,129,58,0.2);border-radius:12px;padding:1rem;cursor:pointer;text-align:left;margin-bottom:1.25rem;">
+      <input type="checkbox" id="age-check" style="width:20px;height:20px;flex-shrink:0;margin-top:2px;accent-color:#c4813a;cursor:pointer;">
+      <span style="font-size:0.82rem;color:#f2f2f7;line-height:1.5;">Confirmo que soy <strong>mayor de 18 años</strong> y acepto las <span style="color:#c4813a;cursor:pointer;" onclick="window.open('normas-fondos.html')">normas de la comunidad</span> y la política de privacidad.</span>
+    </label>
+    <button id="age-submit" onclick="ageVerify()" disabled style="width:100%;padding:0.875rem;background:linear-gradient(135deg,#c4813a,#e09455);border:none;border-radius:12px;font-size:0.9rem;font-weight:700;color:#fff;cursor:not-allowed;opacity:0.5;transition:all 0.2s;">Entrar a SwingerSphere →</button>
+    <p style="font-size:0.68rem;color:#636366;margin-top:1rem;line-height:1.5;">⚖️ Sede legal: Madrid, España · GDPR · LOPD · DSA · MiCA<br>🔒 Crypto-friendly · Sin datos bancarios</p>
+  </div>
+</div>
+<script>
+(function(){
+  // Check if already verified in this session
+  if(sessionStorage.getItem('ss_age_ok')==='1'){
+    document.getElementById('age-gate').style.display='none';
+    return;
+  }
+  document.getElementById('age-check').addEventListener('change',function(){
+    const btn=document.getElementById('age-submit');
+    if(this.checked){btn.disabled=false;btn.style.opacity='1';btn.style.cursor='pointer';}
+    else{btn.disabled=true;btn.style.opacity='0.5';btn.style.cursor='not-allowed';}
+  });
+})();
+function ageVerify(){
+  if(!document.getElementById('age-check').checked)return;
+  sessionStorage.setItem('ss_age_ok','1');
+  const gate=document.getElementById('age-gate');
+  gate.style.transition='opacity 0.5s';gate.style.opacity='0';
+  setTimeout(()=>gate.style.display='none',500);
+}
+</script>
+
+</body>
+</html>
