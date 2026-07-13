@@ -689,9 +689,9 @@ const LimocitoCore = {
     const docs = RAGEngine.retrieve(userMsg, 3, 1.0);
     const context = RAGEngine.buildContext(docs);
 
-    // Phase 3: Try LLM if API key configured
+    // Phase 3: Try LLM if API key configured or served over HTTP/HTTPS
     const cfg = LimocitoLLM.getConfig();
-    if (cfg.apiKey) {
+    if (cfg.apiKey || window.location.protocol.startsWith('http')) {
       try {
         if (onPhase) onPhase('llm');
         const llmResponse = await LimocitoLLM.generate(userMsg, context);
