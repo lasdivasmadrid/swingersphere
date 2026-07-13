@@ -685,6 +685,11 @@ const LimocitoCore = {
         }
       } catch (e) {
         console.warn('[LimocitoCore] LLM error, fallback to KB:', e.message);
+        return {
+          type: 'llm_error',
+          text: `⚠️ **Error de conexión con la IA (Gemini):** ${e.message}\n\n*Por favor, comprueba que la clave de API es correcta. Mientras tanto, operando en modo local:* \n\n${docs.length > 0 ? docs[0].content : 'Sin respuesta local disponible.'}`,
+          suggestions: this._getSuggestions(userMsg),
+        };
       }
     }
 
