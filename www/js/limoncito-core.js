@@ -229,8 +229,7 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
       }
     } catch (e) {
       console.warn('[LimocitoCore] Serverless API call failed, falling back to local simulation:', e.message);
-      // Fallback to local KB simulation if server key is not configured yet
-      return generateSimulatedResponse(userMsg, context);
+      return `⚠️ **Error de la IA en el Servidor:** ${e.message}\n\n*Comprueba que has configurado la variable de entorno GEMINI_API_KEY en Vercel con el valor correcto y has hecho un Redeploy.*`;
     }
   }
 
