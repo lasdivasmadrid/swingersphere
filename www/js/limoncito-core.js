@@ -191,13 +191,12 @@ const LimocitoLLM = (() => {
 
   async function generate(userMsg, context) {
     const cfg = getConfig();
-    if (!cfg.apiKey) {
-      return generateSimulatedResponse(userMsg, context);
-    }
-
-    const systemPrompt = `Eres Limoncito, el oráculo del swinging y asistente IA oficial de SwingerSphere — la plataforma premium de lifestyle en España y Latinoamérica.
+    
+    // If local API key is present (dev override), use it directly
+    if (cfg.apiKey) {
+      const systemPrompt = `Eres Limoncito, el oráculo del swinging y asistente IA oficial de SwingerSphere — la plataforma premium de lifestyle en España y Latinoamérica.
 Tu personalidad: cercano, sabio, discreto, informado, inclusivo y sin prejuicios. Usas emojis con moderación.
-Respondes SIEMPRE en español. Eres el Oráculo Supremo del ambiente swinger y LGTBI+; eres un experto absoluto en: banderas del orgullo LGTBI+ y su historia/significado (Orgullo 6/8 colores, Bisexual, Trans, Asexual, Pansexual, No Binario, Intersex, Género Fluido, Demisexual, Oso, Progreso, etc.), además de prácticas BDSM, fetiches, relaciones abiertas, normas, booking de hoteles/viajes, y CRM de clubes.
+Respondes SIEMPRE en español. Eres el Oráculo Supremo del ambiente swinger y LGTBI+; eres un experto absoluto en: banderas del orgullo LGTBI+ y su historia/significado, además de prácticas BDSM, fetiches, relaciones abiertas, normas, booking de hoteles/viajes, y CRM de clubes.
 Cuando el usuario pregunte sobre pagar: la membresía PRO cuesta 9,99 EUR/mes. Métodos: tarjeta via Transak (convertida automáticamente a USDC) y USDC directo en redes Polygon, Arbitrum o Ethereum.
 Cuando el usuario mencione una ciudad o viaje: recomienda hoteles, eventos y entradas del sistema de Booking con precios.
 Cuando un club pregunte: ofrece planes CRM desde 40 EUR e insignia de Certificación.
@@ -207,11 +206,32 @@ ${context || 'Sin contexto específico'}
 
 Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
 
-    const fullPrompt = systemPrompt + '\n\nUsuario: ' + userMsg;
+      const fullPrompt = systemPrompt + '\n\nUsuario: ' + userMsg;
+      if (cfg.provider === 'gemini') return await callGemini(cfg.apiKey, fullPrompt);
+      if (cfg.provider === 'openai') return await callOpenAI(cfg.apiKey, fullPrompt);
+      return null;
+    }
 
-    if (cfg.provider === 'gemini') return await callGemini(cfg.apiKey, fullPrompt);
-    if (cfg.provider === 'openai') return await callOpenAI(cfg.apiKey, fullPrompt);
-    return null;
+    // Default Production behavior: Call secure Vercel Serverless Function (0 cost)
+    try {
+      const response = await fetch('/api/limoncito', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userMsg, context }),
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        return data.text;
+      } else {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || `Server HTTP ${response.status}`);
+      }
+    } catch (e) {
+      console.warn('[LimocitoCore] Serverless API call failed, falling back to local simulation:', e.message);
+      // Fallback to local KB simulation if server key is not configured yet
+      return generateSimulatedResponse(userMsg, context);
+    }
   }
 
   return { getConfig, setConfig, generate };
