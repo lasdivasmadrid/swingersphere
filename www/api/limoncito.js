@@ -71,7 +71,8 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
 
       return res.status(200).json({ text: text.trim() });
     } catch (e) {
-      return res.status(500).json({ error: `Groq Cloud error: ${e.message}` });
+      const maskedKey = apiKey ? `${apiKey.substring(0, 4)}...${apiKey.substring(apiKey.length - 4)}` : 'null';
+      return res.status(500).json({ error: `Groq Cloud error: ${e.message} (Key: ${maskedKey}, Length: ${apiKey ? apiKey.length : 0}, isGroq: ${isGroq})` });
     }
   } else {
     // ── Call Google Gemini API ──
