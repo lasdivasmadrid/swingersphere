@@ -12,36 +12,175 @@
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/screens.css">
+  <script src="globe-engine.js" defer></script>
 
   <style>
-    body { overflow-x: hidden; }
+    body { overflow-x: hidden; font-family: var(--font-sans); }
 
     /* Scanline decorative effect */
     .scan-line {
       position: absolute;
       width: 100%;
       height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(196,129,58,0.4), transparent);
-      animation: copper-scan 6s linear infinite;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.25), transparent);
+      animation: copper-scan 8s linear infinite;
       pointer-events: none;
+      z-index: 10;
     }
 
-    /* Features hover glow */
-    .feature-card::before {
-      content: '';
+    /* Floating navigation with glassmorphism */
+    .landing-nav {
+      background: rgba(10, 11, 15, 0.65);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      z-index: 1000;
+      padding: 0 var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 100%;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+    .landing-content {
+      padding-top: 96px;
+    }
+
+    /* Hero section split layout */
+    .landing-hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: var(--space-10);
+      align-items: center;
+      padding: var(--space-12) var(--space-6);
+      max-width: 1100px;
+      margin: 0 auto;
+      min-height: calc(100vh - 96px);
+    }
+    .hero-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-5);
+      text-align: left;
+    }
+    .hero-globe-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .hero-globe-wrapper {
+      position: relative;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,129,58,0.06) 0%, transparent 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #hero-globe {
+      width: 350px;
+      height: 350px;
+      cursor: grab;
+      filter: drop-shadow(0 0 40px rgba(196,129,58,0.22));
+    }
+    .globe-overlay-stats {
+      position: absolute;
+      bottom: -10px;
+      background: rgba(10, 11, 15, 0.75);
+      border: 1px solid var(--gold-border);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--white);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      animation: pulse-ring 2.5s ease-in-out infinite;
+    }
+
+    @media (max-width: 900px) {
+      .landing-hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: var(--space-6) var(--space-4) var(--space-12);
+        min-height: auto;
+      }
+      .hero-info {
+        align-items: center;
+        text-align: center;
+      }
+      .hero-globe-container {
+        order: -1;
+        margin-bottom: var(--space-8);
+      }
+      .hero-globe-wrapper {
+        width: 280px;
+        height: 280px;
+      }
+      #hero-globe {
+        width: 270px;
+        height: 270px;
+      }
+    }
+
+    /* Features dynamic card layout */
+    .landing-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: var(--space-12) var(--space-6);
+    }
+    .feature-card {
+      position: relative;
+      background: rgba(10, 11, 15, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      transition: all 0.4s var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      z-index: 1;
+    }
+    .feature-card:hover {
+      border-color: var(--gold-border);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 36px rgba(196,129,58,0.1);
+    }
+    .feature-glow {
       position: absolute;
       inset: 0;
-      border-radius: var(--radius-xl);
+      pointer-events: none;
+      background: radial-gradient(circle 120px at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(196,129,58,0.12), transparent 80%);
       opacity: 0;
-      background: radial-gradient(circle at center, var(--copper-glow) 0%, transparent 70%);
-      transition: opacity var(--duration-base);
+      transition: opacity 0.3s;
+      z-index: -1;
     }
-    .feature-card:hover::before { opacity: 1; }
-    .feature-card { position: relative; }
+    .feature-card:hover .feature-glow {
+      opacity: 1;
+    }
 
     /* Privacy showcase */
     .privacy-card {
-      background: var(--bg-glass);
+      background: rgba(10, 11, 15, 0.5);
       border: 1px solid var(--border);
       border-radius: var(--radius-xl);
       padding: var(--space-5);
@@ -49,17 +188,18 @@
       align-items: center;
       gap: var(--space-4);
       backdrop-filter: blur(16px);
-      transition: all var(--duration-base) var(--ease-out);
+      transition: all 0.3s var(--ease-out);
     }
     .privacy-card:hover {
-      border-color: var(--copper-border);
-      transform: translateX(8px);
-      background: var(--copper-glow);
+      border-color: var(--gold-border);
+      transform: translateX(10px);
+      background: rgba(212, 175, 55, 0.04);
+      box-shadow: -4px 0 20px rgba(212,175,55,0.08);
     }
 
     /* Gradient text */
     .gradient-text {
-      background: linear-gradient(135deg, var(--copper) 0%, var(--copper-pale) 100%);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--copper-light) 50%, var(--copper-pale) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -68,8 +208,8 @@
     /* Scroll reveal */
     .reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+      transform: translateY(40px);
+      transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
     }
     .reveal.visible {
       opacity: 1;
@@ -86,13 +226,13 @@
       top: 100%;
       right: 0;
       margin-top: 8px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
+      background: var(--bg-glass-heavy);
+      border: 1px solid var(--gold-border);
       border-radius: var(--radius-lg);
       min-width: 160px;
-      z-index: 100;
-      box-shadow: var(--shadow-lg);
-      overflow: hidden;
+      z-index: 1000;
+      box-shadow: var(--shadow-lg), 0 0 15px rgba(212,175,55,0.1);
+      backdrop-filter: blur(24px);
     }
     .lang-options.show { display: block; animation: scale-in 0.2s var(--ease-spring); }
     .lang-opt {
@@ -104,8 +244,8 @@
       font-size: 0.875rem;
       transition: background 0.15s;
     }
-    .lang-opt:hover { background: var(--bg-glass-md); }
-    .lang-opt.selected { color: var(--copper); }
+    .lang-opt:hover { background: rgba(212,175,55,0.06); }
+    .lang-opt.selected { color: var(--gold); font-weight: 700; }
   </style>
 </head>
 <body>
@@ -142,77 +282,93 @@
         <a href="app.html" class="btn btn-secondary btn-sm" id="nav-enter">Entrar</a>
       </div>
     </nav>
-
-    <!-- Hero -->
     <section class="landing-hero">
-      <div class="landing-badge">
-        <span id="hero-badge">🛡️ La red más segura del lifestyle</span>
+      <div class="hero-info">
+        <div class="landing-badge">
+          <span id="hero-badge">🛡️ La red más segura del lifestyle</span>
+        </div>
+        <h1 class="landing-title" style="font-family: var(--font-title); font-weight: 800; font-size: 3rem; line-height: 1.15; letter-spacing: -0.04em;">
+          <span id="hero-title1">La comunidad lifestyle</span><br>
+          <span class="landing-title-accent gradient-text" id="hero-title2">más segura del mundo</span>
+        </h1>
+        <p class="landing-subtitle" id="hero-subtitle" style="font-size: 1.05rem; color: var(--silver); line-height: 1.7; max-width: 520px; margin-bottom: 0.5rem;">
+          Privacidad extrema, reputación verificable y comunidad real.
+          El lugar donde la confianza se construye, no se asume.
+        </p>
+        <div class="landing-cta-row" style="display: flex; gap: 1rem; width: 100%;">
+          <a href="app.html" class="btn btn-primary btn-lg" id="cta-register" style="box-shadow: 0 4px 30px rgba(196,129,58,0.4), inset 0 1px 0 rgba(255,255,255,0.2); background: linear-gradient(135deg, var(--gold) 0%, var(--copper) 100%); border-radius: 14px;">
+            🔮 Unirme ahora
+          </a>
+          <a href="app.html" class="btn btn-secondary btn-lg" id="cta-enter" style="border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02);">
+            Explorar la app →
+          </a>
+        </div>
+
+        <!-- Stats (Moved under Hero left column for better visual balance) -->
+        <div class="landing-stats reveal" style="display: flex; gap: 3rem; margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; width: 100%;">
+          <div class="stat-item" style="align-items: flex-start;">
+            <span class="stat-number" data-target="284" data-suffix="K" style="font-family: var(--font-title); font-size: 2.2rem; font-weight: 800;">0</span>
+            <span class="stat-label" id="stat-members" style="font-size: 0.7rem; letter-spacing: 0.1em;">Miembros</span>
+          </div>
+          <div class="stat-item" style="align-items: flex-start;">
+            <span class="stat-number" data-target="1240" data-suffix="" style="font-family: var(--font-title); font-size: 2.2rem; font-weight: 800;">0</span>
+            <span class="stat-label" id="stat-events" style="font-size: 0.7rem; letter-spacing: 0.1em;">Eventos</span>
+          </div>
+          <div class="stat-item" style="align-items: flex-start;">
+            <span class="stat-number" data-target="67" data-suffix="" style="font-family: var(--font-title); font-size: 2.2rem; font-weight: 800;">0</span>
+            <span class="stat-label" id="stat-countries" style="font-size: 0.7rem; letter-spacing: 0.1em;">Países</span>
+          </div>
+        </div>
       </div>
-      <h1 class="landing-title">
-        <span id="hero-title1">La comunidad lifestyle</span><br>
-        <span class="landing-title-accent" id="hero-title2">más segura del mundo</span>
-      </h1>
-      <p class="landing-subtitle" id="hero-subtitle">
-        Privacidad extrema, reputación verificable y comunidad real.
-        El lugar donde la confianza se construye, no se asume.
-      </p>
-      <div class="landing-cta-row">
-        <a href="app.html" class="btn btn-primary btn-lg" id="cta-register">
-          🔮 Unirme ahora
-        </a>
-        <a href="app.html" class="btn btn-secondary btn-lg" id="cta-enter">
-          Explorar la app →
-        </a>
+
+      <!-- Right Column: Interactive 3D Globe -->
+      <div class="hero-globe-container">
+        <div class="hero-globe-wrapper">
+          <canvas id="hero-globe" width="350" height="350"></canvas>
+          <div class="globe-overlay-stats">● 2,842 en línea</div>
+        </div>
       </div>
     </section>
 
-    <!-- Stats -->
-    <div class="landing-stats reveal">
-      <div class="stat-item">
-        <span class="stat-number" data-target="284" data-suffix="K">0</span>
-        <span class="stat-label" id="stat-members">Miembros</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="1240" data-suffix="">0</span>
-        <span class="stat-label" id="stat-events">Eventos</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="67" data-suffix="">0</span>
-        <span class="stat-label" id="stat-countries">Países</span>
-      </div>
-    </div>
-
     <!-- Feature Cards -->
-    <section class="landing-features reveal" style="animation-delay:0.2s">
+    <section class="landing-features reveal" style="animation-delay:0.1s">
       <div class="feature-card">
-        <span class="feature-icon">⭐</span>
-        <div class="feature-title" data-feat="feat1_title">TrustScore™</div>
-        <div class="feature-desc" data-feat="feat1_desc">Tu reputación en tiempo real. Basada en verificaciones, actividad y eventos reales. Como Airbnb, pero para el lifestyle.</div>
+        <div class="feature-glow"></div>
+        <span class="feature-icon" style="font-size: 1.75rem; margin-bottom: 0.5rem;">⭐</span>
+        <div class="feature-title" data-feat="feat1_title" style="font-family: var(--font-title); font-weight: 700; font-size: 1.25rem;">TrustScore™</div>
+        <div class="feature-desc" data-feat="feat1_desc" style="font-size: 0.85rem; color: var(--silver); line-height: 1.6;">Tu reputación en tiempo real. Basada en verificaciones, actividad y eventos reales. Como Airbnb, pero para el lifestyle.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🔐</span>
-        <div class="feature-title" data-feat="feat2_title">Consent Vault™</div>
-        <div class="feature-desc" data-feat="feat2_desc">Cada interacción genera un consentimiento verificable. Tus datos, tus reglas. Siempre.</div>
+        <div class="feature-glow"></div>
+        <span class="feature-icon" style="font-size: 1.75rem; margin-bottom: 0.5rem;">🔐</span>
+        <div class="feature-title" data-feat="feat2_title" style="font-family: var(--font-title); font-weight: 700; font-size: 1.25rem;">Consent Vault™</div>
+        <div class="feature-desc" data-feat="feat2_desc" style="font-size: 0.85rem; color: var(--silver); line-height: 1.6;">Cada interacción genera un consentimiento verificable. Tus datos, tus reglas. Siempre.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">✈️</span>
-        <div class="feature-title" data-feat="feat3_title">Passport Lifestyle™</div>
-        <div class="feature-desc" data-feat="feat3_desc">Colecciona sellos de cada club, evento y destino. Tu estatus sin exponer tu intimidad.</div>
+        <div class="feature-glow"></div>
+        <span class="feature-icon" style="font-size: 1.75rem; margin-bottom: 0.5rem;">✈️</span>
+        <div class="feature-title" data-feat="feat3_title" style="font-family: var(--font-title); font-weight: 700; font-size: 1.25rem;">Passport Lifestyle™</div>
+        <div class="feature-desc" data-feat="feat3_desc" style="font-size: 0.85rem; color: var(--silver); line-height: 1.6;">Colecciona sellos de cada club, evento y destino. Tu estatus sin exponer tu intimidad.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🕵️</span>
-        <div class="feature-title" data-feat="feat4_title">Privacidad Extrema</div>
-        <div class="feature-desc" data-feat="feat4_desc">Cada foto tiene hash único y fingerprint invisible. Si se filtra, sabemos quién la recibió y cuándo la abrió.</div>
+        <div class="feature-glow"></div>
+        <span class="feature-icon" style="font-size: 1.75rem; margin-bottom: 0.5rem;">🕵️</span>
+        <div class="feature-title" data-feat="feat4_title" style="font-family: var(--font-title); font-weight: 700; font-size: 1.25rem;">Privacidad Extrema</div>
+        <div class="feature-desc" data-feat="feat4_desc" style="font-size: 0.85rem; color: var(--silver); line-height: 1.6;">Cada foto tiene hash único y fingerprint invisible. Si se filtra, sabemos quién la recibió y cuándo la abrió.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">👻</span>
-        <div class="feature-title" data-feat="feat5_title">Modo Fantasma</div>
-        <div class="feature-desc" data-feat="feat5_desc">Tú decides cuándo aparecer. Navega completamente invisible hasta que estés listo/a.</div>
+        <div class="feature-glow"></div>
+        <span class="feature-icon" style="font-size: 1.75rem; margin-bottom: 0.5rem;">👻</span>
+        <div class="feature-title" data-feat="feat5_title" style="font-family: var(--font-title); font-weight: 700; font-size: 1.25rem;">Modo Fantasma</div>
+        <div class="feature-desc" data-feat="feat5_desc" style="font-size: 0.85rem; color: var(--silver); line-height: 1.6;">Tú decides cuándo aparecer. Navega completamente invisible hasta que estés listo/a.</div>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">🔮</span>
-        <div class="feature-title" data-feat="feat6_title">Limoncito 🍋</div>
-        <div class="feature-desc" data-feat="feat6_desc">Tu asistente permanente. Traduce, recomienda, detecta perfiles sospechosos y te guía en la comunidad.</div>
+        <div class="feature-glow"></div>
+        <span class="feature-icon" style="font-size: 1.75rem; margin-bottom: 0.5rem;">🔮</span>
+        <div class="feature-title" data-feat="feat6_title" style="font-family: var(--font-title); font-weight: 700; font-size: 1.25rem;">Limoncito 🍋</div>
+        <div class="feature-desc" data-feat="feat6_desc" style="font-size: 0.85rem; color: var(--silver); line-height: 1.6;">Tu asistente permanente. Traduce, recomienda, detecta perfiles sospechosos y te guía en la comunidad.</div>
+      </div>
+    </section>_desc">Tu asistente permanente. Traduce, recomienda, detecta perfiles sospechosos y te guía en la comunidad.</div>
       </div>
     </section>
 
@@ -470,41 +626,106 @@ if (savedLang && savedLang !== 'es') {
   const opt = langOptions.querySelector(`[data-lang="${savedLang}"]`);
   if (opt) opt.click();
 }
+
+// ── INITIALIZE 3D GLOBE & MOUSE GLOW ────────────────────
+window.addEventListener('load', () => {
+  if (window.startGlobe) {
+    window.startGlobe('hero-globe', {
+      userCount: 35,
+      speed: 0.002,
+      showLabels: false
+    });
+  }
+});
+
+// Feature Cards Mouse Glow Effect
+document.querySelectorAll('.feature-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+  });
+});
 </script>
 
 <!-- Age Verification Overlay -->
-<div id="age-gate" style="position:fixed;inset:0;z-index:99999;background:rgba(6,6,8,0.97);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:1rem;">
-  <div style="background:linear-gradient(135deg,#111318,#0d1520);border:1px solid rgba(196,129,58,0.3);border-radius:24px;padding:2.5rem 2rem;max-width:380px;width:100%;text-align:center;box-shadow:0 0 80px rgba(196,129,58,0.08);">
-    <div style="font-size:3rem;margin-bottom:1rem;">🔞</div>
-    <h2 style="font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#f2f2f7,#c4813a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.5rem;">Acceso restringido</h2>
-    <p style="font-size:0.85rem;color:#aeaeb2;margin-bottom:1.75rem;line-height:1.6;">SwingerSphere es una plataforma <strong style="color:#f2f2f7;">exclusivamente para adultos</strong>. El acceso, visualización y uso de este sitio está restringido a personas mayores de 18 años.</p>
-    <label style="display:flex;align-items:flex-start;gap:0.75rem;background:rgba(196,129,58,0.06);border:1px solid rgba(196,129,58,0.2);border-radius:12px;padding:1rem;cursor:pointer;text-align:left;margin-bottom:1.25rem;">
-      <input type="checkbox" id="age-check" style="width:20px;height:20px;flex-shrink:0;margin-top:2px;accent-color:#c4813a;cursor:pointer;">
-      <span style="font-size:0.82rem;color:#f2f2f7;line-height:1.5;">Confirmo que soy <strong>mayor de 18 años</strong> y acepto las <span style="color:#c4813a;cursor:pointer;" onclick="window.open('normas-fondos.html')">normas de la comunidad</span> y la política de privacidad.</span>
-    </label>
-    <button id="age-submit" onclick="ageVerify()" disabled style="width:100%;padding:0.875rem;background:linear-gradient(135deg,#c4813a,#e09455);border:none;border-radius:12px;font-size:0.9rem;font-weight:700;color:#fff;cursor:not-allowed;opacity:0.5;transition:all 0.2s;">Entrar a SwingerSphere →</button>
-    <p style="font-size:0.68rem;color:#636366;margin-top:1rem;line-height:1.5;">⚖️ Sede legal: Madrid, España · GDPR · LOPD · DSA · MiCA<br>🔒 Crypto-friendly · Sin datos bancarios</p>
+<div id="age-gate" style="position:fixed;inset:0;z-index:99999;background:rgba(6,7,10,0.98);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);display:flex;align-items:center;justify-content:center;padding:1rem;">
+  <div style="background: linear-gradient(135deg, rgba(20,21,26,0.85) 0%, rgba(10,11,15,0.9) 100%); border: 1px solid rgba(212,175,55,0.22); border-radius: 28px; padding: 3rem 2.5rem; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 0 100px rgba(196,129,58,0.12), inset 0 1px 0 rgba(255,255,255,0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
+    <div style="width: 72px; height: 72px; background: radial-gradient(circle, rgba(196,129,58,0.15) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2.2rem; border: 1px solid rgba(196,129,58,0.25); animation: pulse-ring 2.5s infinite;">🔮</div>
+    <h2 style="font-family: var(--font-title); font-size: 1.6rem; font-weight: 800; color: var(--white); margin-bottom: 0.5rem; letter-spacing: -0.02em;">Acceso Restringido</h2>
+    <p style="font-size: 0.85rem; color: var(--silver); margin-bottom: 2rem; line-height: 1.6;">SwingerSphere es una comunidad premium exclusivamente para adultos. Introduce tu fecha de nacimiento para verificar tu mayoría de edad.</p>
+    
+    <!-- Birthday Inputs -->
+    <div style="display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 1.5rem;">
+      <div style="display: flex; flex-direction: column; gap: 0.25rem; width: 70px;">
+        <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--silver-dark); font-weight: 700;">Día</span>
+        <input type="number" id="dob-day" placeholder="DD" min="1" max="31" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 0.6rem 0.5rem; font-size: 1.1rem; font-weight: 700; color: var(--white); text-align: center; width: 100%;">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0.25rem; width: 70px;">
+        <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--silver-dark); font-weight: 700;">Mes</span>
+        <input type="number" id="dob-month" placeholder="MM" min="1" max="12" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 0.6rem 0.5rem; font-size: 1.1rem; font-weight: 700; color: var(--white); text-align: center; width: 100%;">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0.25rem; width: 100px;">
+        <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--silver-dark); font-weight: 700;">Año</span>
+        <input type="number" id="dob-year" placeholder="AAAA" min="1920" max="2026" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 0.6rem 0.5rem; font-size: 1.1rem; font-weight: 700; color: var(--white); text-align: center; width: 100%;">
+      </div>
+    </div>
+
+    <!-- Feedback warning message -->
+    <div id="age-warning" style="font-size: 0.8rem; color: var(--danger); min-height: 1.25rem; margin-bottom: 1.5rem; font-weight: 600;"></div>
+
+    <button id="age-submit" onclick="ageVerify()" style="width:100%; padding: 0.9rem; background: linear-gradient(135deg, var(--gold) 0%, var(--copper) 100%); border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 800; color: #fff; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(196,129,58,0.35);">Verificar mi edad →</button>
+    <p style="font-size:0.68rem; color:var(--silver-dark); margin-top:1.5rem; line-height:1.6;">⚖️ Sede legal: Madrid, España · GDPR · LOPD · DSA · MiCA<br>🔒 Conexión cifrada · Privacidad Garantizada</p>
   </div>
 </div>
 <script>
 (function(){
-  // Check if already verified in this session
-  if(sessionStorage.getItem('ss_age_ok')==='1'){
+  // Check if verified
+  if(sessionStorage.getItem('ss_age_ok')==='1' || localStorage.getItem('ss_age_ok')==='1'){
     document.getElementById('age-gate').style.display='none';
     return;
   }
-  document.getElementById('age-check').addEventListener('change',function(){
-    const btn=document.getElementById('age-submit');
-    if(this.checked){btn.disabled=false;btn.style.opacity='1';btn.style.cursor='pointer';}
-    else{btn.disabled=true;btn.style.opacity='0.5';btn.style.cursor='not-allowed';}
-  });
 })();
+
 function ageVerify(){
-  if(!document.getElementById('age-check').checked)return;
-  sessionStorage.setItem('ss_age_ok','1');
-  const gate=document.getElementById('age-gate');
-  gate.style.transition='opacity 0.5s';gate.style.opacity='0';
-  setTimeout(()=>gate.style.display='none',500);
+  const day = parseInt(document.getElementById('dob-day').value);
+  const month = parseInt(document.getElementById('dob-month').value);
+  const year = parseInt(document.getElementById('dob-year').value);
+  const warningEl = document.getElementById('age-warning');
+
+  if (isNaN(day) || isNaN(month) || isNaN(year)) {
+    warningEl.textContent = '❌ Por favor, rellena todos los campos.';
+    return;
+  }
+
+  if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1920 || year > 2026) {
+    warningEl.textContent = '❌ Introduce una fecha de nacimiento válida.';
+    return;
+  }
+
+  const today = new Date();
+  const birthDate = new Date(year, month - 1, day);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  if (age >= 18) {
+    sessionStorage.setItem('ss_age_ok','1');
+    localStorage.setItem('ss_age_ok','1');
+    const gate = document.getElementById('age-gate');
+    gate.style.transition = 'opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    gate.style.opacity = '0';
+    setTimeout(() => gate.style.display = 'none', 600);
+  } else {
+    warningEl.textContent = '⛔ Acceso denegado. Debes ser mayor de 18 años.';
+    document.getElementById('age-submit').disabled = true;
+    document.getElementById('age-submit').style.opacity = '0.3';
+    document.getElementById('age-submit').style.cursor = 'not-allowed';
+  }
 }
 </script>
 

@@ -3,45 +3,50 @@
    Premium Dark Mode · Copper Accents · Glassmorphism
 ═══════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
 /* ── DESIGN TOKENS ─────────────────────────────────────── */
 :root {
   /* Backgrounds */
-  --bg-void:      #060608;
-  --bg-deep:      #0d0d10;
-  --bg-surface:   #141416;
-  --bg-elevated:  #1a1a1e;
-  --bg-card:      #1e1e22;
-  --bg-glass:     rgba(255, 255, 255, 0.04);
-  --bg-glass-md:  rgba(255, 255, 255, 0.07);
-  --bg-glass-hv:  rgba(255, 255, 255, 0.10);
+  --bg-void:      #06070a;
+  --bg-deep:      #0a0b0f;
+  --bg-surface:   #101115;
+  --bg-elevated:  #15161c;
+  --bg-card:      #1a1b22;
+  --bg-glass:     rgba(10, 11, 15, 0.65);
+  --bg-glass-md:  rgba(255, 255, 255, 0.03);
+  --bg-glass-hv:  rgba(255, 255, 255, 0.07);
+  --bg-glass-heavy: rgba(6, 7, 10, 0.85);
 
-  /* Copper Palette */
+  /* Gold & Copper Palette (Luxury Ambient) */
+  --gold:         #d4af37;
+  --gold-glow:    rgba(212, 175, 55, 0.15);
+  --gold-border:  rgba(212, 175, 55, 0.20);
+  
   --copper-900:   #4a2e0f;
   --copper-700:   #8a5a25;
   --copper:       #c4813a;
   --copper-light: #e09455;
   --copper-pale:  #f0b878;
-  --copper-glow:  rgba(196, 129, 58, 0.18);
-  --copper-glow-lg: rgba(196, 129, 58, 0.35);
-  --copper-border: rgba(196, 129, 58, 0.30);
+  --copper-glow:  rgba(196, 129, 58, 0.12);
+  --copper-glow-lg: rgba(196, 129, 58, 0.28);
+  --copper-border: rgba(196, 129, 58, 0.22);
 
   /* Neutrals */
-  --white:        #f2f2f7;
-  --silver-light: #d0d0d8;
-  --silver:       #a0a0b0;
-  --silver-dark:  #6a6a7a;
-  --graphite:     #3a3a44;
-  --graphite-dark:#242428;
-  --border:       rgba(255, 255, 255, 0.08);
-  --border-md:    rgba(255, 255, 255, 0.12);
+  --white:        #f5f5f7;
+  --silver-light: #e2e2e7;
+  --silver:       #9e9eab;
+  --silver-dark:  #636366;
+  --graphite:     #2c2c2e;
+  --graphite-dark:#1c1c1e;
+  --border:       rgba(255, 255, 255, 0.05);
+  --border-md:    rgba(255, 255, 255, 0.09);
 
   /* Semantic */
   --verified:     #30d158;
-  --verified-glow: rgba(48, 209, 88, 0.20);
+  --verified-glow: rgba(48, 209, 88, 0.15);
   --danger:       #ff453a;
-  --danger-glow:  rgba(255, 69, 58, 0.20);
+  --danger-glow:  rgba(255, 69, 58, 0.15);
   --warning:      #ffd60a;
   --info:         #0a84ff;
 
@@ -53,6 +58,7 @@
 
   /* Typography */
   --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-title:   'Outfit', 'Inter', -apple-system, sans-serif;
   --font-mono:    'SF Mono', 'Fira Code', monospace;
 
   --text-xs:      0.70rem;

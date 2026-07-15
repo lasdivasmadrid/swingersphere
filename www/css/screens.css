@@ -36,10 +36,11 @@
   justify-content: space-between;
   padding: 0 var(--space-5);
   height: var(--topbar-h);
-  background: rgba(6, 6, 8, 0.85);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--border);
+  background: rgba(10, 11, 15, 0.70);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
 }
 
 .topbar-logo {
@@ -64,13 +65,14 @@
 }
 
 .logo-text {
+  font-family: var(--font-title);
   font-size: var(--text-md);
-  font-weight: var(--weight-bold);
-  background: linear-gradient(135deg, var(--white) 40%, var(--copper-light) 100%);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--white) 30%, var(--gold) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .topbar-actions {
@@ -92,14 +94,15 @@
 /* ── HOME SCREEN ────────────────────────────────────────── */
 .daily-quote-banner {
   background: linear-gradient(135deg,
-    rgba(196, 129, 58, 0.12) 0%,
-    rgba(184, 115, 51, 0.06) 50%,
-    rgba(196, 129, 58, 0.12) 100%);
-  border: 1px solid var(--copper-border);
+    rgba(212, 175, 55, 0.08) 0%,
+    rgba(196, 129, 58, 0.04) 50%,
+    rgba(212, 175, 55, 0.08) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.20);
   border-radius: var(--radius-xl);
   padding: var(--space-5) var(--space-5);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 8px 32px rgba(212, 175, 55, 0.04);
   animation: slide-down 0.5s var(--ease-out);
 }
 
@@ -118,7 +121,7 @@
 .quote-label {
   font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
-  color: var(--copper);
+  color: var(--gold);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   margin-bottom: var(--space-3);
