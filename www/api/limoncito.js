@@ -84,6 +84,7 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: systemPrompt + '\n\nUsuario: ' + userMsg }] }],
+          tools: [{ google_search: {} }], // Enable Live Google Search Grounding!
           generationConfig: { temperature: 0.7, maxOutputTokens: 600 },
           safetySettings: [
             { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },

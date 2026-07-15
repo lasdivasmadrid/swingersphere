@@ -408,6 +408,12 @@
       title: 'Clubs y locales swinger en Valencia y Malaga',
       tags: ['valencia','malaga','marbella','locales','clubs','swinger','flamingos','passion','espana'],
       content: 'Locales Swinger en Valencia y Málaga:\n\n🏛️ FLAMINGOS SWINGERS CLUB (Valencia - Carrer de l\'Ermita, 3):\n• Playrooms temáticos muy activos de viernes a domingo.\n\n🏛️ MARBELLA PASSION (Málaga - Zona Nueva Andalucía):\n• Enfocado a un público internacional de alto standing en la Costa del Sol.'
+    },
+    {
+      id: 'loc4',
+      title: 'Spa Nudista Divernis Madrid y Malaga Benalmadena',
+      tags: ['divernis','spa','nudista','madrid','malaga','benalmadena','jacuzzi','sauna','piscina','masajes','liberal','club','espana'],
+      content: 'Divernis - Spa Nudista y Club Liberal Premium:\n\n🏛️ DIVERNIS MADRID (Calle de Alcántara, 54 - Barrio de Salamanca):\n• Club liberal pionero que combina circuito de spa (jacuzzi gigante, sauna, baño turco) y zonas de juego eróticas exclusivas.\n• Dispone de salas de conexión, cabinas privadas y servicio de masajes profesionales.\n• Ambiente sumamente elegante, higiénico y discreto.\n\n🏛️ DIVERNIS BENALMÁDENA (Málaga - Calle Los Girasoles, 8):\n• Réplica del concepto de Madrid en la Costa del Sol.\n• Instalaciones completas de spa nudista erótico, piscina y amplias salas de juegos para parejas y singles seleccionados.\n\nNormativa general: Requiere respeto total al consentimiento (el No es No), vestimenta adecuada de entrada (cambio de ropa en vestuarios) y reserva previa recomendada.'
     }
   ];
 
