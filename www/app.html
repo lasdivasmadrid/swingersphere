@@ -2012,16 +2012,14 @@ const area=document.getElementById('em-test-area');
   showToast(`🛡️ Registrada • ${label} • ${token.split('-').slice(-1)[0]}`,'copper');
 };
 
-/* ?????????????????????????????????????????????????????????????????????? 
 /* ── PRIVATE MESSAGING SCREEN • OK-Prior System ── */
-?????????????????????????????????????????????????????????????????????? */
 function renderPrivateMsg(){
   ensureExtraScreens();
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const target=document.getElementById('screen-privatemsg');
   target.classList.add('active');
   const REQS=[{id:'req1',ii:'EJ',co:'#0a84ff',nm:'Erik & Jana',ts:98,vl:4,dist:'1.840km',ago:'hace 2h'},{id:'req2',ii:'SL',co:'#9b59b6',nm:'Sophie',ts:87,vl:3,dist:'892km',ago:'hace 5h'}].filter(r => !isUserBlockedByName(r.nm));
-  const CHATS=[{id:'ch1',ii:'VM',co:'#c4813a',nm:'Valentina & Marco',last:'¡Hola! ¿Seguís en Madrid?',time:'14:25',unread:true},
+  const CHATS=[{id:'ch1',ii:'VM',co:'#c4813a',nm:'Valentina & Marco',last:'¡Hola! ¿Seguís en Madrid?',time:'14:25',unread:1}].filter(ch => !isUserBlockedByName(ch.nm));
   target.innerHTML=`
     <div class="topbar">
       <div class="topbar-logo"><canvas class="topbar-globe" id="tg-privmsg" width="30" height="30"></canvas><span class="logo-text">?? Mensajes</span></div>
@@ -3290,8 +3288,8 @@ window.showAdminPanel = function() {
   // Header
   const header = document.createElement('div');
   header.style.cssText = 'display:flex;justify-content:between;align-items:center;margin-bottom:1.5rem;border-bottom:1px solid var(--border);padding-bottom:0.75rem;';
-  header.innerHTML = `<h3 style="margin:0;font-size:1.1rem;font-weight:800;color:var(--copper);">⚙️ Panel de Administración</h3>`
-    <button onclick="this.closest('.overlay').remove()" class="btn-icon btn-secondary" style="background:none;border:none;color:#aaa;font-size:1.1rem;cursor:pointer;">?</button>`;
+  header.innerHTML = `<h3 style="margin:0;font-size:1.1rem;font-weight:800;color:var(--copper);">⚙️ Panel de Administración</h3>
+    <button onclick="this.closest('.overlay').remove()" class="btn-icon btn-secondary" style="background:none;border:none;color:#aaa;font-size:1.1rem;cursor:pointer;">✕</button>`;
   modal.appendChild(header);
 
   // 1. Identity Switcher section
