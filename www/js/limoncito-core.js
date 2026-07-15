@@ -1,5 +1,5 @@
 /* ===========================================================
-   LIMONCITO™ AI CORE v2.0
+   SHADOW™ AI CORE v2.0
    5-Layer Architecture: LLM → KB → RAG → Community → Concierge
    =========================================================== */
 'use strict';
@@ -186,7 +186,7 @@ const LimocitoLLM = (() => {
     
     return intro + "\n\n" + body + bookingRecs + "\n\n" +
       "--- \n" +
-      "🤖 *Limoncito está operando en Modo Simulación Local. Para activar las respuestas hiper-inteligentes de la IA real de Google Gemini (100% GRATIS), haz clic en el engranaje ⚙️ de la cabecera y configura tu API Key en 10 segundos.*";
+      "🤖 *Shadow está operando en Modo Simulación Local. Para activar las respuestas hiper-inteligentes de la IA real de Google Gemini (100% GRATIS), haz clic en el engranaje ⚙️ de la cabecera y configura tu API Key en 10 segundos.*";
   }
 
   async function generate(userMsg, context) {
@@ -194,7 +194,7 @@ const LimocitoLLM = (() => {
     
     // If local API key is present (dev override), use it directly
     if (cfg.apiKey) {
-      const systemPrompt = `Eres Limoncito, el oráculo del swinging y asistente IA oficial de SwingerSphere — la plataforma premium de lifestyle en España y Latinoamérica.
+      const systemPrompt = `Eres Shadow, el oráculo del swinging y asistente IA oficial de SwingerSphere — la plataforma premium de lifestyle en España y Latinoamérica.
 Tu personalidad: cercano, sabio, discreto, informado, inclusivo y sin prejuicios. Usas emojis con moderación.
 Respondes SIEMPRE en español. Eres el Oráculo Supremo del ambiente swinger y LGTBI+; eres un experto absoluto en: banderas del orgullo LGTBI+ y su historia/significado, además de prácticas BDSM, fetiches, relaciones abiertas, normas, booking de hoteles/viajes, y CRM de clubes.
 Cuando el usuario pregunte sobre pagar: la membresía PRO cuesta 9,99 EUR/mes. Métodos: tarjeta via Transak (convertida automáticamente a USDC) y USDC directo en redes Polygon, Arbitrum o Ethereum.
@@ -214,7 +214,13 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
 
     // Default Production behavior: Call secure Vercel Serverless Function (0 cost)
     try {
-      const response = await fetch('/api/limoncito', {
+      let apiServer = localStorage.getItem('lmcito_api_server') || '';
+      if (!apiServer && (location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+        apiServer = 'https://swingersphere.vercel.app';
+      }
+      const apiUrl = apiServer ? `${apiServer.replace(/\/$/, '')}/api/limoncito` : '/api/limoncito';
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userMsg, context }),
@@ -228,7 +234,7 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
         throw new Error(errData.error || `Server HTTP ${response.status}`);
       }
     } catch (e) {
-      console.warn('[LimocitoCore] Serverless API call failed, falling back to local simulation:', e.message);
+      console.warn('[ShadowCore] Serverless API call failed, falling back to local simulation:', e.message);
       return `⚠️ **Error de la IA en el Servidor:** ${e.message}\n\n*Comprueba que has configurado la variable de entorno GEMINI_API_KEY en Vercel con el valor correcto y has hecho un Redeploy.*`;
     }
   }
@@ -410,7 +416,7 @@ const LIMONCITO_KB = {
       id: 'ce1',
       title: 'Certificacion Oficial SwingerSphere',
       tags: ['certificacion','verificado','badge','sello','check','oficial','certificar'],
-      content: 'La Certificacion Oficial SwingerSphere es el sello de confianza del lifestyle. Tipos:\n\n🏛️ Club Verificado: 149 EUR/ano — badge dorado, prioridad en busquedas, Limoncito te recomienda\n🎉 Evento Verificado: 99 EUR/ano — sello en agenda, push a usuarios, analytics\n👤 Organizador Verificado: 99 EUR/ano — perfil destacado, TrustScore +15\n🏢 Negocio Verificado: 199 EUR/ano — marketplace prioritario, landing en la app\n\nSolicita tu certificacion desde Configuracion > Certificacion Oficial.'
+      content: 'La Certificacion Oficial SwingerSphere es el sello de confianza del lifestyle. Tipos:\n\n🏛️ Club Verificado: 149 EUR/ano — badge dorado, prioridad en busquedas, Shadow te recomienda\n🎉 Evento Verificado: 99 EUR/ano — sello en agenda, push a usuarios, analytics\n👤 Organizador Verificado: 99 EUR/ano — perfil destacado, TrustScore +15\n🏢 Negocio Verificado: 199 EUR/ano — marketplace prioritario, landing en la app\n\nSolicita tu certificacion desde Configuracion > Certificacion Oficial.'
     },
   ],
 
@@ -419,7 +425,7 @@ const LIMONCITO_KB = {
       id: 'bz1',
       title: 'SwingerSphere Business CRM para clubs',
       tags: ['business','crm','club','gestion','socios','reservas','ticketing','estadisticas','software','programa'],
-      content: 'SwingerSphere Business es el CRM todo-en-uno para clubs y locales lifestyle:\n\n📊 Dashboard con metricas en tiempo real\n👥 Gestion de socios (VIP, regular, nuevo)\n📅 Sistema de reservas con calendario\n🎟️ Ticketing digital con QR\n📈 Estadisticas de ocupacion e ingresos\n🍋 IA Comercial (Limoncito te asesora)\n\nPlanes: Basico 40 EUR/45 dias · Premium 100 EUR/45 dias · Elite 200 EUR/45 dias\n\nSustituye 4-5 programas distintos. Todo centralizado en una sola plataforma.'
+      content: 'SwingerSphere Business es el CRM todo-en-uno para clubs y locales lifestyle:\n\n📊 Dashboard con metricas en tiempo real\n👥 Gestion de socios (VIP, regular, nuevo)\n📅 Sistema de reservas con calendario\n🎟️ Ticketing digital con QR\n📈 Estadisticas de ocupacion e ingresos\n👤 IA Comercial (Shadow te asesora)\n\nPlanes: Basico 40 EUR/45 dias · Premium 100 EUR/45 dias · Elite 200 EUR/45 dias\n\nSustituye 4-5 programas distintos. Todo centralizado en una sola plataforma.'
     },
   ],
 };
@@ -590,7 +596,7 @@ const ConciergeDetector = (() => {
 // KB FALLBACK RESPONSES
 // ═══════════════════════════════════════════════════
 const KB_FALLBACK = {
-  greeting: ['Hola! Soy Limoncito, tu guia del lifestyle. Tengo una prueba de 7 dias gratis para ti. Puedo ayudarte con clubs, eventos, privacidad, pagos y mucho mas. Preguntame lo que necesites!'],
+  greeting: ['Hola! Soy Shadow, tu guia del lifestyle. Tengo una prueba de 7 dias gratis para ti. Puedo ayudarte con clubs, eventos, privacidad, pagos y mucho mas. Preguntame lo que necesites!'],
   empty: ['Hmm, no encuentro informacion especifica sobre eso. Intenta preguntarme sobre: clubs, eventos, privacidad, pagos o el lifestyle en general.'],
 };
 
@@ -611,7 +617,7 @@ const LimocitoCore = {
     if (greetings.some(g => cleanMsg === g || cleanMsg.startsWith(g + ' ') || g.startsWith(cleanMsg))) {
       return {
         type: 'kb',
-        text: "¡Hola! 🍋 Soy **Limoncito**, tu agente de IA oficial y oráculo en SwingerSphere.\n\nPuedo guiarte por toda la plataforma de forma interactiva. Intenta pedirme cosas como:\n\n• 💳 **Membresía PRO:** Escribe *'pagar pro'* para activar tu suscripción.\n• 💰 **Billetera USDC:** Escribe *'ver saldo'*, *'depositar'* o *'retirar a banco'*.\n• 🏨 **Viajes y Reservas:** Escribe *'buscar hoteles'* o *'mis reservas'*.\n• 🏛️ **Clubes y CRM:** Escribe *'abrir dashboard'* o *'certificar club'*.\n• 🏳️‍🌈 **Banderas LGTBI+:** Escribe *'significado de la bandera bisexual'* o *'bandera progreso'*.\n• 🔗 **Lifestyle & BDSM:** Pregúntame sobre safe words, shibari o relaciones abiertas.\n\n¿En qué te puedo ayudar hoy?",
+        text: "¡Hola! 👤 Soy **Shadow**, tu agente de IA oficial y oráculo en SwingerSphere.\n\nPuedo guiarte por toda la plataforma de forma interactiva. Intenta pedirme cosas como:\n\n• 💳 **Membresía PRO:** Escribe *'pagar pro'* para activar tu suscripción.\n• 💰 **Billetera USDC:** Escribe *'ver saldo'*, *'depositar'* o *'retirar a banco'*.\n• 🏨 **Viajes y Reservas:** Escribe *'buscar hoteles'* o *'mis reservas'*.\n• 🏛️ **Clubes y CRM:** Escribe *'abrir dashboard'* o *'certificar club'*.\n• 🏳️‍🌈 **Banderas LGTBI+:** Escribe *'significado de la bandera bisexual'* o *'bandera progreso'*.\n• 🔗 **Lifestyle & BDSM:** Pregúntame sobre safe words, shibari o relaciones abiertas.\n\n¿En qué te puedo ayudar hoy?",
         suggestions: [
           { label: '💰 Ver Saldo', q: 'ver saldo' },
           { label: '🏨 Buscar Hoteles', q: 'buscar hoteles' },
@@ -803,4 +809,4 @@ const LimocitoCore = {
 };
 
 window.LimocitoCore = LimocitoCore;
-console.log('Limoncito AI Core v2.0 loaded — KB docs:', Object.values(LIMONCITO_KB).flat().length);
+console.log('Shadow AI Core v2.0 loaded — KB docs:', Object.values(LIMONCITO_KB).flat().length);

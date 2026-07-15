@@ -55,7 +55,7 @@ var AD_PLANS = [
       'Banner publicitario en pantalla Home (1 semana incluida)',
       'Posicion #1 en busquedas de tu ciudad',
       'Estadisticas avanzadas (demograficas, horarios)',
-      'Limoncito recomienda tu local en consultas',
+      'Shadow recomienda tu local en consultas',
       'Landing page personalizada dentro de la app',
       'Descuentos automaticos para usuarios PRO',
       'Soporte prioritario + account manager',
@@ -68,7 +68,7 @@ var AD_EXTRAS = [
   { id:'banner_home',    name:'Banner en Home',          price:10,  period:'semana', icon:'📢', desc:'Banner visual en la pantalla principal de todos los usuarios' },
   { id:'push_event',     name:'Push de evento',          price:15,  period:'evento', icon:'🔔', desc:'Notificacion push a usuarios de tu ciudad cuando publicas evento' },
   { id:'featured_week',  name:'Destacado de la semana',  price:25,  period:'semana', icon:'🌟', desc:'Tu local aparece primero en la ciudad durante 7 dias' },
-  { id:'limoncito_rec',  name:'Recomendacion Limoncito', price:20,  period:'45 dias', icon:'🍋', desc:'Limoncito recomienda tu local cuando le preguntan por tu ciudad' },
+  { id:'limoncito_rec',  name:'Recomendacion Shadow', price:20,  period:'45 dias', icon:'👤', desc:'Shadow recomienda tu local cuando le preguntan por tu ciudad' },
   { id:'landing_custom', name:'Landing en la app',       price:199, period:'unico',  icon:'🎨', desc:'Pagina dedicada dentro de la app con galeria, resenas, mapa y reservas' },
   { id:'analytics_pro',  name:'Analytics Pro',           price:25,  period:'45 dias', icon:'📊', desc:'Datos demograficos, horarios pico, comparativa con competencia' },
 ];

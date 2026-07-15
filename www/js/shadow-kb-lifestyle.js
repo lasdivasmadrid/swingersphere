@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   LIMONCITO™ — ENCICLOPEDIA LIFESTYLE & BDSM v1.0
+   SHADOW™ — ENCICLOPEDIA LIFESTYLE & BDSM v1.0
    Base de conocimiento extendida: +40 documentos
    Se carga DESPUES de limoncito-core.js y extiende LIMONCITO_KB
    ═══════════════════════════════════════════════════════════════════ */
@@ -468,5 +468,5 @@
   for (var key in LIMONCITO_KB) {
     if (LIMONCITO_KB.hasOwnProperty(key)) totalDocs += LIMONCITO_KB[key].length;
   }
-  console.log('📖 Limoncito KB Extended v1.3 loaded — Total docs:', totalDocs);
+  console.log('📖 Shadow KB Extended v1.3 loaded — Total docs:', totalDocs);
 })();

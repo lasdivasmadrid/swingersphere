@@ -8,14 +8,14 @@
 
 // ── Badge Types ──────────────────────────────────────────────────
 var CERT_BADGES = [
-  {id:'club',      icon:'\u{1F3DB}\uFE0F', name:'Club Verificado',       price:149, period:'ano', color:'#ffd700', desc:'Badge dorado en directorio, prioridad en busquedas, Limoncito recomienda tu club',
-    features:['Badge dorado visible en directorio','Prioridad en resultados de busqueda','Limoncito recomienda tu club activamente','Sello de confianza para visitantes','Acceso a estadisticas de perfil']},
+  {id:'club',      icon:'\u{1F3DB}\uFE0F', name:'Club Verificado',       price:149, period:'ano', color:'#ffd700', desc:'Badge dorado en directorio, prioridad en busquedas, Shadow recomienda tu club',
+    features:['Badge dorado visible en directorio','Prioridad en resultados de busqueda','Shadow recomienda tu club activamente','Sello de confianza para visitantes','Acceso a estadisticas de perfil']},
   {id:'event',     icon:'\u{1F389}',       name:'Evento Verificado',     price:99,  period:'ano', color:'#30d158', desc:'Sello en agenda de eventos, push a usuarios cercanos, analytics de asistencia',
     features:['Sello verificado en agenda de eventos','Push automatico a usuarios cercanos','Analytics detallados de asistencia','Prioridad en calendario lifestyle','Badge verde en todas las publicaciones']},
   {id:'organizer', icon:'\u{1F464}',       name:'Organizador Verificado', price:99,  period:'ano', color:'#0a84ff', desc:'Perfil destacado, historial publico de eventos, TrustScore +15 boost',
-    features:['Perfil destacado con badge azul','Historial publico de eventos organizados','TrustScore +15 puntos de boost','Mayor visibilidad en comunidad','Recomendaciones prioritarias de Limoncito']},
-  {id:'business',  icon:'\u{1F3E2}',       name:'Negocio Verificado',    price:199, period:'ano', color:'#c4813a', desc:'Marketplace prioritario, landing en app, Limoncito promociona tu servicio',
-    features:['Posicion prioritaria en marketplace','Landing page dedicada en la app','Limoncito promociona tu servicio','Badge cobre premium exclusivo','Estadisticas avanzadas de interaccion','Soporte prioritario dedicado']},
+    features:['Perfil destacado con badge azul','Historial publico de eventos organizados','TrustScore +15 puntos de boost','Mayor visibilidad en comunidad','Recomendaciones prioritarias de Shadow']},
+  {id:'business',  icon:'\u{1F3E2}',       name:'Negocio Verificado',    price:199, period:'ano', color:'#c4813a', desc:'Marketplace prioritario, landing en app, Shadow promociona tu servicio',
+    features:['Posicion prioritaria en marketplace','Landing page dedicada en la app','Shadow promociona tu servicio','Badge cobre premium exclusivo','Estadisticas avanzadas de interaccion','Soporte prioritario dedicado']},
 ];
 
 // ── Demo Certified Businesses ────────────────────────────────────

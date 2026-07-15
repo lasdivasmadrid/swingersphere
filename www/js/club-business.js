@@ -1210,7 +1210,7 @@
   window.showClubAI = function() {
     _secLog('club_ai_open', {});
     var ov = _createOverlay();
-    var modal = _createModal('\uD83C\uDF4B Limoncito IA Comercial', function() { _removeOverlay(ov); });
+    var modal = _createModal('\uD83D\uDC64 Shadow IA Comercial', function() { _removeOverlay(ov); });
     var body = modal._body;
 
     var aiResponses = {
@@ -1236,7 +1236,7 @@
     });
     welcomeMsg.appendChild(_el('div', {
       style: { fontSize: '13px', color: 'var(--fg-primary, #e0e0e0)' }
-    }, ['\uD83C\uDF4B Hola! Soy Limoncito, tu asistente de IA comercial. Puedo ayudarte con analisis de negocio, precios, tendencias y mas. Selecciona un tema o escribe tu pregunta.']));
+    }, ['\uD83D\uDC64 Hola! Soy Shadow, tu asistente de IA comercial. Puedo ayudarte con analisis de negocio, precios, tendencias y mas. Selecciona un tema o escribe tu pregunta.']));
     chatContainer.appendChild(welcomeMsg);
     body.appendChild(chatContainer);
 

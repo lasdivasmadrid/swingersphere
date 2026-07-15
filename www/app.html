@@ -222,8 +222,8 @@ function agVerify(){
 <!-- Globe Engine (continents + fly-in dots + EM2) -->
 <script src="js/security.js"></script>
 <script src="js/limoncito-core.js"></script>
-<script src="js/limoncito-kb-lifestyle.js"></script>
-<script src="js/limoncito-kb-bible.js"></script>
+<script src="js/shadow-kb-lifestyle.js"></script>
+<script src="js/shadow-kb-bible.js"></script>
 <script src="js/trial-system.js"></script>
 <script src="js/advertising.js"></script>
 <script src="js/certification.js"></script>
@@ -2579,23 +2579,23 @@ function showLangPicker() {
   ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.appendChild(ov);
 }
 
-/* ── LIMONCITO™ AI CORE UI ──────────────────────────────── */
+/* ── SHADOW™ AI CORE UI ──────────────────────────────── */
 let orOpen = false;
 
-function initOraculo() { initLimoncito(); }
+function initOraculo() { initShadow(); }
 
-function initLimoncito() {
+function initShadow() {
   document.getElementById('or-btn')?.remove();
   document.getElementById('or-panel')?.remove();
 
   // ── Floating button (avatar) ──
   const btn = document.createElement('button');
   btn.id = 'or-btn'; btn.className = 'oraculo-btn';
-  btn.title = 'Limoncito IA'; btn.style.cssText = 'overflow:hidden;padding:0;';
+  btn.title = 'Shadow IA'; btn.style.cssText = 'overflow:hidden;padding:0;';
   const av = document.createElement('img');
-  av.src = 'img/limoncito_avatar.png';
+  av.src = 'img/shadow_avatar.png';
   av.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
-  av.onerror = () => { btn.innerHTML = '🍋'; };
+  av.onerror = () => { btn.innerHTML = '👤'; };
   btn.appendChild(av);
 
   // ── Chat panel ──
@@ -2606,8 +2606,8 @@ function initLimoncito() {
   // Header
   const hdr = document.createElement('div');
   hdr.style.cssText = 'background:var(--copper-glow);border-bottom:1px solid var(--copper-border);padding:0.625rem 0.875rem;display:flex;align-items:center;gap:0.5rem;';
-  hdr.innerHTML = '<img src="img/limoncito_avatar.png" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--copper-border);flex-shrink:0;" onerror="this.style.display=\'none\'">' +
-    '<div style="flex:1;"><div style="font-weight:700;font-size:0.82rem;">Limoncito 🍋</div>' +
+  hdr.innerHTML = '<img src="img/shadow_avatar.png" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--copper-border);flex-shrink:0;" onerror="this.style.display=\'none\'">' +
+    '<div style="flex:1;"><div style="font-weight:700;font-size:0.82rem;">Shadow 👤</div>' +
     '<div id="or-status" style="font-size:0.6rem;color:#30d158;">● Iniciando...</div></div>' +
     '<button id="or-cfg" title="Configurar API" style="background:none;border:none;font-size:0.9rem;cursor:pointer;color:var(--silver-dark);padding:4px;">⚙️</button>' +
     '<button id="or-close" style="background:none;border:none;font-size:1rem;cursor:pointer;color:var(--silver-dark);padding:4px;">✕</button>';
@@ -2632,7 +2632,7 @@ function initLimoncito() {
   // Input row
   const inputRow = document.createElement('div');
   inputRow.className = 'oraculo-input-row';
-  inputRow.innerHTML = '<input class="oraculo-input" id="or-inp" placeholder="Pregunta a Limoncito... (ej: Voy a Barcelona del 12 al 15)">' +
+  inputRow.innerHTML = '<input class="oraculo-input" id="or-inp" placeholder="Pregunta a Shadow... (ej: Voy a Barcelona del 12 al 15)">' +
     '<button class="btn btn-primary btn-sm" id="or-snd">➤</button>';
   panel.appendChild(inputRow);
 
@@ -2652,11 +2652,11 @@ function initLimoncito() {
     const cfg = window.LimocitoLLM ? LimocitoLLM.getConfig() : null;
     const hasKey = cfg && cfg.apiKey;
     if (hasKey) {
-      setStatus('● En linea · IA activa', '#30d158');
-      addOrMsg('Hola! 🍋 Soy Limoncito, tu guia del lifestyle. Puedo ayudarte con clubs, viajes, protocolo, pagos, seguridad y mas.\n\nPrueba: "Voy a Barcelona del 12 al 15 de agosto" 🌍', 'ai');
+      setStatus('● En línea · IA activa', '#30d158');
+      addOrMsg('Hola! 👤 Soy Shadow, tu guia del lifestyle. Puedo ayudarte con clubs, viajes, protocolo, pagos, seguridad y mas.\n\nPrueba: "Voy a Barcelona del 12 al 15 de agosto" 🌍', 'ai');
     } else {
-      setStatus('● En linea', '#30d158');
-      addOrMsg('Hola! 🍋 Soy Limoncito, tu guia del lifestyle.\n\nPuedo ayudarte con clubs, eventos, viajes, pagos, privacidad y mucho mas. Preguntame lo que necesites!', 'ai');
+      setStatus('● En línea', '#30d158');
+      addOrMsg('Hola! 👤 Soy Shadow, tu guia del lifestyle.\n\nPuedo ayudarte con clubs, eventos, viajes, pagos, privacidad y mucho mas. Preguntame lo que necesites!', 'ai');
     }
   }, 800);
 
@@ -2771,7 +2771,7 @@ function addConciergeCard(data) {
   card.style.cssText = 'padding:0;overflow:hidden;border-radius:14px;border:1px solid var(--copper-border);background:var(--bg-card);';
   card.innerHTML =
     '<div style="background:linear-gradient(135deg,rgba(196,129,58,0.15),rgba(196,129,58,0.05));padding:0.75rem;border-bottom:1px solid var(--border);">' +
-      '<div style="font-weight:700;font-size:0.9rem;">' + data.flag + ' Limoncito Concierge™ — ' + data.cityName + '</div>' +
+      '<div style="font-weight:700;font-size:0.9rem;">' + data.flag + ' Shadow Concierge™ — ' + data.cityName + '</div>' +
       (data.dateStr ? '<div style="font-size:0.7rem;color:var(--copper);">📅 ' + data.dateStr + '</div>' : '') +
     '</div>' +
     '<div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.625rem;">' +
@@ -2797,27 +2797,30 @@ function _conciergeSection(title, items) {
 
 function showLimocitoConfig() {
   const cfg = window.LimocitoLLM ? LimocitoLLM.getConfig() : { provider:'gemini', apiKey:'' };
+  const serverVal = localStorage.getItem('lmcito_api_server') || '';
   const ov = document.createElement('div'); ov.className = 'overlay center';
   ov.innerHTML = '<div class="modal center-modal" style="padding:1.5rem;max-width:360px;">' +
-    '<div style="text-align:center;margin-bottom:1rem;"><div style="font-size:2rem;">🍋</div>' +
-    '<h3 style="font-weight:700;margin-bottom:0.25rem;">Configurar Limoncito IA</h3>' +
-    '<p style="font-size:0.75rem;color:var(--silver);">Activa la IA real con tu API key gratuita</p></div>' +
+    '<div style="text-align:center;margin-bottom:1rem;"><div style="font-size:2rem;">👤</div>' +
+    '<h3 style="font-weight:700;margin-bottom:0.25rem;">Configurar Shadow IA</h3>' +
+    '<p style="font-size:0.75rem;color:var(--silver);">Personaliza la conexión del asistente inteligente</p></div>' +
     '<div style="display:flex;flex-direction:column;gap:0.875rem;">' +
-      '<div><div style="font-size:0.72rem;color:var(--silver-dark);margin-bottom:0.3rem;">Proveedor de IA</div>' +
+      '<div><div style="font-size:0.72rem;color:var(--silver-dark);margin-bottom:0.3rem;">Servidor API de Vercel (móviles/local)</div>' +
+        '<input id="lm-server" type="text" value="' + serverVal + '" placeholder="https://swingersphere.vercel.app" style="width:100%;box-sizing:border-box;background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px;padding:0.6rem 0.75rem;color:var(--fg-primary);font-size:0.82rem;">' +
+      '</div>' +
+      '<div style="border-top:1px dashed var(--border);margin:0.5rem 0;"></div>' +
+      '<div><div style="font-size:0.72rem;color:var(--silver-dark);margin-bottom:0.3rem;">Proveedor de IA Propio (Opcional)</div>' +
         '<select id="lm-prov" style="width:100%;background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px;padding:0.6rem 0.75rem;color:var(--fg-primary);font-size:0.85rem;">' +
           '<option value="gemini"' + (cfg.provider==='gemini'?' selected':'') + '>🟢 Gemini Flash (Google) — GRATIS</option>' +
           '<option value="openai"' + (cfg.provider==='openai'?' selected':'') + '>🔵 GPT-4o-mini (OpenAI)</option>' +
         '</select></div>' +
-      '<div><div style="font-size:0.72rem;color:var(--silver-dark);margin-bottom:0.3rem;">API Key <span style="color:var(--copper);">*</span></div>' +
+      '<div><div style="font-size:0.72rem;color:var(--silver-dark);margin-bottom:0.3rem;">API Key Propia (Opcional)</div>' +
         '<input id="lm-key" type="password" value="' + cfg.apiKey + '" placeholder="Pega tu API key aquí..." style="width:100%;box-sizing:border-box;background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px;padding:0.6rem 0.75rem;color:var(--fg-primary);font-size:0.82rem;font-family:monospace;">' +
         '</div>' +
       '<div style="background:rgba(196,129,58,0.06);border:1px solid rgba(196,129,58,0.2);border-radius:10px;padding:0.75rem;font-size:0.72rem;color:var(--silver-dark);">' +
-        '🔑 Gemini Flash es <strong>100% gratuito</strong>.<br>' +
-        'Obtén tu key en: <span style="color:var(--copper);">aistudio.google.com/app/apikey</span><br><br>' +
-        '🔒 La key se guarda solo en tu dispositivo (localStorage). Nunca se envía a nuestros servidores.' +
+        '🔒 Tus claves y configuración se guardan de forma local y 100% segura en tu dispositivo (localStorage).' +
       '</div>' +
       '<button onclick="saveLimocitoConfig()" class="btn btn-primary w-full">💾 Guardar y activar</button>' +
-      (cfg.apiKey ? '<button onclick="clearLimocitoConfig()" class="btn btn-secondary w-full" style="font-size:0.78rem;">🗑️ Borrar API key</button>' : '') +
+      (cfg.apiKey || serverVal ? '<button onclick="clearLimocitoConfig()" class="btn btn-secondary w-full" style="font-size:0.78rem;">🗑️ Restablecer ajustes</button>' : '') +
     '</div></div>';
   ov.onclick = e => { if (e.target === ov) ov.remove(); };
   document.body.appendChild(ov);
@@ -2826,19 +2829,36 @@ function showLimocitoConfig() {
 function saveLimocitoConfig() {
   const prov = document.getElementById('lm-prov')?.value || 'gemini';
   const key = document.getElementById('lm-key')?.value.trim() || '';
-  if (!key) { showToast('Introduce una API key', 'error'); return; }
-  if (window.LimocitoLLM) LimocitoLLM.setConfig(prov, key);
+  const server = document.getElementById('lm-server')?.value.trim() || '';
+
+  if (window.LimocitoLLM) {
+    if (key) {
+      LimocitoLLM.setConfig(prov, key);
+    } else {
+      localStorage.removeItem('lmcito_apikey');
+    }
+  }
+
+  if (server) {
+    localStorage.setItem('lmcito_api_server', server);
+  } else {
+    localStorage.removeItem('lmcito_api_server');
+  }
+
   document.querySelector('.overlay')?.remove();
-  showToast('🍋 IA activada con ' + (prov === 'gemini' ? 'Gemini Flash' : 'OpenAI') + '!', 'success');
-  document.getElementById('or-status').textContent = '● En línea · IA ' + (prov === 'gemini' ? 'Gemini' : 'OpenAI') + ' activa';
+  showToast('👤 Shadow IA configurado!', 'success');
+  const hasKey = key;
+  document.getElementById('or-status').textContent = hasKey ? '● En línea · IA activa' : '● En línea';
   document.getElementById('or-status').style.color = '#30d158';
 }
 
 function clearLimocitoConfig() {
   localStorage.removeItem('lmcito_apikey');
   localStorage.removeItem('lmcito_provider');
+  localStorage.removeItem('lmcito_api_server');
   document.querySelector('.overlay')?.remove();
-  showToast('API key eliminada. Usando Knowledge Base local.', 'copper');
+  showToast('Ajustes restablecidos.', 'copper');
+  document.getElementById('or-status').textContent = '● En línea';
 }
 
 function addOrMsg(txt,type){

@@ -1,8 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════════
-   LIMONCITO™ — BIBLIA COMPLETA vol.2
+   SHADOW™ — BIBLIA COMPLETA vol.2
    Enciclopedia avanzada: psicologia, historia, tecnicas,
    dinamicas, cultura, internacional, sexologia, parejas
-   Se carga DESPUES de limoncito-kb-lifestyle.js
+   Se carga DESPUES de shadow-kb-lifestyle.js
    ═══════════════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -273,6 +273,6 @@
   for (var key in LIMONCITO_KB) {
     if (LIMONCITO_KB.hasOwnProperty(key)) totalDocs += LIMONCITO_KB[key].length;
   }
-  console.log('📖 Limoncito BIBLIA v2.0 loaded — Total docs:', totalDocs);
+  console.log('📖 Shadow BIBLIA v2.0 loaded — Total docs:', totalDocs);
 })();
 
