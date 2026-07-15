@@ -591,7 +591,7 @@ function renderFAB() {
   fab = document.createElement('button');
   fab.id = 'main-fab';
   fab.className = 'fab';
-  fab.innerHTML = '🔮';
+  fab.innerHTML = `<svg viewBox="0 0 24 24" style="width:28px;height:28px;color:#fff;fill:currentColor;animation:oraculo-float 3s ease-in-out infinite;"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M8 12a4 4 0 0 0 8 0" fill="none" stroke="#000" stroke-width="2"/><path d="M2.5 12h19" fill="none" stroke="#000" stroke-width="2"/></svg>`;
   fab.title = 'Limoncito 🍋';
   fab.onclick = () => { try { toggleOraculo(); } catch(e) { showToast('Limoncito cargando...','copper'); } };
   document.body.appendChild(fab);
@@ -619,7 +619,7 @@ window.showConsentVault = function(action, onAccept, tObj) {
   overlay.className='overlay center';
   overlay.innerHTML=`
     <div class="modal center-modal consent-modal">
-      <div class="consent-icon">� </div>
+      <div class="consent-icon">🛡️ </div>
       <h2 style="font-size:1.25rem;font-weight:700;margin-bottom:0.5rem;">${t('consent_title')}</h2>
       <p style="font-size:0.8rem;color:var(--copper);font-weight:600;margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.08em;">${t('consent_subtitle')}</p>
       <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-lg);padding:var(--space-4);margin-bottom:1.5rem;text-align:left;">
@@ -694,13 +694,13 @@ function renderHome() {
 function buildHomeBanners() {
   const AD_BANNERS_HOME = [
     { id:'b1', tag:'PUBLICIDAD', color:'#c4813a', bg:'rgba(196,129,58,0.08)', border:'rgba(196,129,58,0.3)',
-      icon:'???', title:'Privee Club Madrid', sub:'Club Verificado � TS 98',
+      icon:'🏛️', title:'Privee Club Madrid', sub:'Club Verificado • TS 98',
       desc:'Fiestas VIP todos los viernes. Reserva mesa exclusiva.', cta:'Ver Landing', onclick:"showClubLanding('privee')" },
     { id:'b2', tag:'DESTACADO', color:'#30d158', bg:'rgba(48,209,88,0.07)', border:'rgba(48,209,88,0.25)',
-      icon:'??', title:'Desire Pearl Resort', sub:'Cancun � Todo incluido',
-      desc:'Semanas lifestyle en pareja desde 280�/noche. Oferta exclusiva SwingerSphere.', cta:'Reservar', onclick:"if(window.showBookingDetail)showBookingDetail('hotel_desire');else showToast('Cargando booking...','copper')" },
+      icon:'🏨', title:'Desire Pearl Resort', sub:'Cancun • Todo incluido',
+      desc:'Semanas lifestyle en pareja desde 280€/noche. Oferta exclusiva SwingerSphere.', cta:'Reservar', onclick:"if(window.showBookingDetail)showBookingDetail('hotel_desire');else showToast('Cargando booking...','copper')" },
     { id:'b3', tag:'EVENTO', color:'#0a84ff', bg:'rgba(10,132,255,0.07)', border:'rgba(10,132,255,0.25)',
-      icon:'??', title:'Pool Party VIP � Ibiza', sub:'12 Jul � Entrada desde 45�',
+      icon:'🎉', title:'Pool Party VIP • Ibiza', sub:'12 Jul • Entrada desde 45€',
       desc:'La fiesta del verano. 200 parejas verificadas. Open bar incluido.', cta:'Entradas', onclick:"if(window.showBookingDetail)showBookingDetail('event_pool_ibiza');else showToast('Abriendo entradas...','copper')" },
   ];
   
@@ -717,8 +717,8 @@ function buildHomeBanners() {
         border: 'rgba(196,129,58,0.3)',
         icon: parsed.icon || '???',
         title: parsed.title || 'Tu Club Custom',
-        sub: parsed.sub || 'Club Verificado � TS 99',
-        desc: parsed.desc || 'Descripci�n de tu anuncio.',
+        sub: parsed.sub || 'Club Verificado • TS 99',
+        desc: parsed.desc || 'Descripción de tu anuncio.',
         cta: parsed.cta || 'Ver Landing',
         onclick: parsed.onclick || "showClubLanding('custom')"
       };
@@ -2009,11 +2009,11 @@ window.testEphemeral=function(ttlMs,label){
   const preview=EM.buildPreview(token,dataUrl,ttlMs);
 const area=document.getElementById('em-test-area');
   if(area){area.innerHTML='';area.appendChild(preview);}
-  showToast(`?? Registrada � ${label} � ${token.split('-').slice(-1)[0]}`,'copper');
+  showToast(`🛡️ Registrada • ${label} • ${token.split('-').slice(-1)[0]}`,'copper');
 };
 
 /* ?????????????????????????????????????????????????????????????????????? 
-   PRIVATE MESSAGING SCREEN � OK-Prior System
+/* ── PRIVATE MESSAGING SCREEN • OK-Prior System ── */
 ?????????????????????????????????????????????????????????????????????? */
 function renderPrivateMsg(){
   ensureExtraScreens();
@@ -2021,7 +2021,7 @@ function renderPrivateMsg(){
   const target=document.getElementById('screen-privatemsg');
   target.classList.add('active');
   const REQS=[{id:'req1',ii:'EJ',co:'#0a84ff',nm:'Erik & Jana',ts:98,vl:4,dist:'1.840km',ago:'hace 2h'},{id:'req2',ii:'SL',co:'#9b59b6',nm:'Sophie',ts:87,vl:3,dist:'892km',ago:'hace 5h'}].filter(r => !isUserBlockedByName(r.nm));
-  const CHATS=[{id:'ch1',ii:'VM',co:'#c4813a',nm:'Valentina & Marco',last:'�Hola! �Segu�s en Madrid?',time:'14:30',unread:2},{id:'ch2',ii:'IR',co:'#ff375f',nm:'Isabela & Rodrigo',last:'Nos vemos el s�bado ??',time:'Ayer',unread:0}].filter(ch => !isUserBlockedByName(ch.nm));
+  const CHATS=[{id:'ch1',ii:'VM',co:'#c4813a',nm:'Valentina & Marco',last:'¡Hola! ¿Seguís en Madrid?',time:'14:25',unread:true},
   target.innerHTML=`
     <div class="topbar">
       <div class="topbar-logo"><canvas class="topbar-globe" id="tg-privmsg" width="30" height="30"></canvas><span class="logo-text">?? Mensajes</span></div>
@@ -2036,7 +2036,7 @@ function renderPrivateMsg(){
         ${REQS.map(r=>`<div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:12px;padding:0.875rem;margin-bottom:0.5rem;" id="${r.id}">
           <div style="display:flex;align-items:center;gap:0.625rem;margin-bottom:0.625rem;">
             <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,${r.co}33,${r.co}77);border:2px solid ${r.co}55;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:${r.co};">${r.ii}</div>
-            <div style="flex:1;"><div style="font-size:0.875rem;font-weight:600;">${r.nm}</div><div style="font-size:0.68rem;color:var(--silver-dark);">TS ${r.ts} � ?? ${r.dist} � ${r.ago}</div></div>
+            <div style="flex:1;"><div style="font-size:0.875rem;font-weight:600;">${r.nm}</div><div style="font-size:0.68rem;color:var(--silver-dark);">TS ${r.ts} • 📍 ${r.dist} • ${r.ago}</div></div>
           </div>
           <div style="background:var(--bg-surface);border-radius:8px;padding:0.45rem 0.625rem;font-size:0.72rem;color:var(--silver);font-style:italic;margin-bottom:0.625rem;">?? No ves el contenido hasta aceptar. Solo sabes que alguien quiere hablar contigo.</div>
           <div style="display:flex;gap:0.5rem;">
@@ -2046,11 +2046,11 @@ function renderPrivateMsg(){
         </div>`).join('')}
       </div>`:''}
       <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:0.875rem;">
-        <div style="font-size:0.65rem;color:var(--silver-dark);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.625rem;">??? C�mo funciona</div>
-        ${[{i:'1??',t:'A quiere escribirte',d:'Recibes solo una solicitud an�nima. Cero contenido visible.'},
-           {i:'2??',t:'T� decides',d:'Aceptar activa el canal. Rechazar es invisible para A.'},
-           {i:'3??',t:'Canal E2E activado',d:'ConsentVault� genera contrato. Chat cifrado extremo a extremo.'},
-           {i:'4??',t:'Fotos ef�meras',d:'Im�genes se destruyen tras 30 min. Ning�n servidor las guarda.'}].map(s=>`
+        <div style="font-size:0.65rem;color:var(--silver-dark);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.625rem;">❓ Cómo funciona</div>
+        ${[{i:'1️⃣',t:'A quiere escribirte',d:'Recibes solo una solicitud anónima. Cero contenido visible.'},
+           {i:'2️⃣',t:'Tú decides',d:'Aceptar activa el canal. Rechazar es invisible para A.'},
+           {i:'3️⃣',t:'Canal E2E activado',d:'ConsentVault™ genera contrato. Chat cifrado extremo a extremo.'},
+           {i:'4️⃣',t:'Fotos efímeras',d:'Imágenes se destruyen tras 30 min. Ningún servidor las guarda.'}].map(s=>`
           <div style="display:flex;gap:0.625rem;margin-bottom:0.4rem;"><span>${s.i}</span><div><div style="font-size:0.78rem;font-weight:600;">${s.t}</div><div style="font-size:0.68rem;color:var(--silver-dark);">${s.d}</div></div></div>`).join('')}
       </div>
       <div style="font-size:0.65rem;color:var(--silver-dark);text-transform:uppercase;letter-spacing:0.12em;">Conversaciones activas</div>
@@ -2066,11 +2066,11 @@ function renderPrivateMsg(){
           </div>
           ${ch.unread?`<div style="width:20px;height:20px;border-radius:50%;background:var(--copper);color:#fff;font-size:0.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;">${ch.unread}</div>`:''}
         </div>`).join('')}
-      <button class="btn btn-secondary w-full" style="margin-bottom:1rem;" onclick="showConsentVault('iniciar nueva solicitud de mensajer�a an�nima',()=>showToast('? Solicitud enviada de forma an�nima','success'))">?? Nueva solicitud de conversaci�n</button>
+      <button class="btn btn-secondary w-full" style="margin-bottom:1rem;" onclick="showConsentVault('iniciar nueva solicitud de mensajería anónima',()=>showToast('💬 Solicitud enviada de forma anónima','success'))">💬 Nueva solicitud de conversación</button>
     </div>`;
 }
-window.acceptMsgReq=function(id,nm,ii,co){showConsentVault(`aceptar conversaci�n con ${nm}`,()=>{document.getElementById(id)?.remove();showToast(`? Canal E2E abierto con ${nm}`,'success');});};
-window.rejectMsgReq=function(id,nm){const el=document.getElementById(id);if(el){el.style.opacity='0.4';setTimeout(()=>el.remove(),350);}showToast(`?? Rechazado (${nm} no lo sabr�)`,'default');};
+window.acceptMsgReq=function(id,nm,ii,co){showConsentVault(`aceptar conversación con ${nm}`,()=>{document.getElementById(id)?.remove();showToast(`🔓 Canal E2E abierto con ${nm}`,'success');});};
+window.rejectMsgReq=function(id,nm){const el=document.getElementById(id);if(el){el.style.opacity='0.4';setTimeout(()=>el.remove(),350);}showToast(`🔏 Rechazado (${nm} no lo sabrá)`,'default');};
 window.openChatWin = function(nm, ii, co) {
   document.getElementById('chat-ov')?.remove();
   document.getElementById('vcall-ov')?.remove();
@@ -2078,9 +2078,9 @@ window.openChatWin = function(nm, ii, co) {
   ov.id = 'chat-ov';
   ov.style.cssText = 'position:fixed;inset:0;background:var(--bg-void);z-index:200;display:flex;flex-direction:column;';
   const sample = [
-    { mine: false, txt: '�Hola! �C�mo est�is?', t: '14:20' },
-    { mine: true, txt: '�Muy bien! �Vosotros?', t: '14:21' },
-    { mine: false, txt: 'Genial, �vendr�is al evento?', t: '14:22' }
+    { mine: false, txt: '¡Hola! ¿Cómo estáis?', t: '14:20' },
+    { mine: true, txt: '¡Muy bien! ¿Vosotros?', t: '14:21' },
+    { mine: false, txt: 'Genial, ¿vendréis al evento?', t: '14:22' }
   ];
   
   // Header con boton de videollamada
@@ -2090,7 +2090,7 @@ window.openChatWin = function(nm, ii, co) {
     <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,${co}33,${co}77);border:2px solid ${co}55;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:${co};flex-shrink:0;">${ii}</div>
     <div style="flex:1;min-width:0;">
       <div style="font-size:0.875rem;font-weight:600;">${nm}</div>
-      <div style="font-size:0.62rem;color:#30d158;display:flex;align-items:center;gap:3px;">?? E2E � ?? Fotos 30min</div>
+      <div style="font-size:0.62rem;color:#30d158;display:flex;align-items:center;gap:3px;">🔒 E2E • 📷 Fotos 30min</div>
     </div>
     <button id="vcall-btn" title="Videollamada E2E" onclick="startVideoCall('${nm}','${ii}','${co}')" style="width:38px;height:38px;border-radius:50%;background:rgba(48,209,88,0.12);border:1px solid rgba(48,209,88,0.3);display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(48,209,88,0.22)'" onmouseout="this.style.background='rgba(48,209,88,0.12)'">??</button>
     <button id="block-btn" title="Bloquear Usuario" onclick="confirmBlockUser('${nm}', '${co}')" style="width:38px;height:38px;border-radius:50%;background:rgba(255,55,95,0.12);border:1px solid rgba(255,55,95,0.3);display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;color:#ff375f;margin-left:0.25rem;">??</button>`;
@@ -2108,16 +2108,16 @@ window.openChatWin = function(nm, ii, co) {
   // Barra de entrada
   const bar = document.createElement('div');
   bar.style.cssText = 'padding:0.625rem 0.75rem;border-top:1px solid var(--border);display:flex;gap:0.4rem;background:var(--bg-deep);flex-shrink:0;';
-  bar.innerHTML = `<button onclick="sendEphPhoto()" title="Foto ef�mera 30min" style="width:40px;height:40px;border-radius:50%;background:rgba(255,69,58,0.1);border:1px solid rgba(255,69,58,0.25);display:flex;align-items:center;justify-content:center;font-size:1rem;cursor:pointer;">??</button>
+  bar.innerHTML = `<button onclick="sendEphPhoto()" title="Foto efímera 30min" style="width:40px;height:40px;border-radius:50%;background:rgba(255,69,58,0.1);border:1px solid rgba(255,69,58,0.25);display:flex;align-items:center;justify-content:center;font-size:1rem;cursor:pointer;">📷</button>
     <input id="cin" placeholder="Mensaje cifrado E2E..." style="flex:1;background:var(--bg-elevated);border:1px solid var(--border);border-radius:9999px;padding:0.5rem 1rem;font-size:0.85rem;color:var(--white);" onkeydown="if(event.key==='Enter')sendChatOv()">
     <button onclick="sendChatOv()" style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--copper),var(--copper-light));display:flex;align-items:center;justify-content:center;font-size:1rem;cursor:pointer;">?</button>`;
   ov.appendChild(bar);
   document.body.appendChild(ov);
 };
 window.sendChatOv=function(){const i=document.getElementById('cin');if(!i||!i.value.trim())return;const c=document.getElementById('cov-msgs');const d=document.createElement('div');d.style.cssText='display:flex;flex-direction:row-reverse;';d.innerHTML=`<div style="max-width:75%;background:linear-gradient(135deg,var(--copper),var(--copper-light));border-radius:16px 16px 4px 16px;padding:0.5rem 0.75rem;font-size:0.85rem;">${escHtml(i.value)}<div style="font-size:0.58rem;color:rgba(255,255,255,0.55);margin-top:0.15rem;text-align:right;">${new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})}</div></div>`;c.appendChild(d);c.scrollTop=c.scrollHeight;i.value='';};
-window.sendEphPhoto=function(){showConsentVault('enviar foto ef�mera (30 min autodestrucci�n)',()=>{const cv=document.createElement('canvas');cv.width=200;cv.height=130;const ctx=cv.getContext('2d');const g=ctx.createLinearGradient(0,0,200,130);g.addColorStop(0,'#c4813a');g.addColorStop(1,'#0d1520');ctx.fillStyle=g;ctx.fillRect(0,0,200,130);ctx.fillStyle='rgba(255,255,255,0.85)';ctx.font='bold 14px Inter,sans-serif';ctx.textAlign='center';ctx.fillText('?? Foto privada ef�mera',100,50);ctx.font='11px monospace';ctx.fillStyle='rgba(255,255,255,0.5)';ctx.fillText('?? Autodestrucci�n en 30 min',100,75);ctx.fillText(new Date().toLocaleTimeString(),100,97);const du=cv.toDataURL();const tk=EM.register(du,1800000,t=>{showToast(`?? Foto destruida � ${t}`,'error');});const pv=EM.buildPreview(tk,du,1800000);const c=document.getElementById('cov-msgs');const d=document.createElement('div');d.style.cssText='display:flex;flex-direction:row-reverse;margin:0.25rem 0;';d.appendChild(pv);c.appendChild(d);c.scrollTop=c.scrollHeight;showToast('?? Foto enviada � 30min autodestruct','copper');});};
+window.sendEphPhoto=function(){showConsentVault('enviar foto efímera (30 min autodestrucción)',()=>{const cv=document.createElement('canvas');cv.width=200;cv.height=130;const ctx=cv.getContext('2d');const g=ctx.createLinearGradient(0,0,200,130);g.addColorStop(0,'#c4813a');g.addColorStop(1,'#0d1520');ctx.fillStyle=g;ctx.fillRect(0,0,200,130);ctx.fillStyle='rgba(255,255,255,0.85)';ctx.font='bold 14px Inter,sans-serif';ctx.textAlign='center';ctx.fillText('📷 Foto privada efímera',100,50);ctx.font='11px monospace';ctx.fillStyle='rgba(255,255,255,0.5)';ctx.fillText('⏱️ Autodestrucción en 30 min',100,75);ctx.fillText(new Date().toLocaleTimeString(),100,97);const du=cv.toDataURL();const tk=EM.register(du,1800000,t=>{showToast(`📷 Foto destruida • ${t}`,'error');});const pv=EM.buildPreview(tk,du,1800000);const c=document.getElementById('cov-msgs');const d=document.createElement('div');d.style.cssText='display:flex;flex-direction:row-reverse;margin:0.25rem 0;';d.appendChild(pv);c.appendChild(d);c.scrollTop=c.scrollHeight;showToast('📷 Foto enviada • 30min autodestruct','copper');});};
 
-/* ?????????????????????? VIDEO CALL � WebRTC E2E ?????????????????????? */
+/* ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VIDEO CALL • WebRTC E2E ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ */
 window._vcStream = null;
 window._vcAnimId = null;
 window._vcMicOn = true;
@@ -2171,7 +2171,7 @@ window.startVideoCall = function(nm, ii, co) {
   controls.innerHTML = `
     <button id="vc-mic" onclick="toggleVcMic()" title="Silenciar micro" style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.2);font-size:1.4rem;color:#fff;cursor:pointer;transition:all 0.2s;">??</button>
     <button onclick="endVideoCall()" title="Colgar" style="width:68px;height:68px;border-radius:50%;background:#ff375f;border:none;font-size:1.6rem;cursor:pointer;box-shadow:0 4px 20px rgba(255,55,95,0.5);">??</button>
-    <button id="vc-cam" onclick="toggleVcCam()" title="Apagar c�mara" style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.2);font-size:1.4rem;color:#fff;cursor:pointer;transition:all 0.2s;">??</button>`;
+    <button id="vc-cam" onclick="toggleVcCam()" title="Apagar cámara" style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.2);font-size:1.4rem;color:#fff;cursor:pointer;transition:all 0.2s;">📷</button>`;
 
   if (!document.getElementById('vc-styles')) {
     const st = document.createElement('style');
@@ -2204,10 +2204,10 @@ window.startVideoCall = function(nm, ii, co) {
 
   // Subtitles sequence
   const dialogue = [
-    { sender: nm, text: "�Hola! �Me escuchas bien? ??" },
-    { sender: nm, text: "�Qu� buena calidad! Esta llamada E2E va super fluida." },
-    { sender: nm, text: "Aqu� estamos organizando la salida del fin de semana... ???" },
-    { sender: nm, text: "�Te ves genial! Qu� ganas de vernos en el club." },
+    { sender: nm, text: "¡Hola! ¿Me escuchas bien? 🎤" },
+    { sender: nm, text: "¡Qué buena calidad! Esta llamada E2E va super fluida." },
+    { sender: nm, text: "Aquí estamos organizando la salida del fin de semana... 🏖️" },
+    { sender: nm, text: "¡Te ves genial! Qué ganas de vernos en el club." },
     { sender: nm, text: "Me encanta el cifrado de SwingerSphere, muy discreto. ??" }
   ];
   let subIndex = 0;
@@ -2229,7 +2229,7 @@ window.startVideoCall = function(nm, ii, co) {
         
         setTimeout(function() {
           const st2 = document.getElementById('vc-status');
-          if (st2) st2.textContent = '? Conectado � E2E Cifrado';
+          if (st2) st2.textContent = '🔒 Conectado • E2E Cifrado';
           const pl = document.getElementById('vc-placeholder');
           if (pl) {
             pl.style.opacity = '0';
@@ -2249,7 +2249,7 @@ window.startVideoCall = function(nm, ii, co) {
   function startSimulationFallback() {
     window._vcSimActive = true;
     const st = document.getElementById('vc-status');
-    if (st) st.textContent = '??? E2E Activo (Modo Simulaci�n)';
+    if (st) st.textContent = '🔒 E2E Activo (Modo Simulación)';
     
     setTimeout(function() {
       const pl = document.getElementById('vc-placeholder');
@@ -2425,7 +2425,7 @@ window.startVideoCall = function(nm, ii, co) {
         lCtx.fillStyle = 'rgba(255, 255, 255, 0.5)';
         lCtx.font = '600 0.68rem Inter, sans-serif';
         lCtx.textAlign = 'center';
-        lCtx.fillText('T� (Simulado)', lw / 2, lh / 2 + 25);
+        lCtx.fillText('Tú (Simulado)', lw / 2, lh / 2 + 25);
 
         if (Math.floor(tick / 20) % 2 === 0) {
           lCtx.fillStyle = '#ff375f';
@@ -2441,7 +2441,7 @@ window.startVideoCall = function(nm, ii, co) {
         lCtx.fillStyle = '#666666';
         lCtx.font = 'bold 0.6rem Inter, sans-serif';
         lCtx.textAlign = 'center';
-        lCtx.fillText('C�mara apagada', lw / 2, lh / 2);
+        lCtx.fillText('Cámara apagada', lw / 2, lh / 2);
       }
     }
 
@@ -2486,7 +2486,7 @@ window.toggleVcMic = function() {
     btn.style.background = window._vcMicOn ? 'rgba(255,255,255,0.12)' : 'rgba(255,55,95,0.3)';
     btn.style.borderColor = window._vcMicOn ? 'rgba(255,255,255,0.2)' : 'rgba(255,55,95,0.5)';
   }
-  showToast(window._vcMicOn ? '?? Micr�fono activado' : '?? Micr�fono silenciado', 'default');
+  showToast(window._vcMicOn ? '🎤 Micrófono activado' : '🔇 Micrófono silenciado', 'default');
 };
 
 window.toggleVcCam = function() {
@@ -2511,7 +2511,7 @@ window.toggleVcCam = function() {
     if (lvOff) lvOff.style.display = window._vcCamOn ? 'none' : 'flex';
     lvc.style.display = window._vcCamOn ? 'block' : 'none';
   }
-  showToast(window._vcCamOn ? '?? C�mara activada' : '?? C�mara desactivada', 'default');
+  showToast(window._vcCamOn ? '📷 Cámara activada' : '📷 Cámara desactivada', 'default');
 };
 
 
@@ -3042,7 +3042,7 @@ window.addEventListener('load',()=>{
           reviews: 4,
           certified: true,
           image: evt.emoji,
-          description: 'Actividad oficial en ' + evt.club + ' programada por la administraci�n.',
+          description: 'Actividad oficial en ' + evt.club + ' programada por la administración.',
           dates: [evt.date],
           capacity: evt.maxAttendees
         });
@@ -3290,7 +3290,7 @@ window.showAdminPanel = function() {
   // Header
   const header = document.createElement('div');
   header.style.cssText = 'display:flex;justify-content:between;align-items:center;margin-bottom:1.5rem;border-bottom:1px solid var(--border);padding-bottom:0.75rem;';
-  header.innerHTML = `<h3 style="margin:0;font-size:1.1rem;font-weight:800;color:var(--copper);">?? Panel de Administraci�n</h3>
+  header.innerHTML = `<h3 style="margin:0;font-size:1.1rem;font-weight:800;color:var(--copper);">⚙️ Panel de Administración</h3>`
     <button onclick="this.closest('.overlay').remove()" class="btn-icon btn-secondary" style="background:none;border:none;color:#aaa;font-size:1.1rem;cursor:pointer;">?</button>`;
   modal.appendChild(header);
 
@@ -3298,12 +3298,12 @@ window.showAdminPanel = function() {
   const sec1 = document.createElement('div');
   sec1.style.marginBottom = '1.5rem';
   sec1.innerHTML = `<h4 style="font-size:0.85rem;color:#c4813a;text-transform:uppercase;margin:0 0 0.5rem;letter-spacing:1px;">1. Simulador: Ver App Como</h4>
-    <p style="font-size:0.7rem;color:#aeaeb2;margin:0 0 0.75rem;">Cambia el perfil activo para probar bloqueos rec�procos y ver c�mo interact�an otros usuarios.</p>`;
+    <p style="font-size:0.7rem;color:#aeaeb2;margin:0 0 0.75rem;">Cambia el perfil activo para probar bloqueos recíprocos y ver cómo interactúan otros usuarios.</p>`;
   
   const select = document.createElement('select');
   select.style.cssText = 'width:100%;padding:10px;background:#1a1d26;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:0.85rem;';
   
-  const opts = [{id:'me', name:'Alex & Sara (T�)'}].concat(USERS);
+  const opts = [{id:'me', name:'Alex & Sara (Tú)'}].concat(USERS);
   opts.forEach(o => {
     const opt = document.createElement('option');
     opt.value = o.id;
@@ -3321,7 +3321,7 @@ window.showAdminPanel = function() {
   // 2. Block List section
   const sec2 = document.createElement('div');
   sec2.style.marginBottom = '1.5rem';
-  sec2.innerHTML = `<h4 style="font-size:0.85rem;color:#c4813a;text-transform:uppercase;margin:0 0 0.5rem;letter-spacing:1px;">2. Gesti�n de Bloqueos Globales</h4>`;
+  sec2.innerHTML = `<h4 style="font-size:0.85rem;color:#c4813a;text-transform:uppercase;margin:0 0 0.5rem;letter-spacing:1px;">2. Gestión de Bloqueos Globales</h4>`;
   
   const blockList = document.createElement('div');
   blockList.style.cssText = 'max-height:120px;overflow-y:auto;background:#1a1d26;border-radius:10px;padding:8px;font-size:0.72rem;margin-bottom:10px;border:1px solid rgba(255,255,255,0.05);';
@@ -3337,7 +3337,7 @@ window.showAdminPanel = function() {
       hasBlocks = true;
       const blockedName = blockedId === 'me' ? 'Alex & Sara' : (USERS.find(x => x.id === blockedId)?.name || blockedId);
       blockRows += `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
-        <span>?? <b>${blockerName}</b> bloque� a <b>${blockedName}</b></span>
+        <span>🚫 <b>${blockerName}</b> bloqueó a <b>${blockedName}</b></span>
         <button class="btn-text" style="color:#ff375f;background:none;border:none;cursor:pointer;font-size:0.7rem;font-weight:700;" onclick="adminRemoveBlock('${blockerId}','${blockedId}')">Desbloquear</button>
       </div>`;
     });
@@ -3367,7 +3367,7 @@ window.showAdminPanel = function() {
   blockBtn.onclick = function() {
     const idA = selA.value;
     const idB = selB.value;
-    if (idA === idB) { showToast('No puedes bloquearse a s� mismo', 'error'); return; }
+    if (idA === idB) { showToast('No puedes bloquearte a ti mismo', 'error'); return; }
     
     let currentBlocks = {};
     try { currentBlocks = JSON.parse(localStorage.getItem('ss_global_blocks') || '{}'); } catch(e) {}
@@ -3393,14 +3393,14 @@ window.showAdminPanel = function() {
   sec3.style.marginBottom = '1rem';
   sec3.innerHTML = `<h4 style="font-size:0.85rem;color:#c4813a;text-transform:uppercase;margin:0 0 0.75rem;letter-spacing:1px;">3. Programar Nueva Actividad / Evento</h4>
     <div style="display:flex;flex-direction:column;gap:8px;">
-      <input id="adm-title" placeholder="T�tulo (ej: Neon & Leather VIP)" style="width:100%;padding:8px 12px;background:#1a1d26;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:0.8rem;box-sizing:border-box;">
+      <input id="adm-title" placeholder="Título (ej: Neon & Leather VIP)" style="width:100%;padding:8px 12px;background:#1a1d26;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:0.8rem;box-sizing:border-box;">
       <input id="adm-club" placeholder="Club/Local (ej: Club Privee)" style="width:100%;padding:8px 12px;background:#1a1d26;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:0.8rem;box-sizing:border-box;">
       <input id="adm-date" placeholder="Fecha (ej: 28 Jun 2026)" style="width:100%;padding:8px 12px;background:#1a1d26;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:0.8rem;box-sizing:border-box;">
       <div style="display:flex;gap:8px;">
         <input id="adm-time" placeholder="Hora (ej: 22:00)" style="flex:1;padding:8px 12px;background:#1a1d26;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:0.8rem;box-sizing:border-box;">
-        <input id="adm-price" placeholder="Precio (ej: 50�)" style="flex:1;padding:8px 12px;background:#1a1d26;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:0.8rem;box-sizing:border-box;">
+        <input id="adm-price" placeholder="Precio (ej: 50€)" style="flex:1;padding:8px 12px;background:#1a1d26;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:0.8rem;box-sizing:border-box;">
       </div>
-      <input id="adm-loc" placeholder="Ciudad/Direcci�n (ej: Madrid, Espa�a)" style="width:100%;padding:8px 12px;background:#1a1d26;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:0.8rem;box-sizing:border-box;">
+      <input id="adm-loc" placeholder="Ciudad/Dirección (ej: Madrid, España)" style="width:100%;padding:8px 12px;background:#1a1d26;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:0.8rem;box-sizing:border-box;">
       <div style="display:flex;gap:8px;">
         <input id="adm-emoji" placeholder="Emoji (ej: ??)" style="flex:0.3;padding:8px 12px;background:#1a1d26;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:0.8rem;box-sizing:border-box;">
         <input id="adm-tags" placeholder="Tags separados por coma (ej: Kink, VIP)" style="flex:1;padding:8px 12px;background:#1a1d26;border:1px solid var(--border);border-radius:10px;color:#fff;font-size:0.8rem;box-sizing:border-box;">
@@ -3421,7 +3421,7 @@ window.adminRemoveBlock = function(blockerId, blockedId) {
     if (idx !== -1) {
       blocks[blockerId].splice(idx, 1);
       localStorage.setItem('ss_global_blocks', JSON.stringify(blocks));
-      showToast('Desbloqueado con �xito', 'success');
+      showToast('Desbloqueado con éxito', 'success');
       showAdminPanel(); // Refresh
       if (typeof navigateTo === 'function') navigateTo(state.screen || 'home');
     }
@@ -3439,7 +3439,7 @@ window.adminScheduleEvent = function() {
   const tagsText = document.getElementById('adm-tags').value.trim();
 
   if (!title || !date || !loc) {
-    showToast('Por favor rellenar T�tulo, Fecha y Ciudad', 'error');
+    showToast('Por favor rellenar Título, Fecha y Ciudad', 'error');
     return;
   }
 
@@ -3456,7 +3456,7 @@ window.adminScheduleEvent = function() {
     attendees: 12,
     maxAttendees: 80,
     anonymous: false,
-    price: price || '30�',
+    price: price || '30€',
     emoji: emoji,
     tags: tagsText ? tagsText.split(',').map(t => t.trim()).filter(Boolean) : ['VIP'],
     color: 'linear-gradient(135deg,#1a0a00,#4a2e0f)'
@@ -3478,7 +3478,7 @@ window.adminScheduleEvent = function() {
       reviews: 4,
       certified: true,
       image: newEvt.emoji,
-      description: 'Actividad oficial en ' + newEvt.club + ' programada por la administraci�n.',
+      description: 'Actividad oficial en ' + newEvt.club + ' programada por la administración.',
       dates: [newEvt.date],
       capacity: newEvt.maxAttendees
     });
@@ -3513,22 +3513,22 @@ window.showClubLanding = function(clubId) {
   let clubAddress = 'Calle del Deseo, 24, Madrid';
   let clubPhone = '+34 600 111 222';
   let clubCapacity = '150 personas';
-  let clubDesc = 'El club swinger y lifestyle m�s exclusivo de la capital. Ambiente distinguido para parejas curiosas y experimentadas. Selecci�n rigurosa en puerta.';
+  let clubDesc = 'El club swinger y lifestyle más exclusivo de la capital. Ambiente distinguido para parejas curiosas y experimentadas. Selección rigurosa en puerta.';
   let coverIcon = '???';
   let amenities = ["Salas de juego privadas", "Jacuzzi climatizado", "Barra libre premium", "Zonas oscuras (Playrooms)", "Pista de baile sensual", "Camerinos con taquillas"];
-  let schedule = "Viernes y S�bados: 23:00 - 06:00";
+  let schedule = "Viernes y Sábados: 23:00 - 06:00";
   let rating = "4.8";
   let reviews = 142;
 
   if (clubId === 'oasis') {
     clubName = 'Oasis Barcelona';
     clubCity = 'Barcelona';
-    clubAddress = 'Avinguda del Cl�max, 69, Barcelona';
+    clubAddress = 'Avinguda del Clímax, 69, Barcelona';
     clubPhone = '+34 600 333 444';
     clubCapacity = '200 personas';
-    clubDesc = 'Un santuario de libertad y erotismo frente al mar. Instalaciones de lujo con jardines ex�ticos y zonas h�medas. Fiestas tem�ticas internacionales.';
+    clubDesc = 'Un santuario de libertad y erotismo frente al mar. Instalaciones de lujo con jardines exóticos y zonas húmedas. Fiestas temáticas internacionales.';
     coverIcon = '??';
-    amenities = ["Jard�n naturista privado", "Piscina exterior", "Zonas de juego amplias", "Camas balinesas", "Cocteler�a ex�tica", "Zona VIP reservada"];
+    amenities = ["Jardín naturista privado", "Piscina exterior", "Zonas de juego amplias", "Camas balinesas", "Coctelería exótica", "Zona VIP reservada"];
     schedule = "Jueves a Domingos: 22:00 - 05:00";
     rating = "4.7";
     reviews = 98;
@@ -3539,10 +3539,10 @@ window.showClubLanding = function(clubId) {
         const parsed = JSON.parse(customProfile);
         clubName = parsed.name || 'Tu Club Custom';
         clubCity = parsed.city || 'Tu Ciudad';
-        clubAddress = parsed.address || 'Tu Direcci�n';
-        clubPhone = parsed.phone || 'Tu Tel�fono';
+        clubAddress = parsed.address || 'Tu Dirección';
+        clubPhone = parsed.phone || 'Tu Teléfono';
         clubCapacity = parsed.capacity || '100 personas';
-        clubDesc = parsed.description || 'Descripci�n personalizada de tu local.';
+        clubDesc = parsed.description || 'Descripción personalizada de tu local.';
         coverIcon = parsed.icon || '???';
         if (parsed.amenities) amenities = parsed.amenities.split(',').map(x => x.trim()).filter(Boolean);
         if (parsed.schedule) schedule = parsed.schedule;
@@ -3577,7 +3577,7 @@ window.showClubLanding = function(clubId) {
   
   const ratingRow = document.createElement('div');
   ratingRow.style.cssText = 'display:flex;align-items:center;gap:6px;font-size:0.7rem;color:#aeaeb2;margin-bottom:0.4rem;';
-  ratingRow.innerHTML = `<span style="color:#ffd700;">?</span><span style="color:#fff;font-weight:700;">${rating}</span><span>(${reviews} rese�as)</span><span style="background:rgba(48,209,88,0.12);color:#30d158;padding:2px 8px;border-radius:9999px;font-size:0.6rem;font-weight:700;margin-left:6px;border:1px solid rgba(48,209,88,0.25);box-shadow:0 0 8px rgba(48,209,88,0.2);">VERIFICADO GOLD</span>`;
+  ratingRow.innerHTML = `<span style="color:#ffd700;">★</span><span style="color:#fff;font-weight:700;">${rating}</span><span>(${reviews} reseñas)</span><span style="background:rgba(48,209,88,0.12);color:#30d158;padding:2px 8px;border-radius:9999px;font-size:0.6rem;font-weight:700;margin-left:6px;border:1px solid rgba(48,209,88,0.25);box-shadow:0 0 8px rgba(48,209,88,0.2);">VERIFICADO GOLD</span>`;
   titleInfo.appendChild(ratingRow);
 
   const mainTitle = document.createElement('h1');
@@ -3618,8 +3618,8 @@ window.showClubLanding = function(clubId) {
   detailCard.style.cssText = 'background:#1a1d26;border:1px solid rgba(196,129,58,0.15);border-radius:16px;padding:12px 16px;display:flex;flex-direction:column;gap:8px;';
   detailCard.innerHTML = `
     <div style="display:flex;justify-content:between;font-size:0.78rem;"><span style="color:#aeaeb2;">? Horario:</span><span style="font-weight:600;margin-left:auto;">${schedule}</span></div>
-    <div style="display:flex;justify-content:between;font-size:0.78rem;"><span style="color:#aeaeb2;">?? Aforo m�ximo:</span><span style="font-weight:600;margin-left:auto;">${clubCapacity}</span></div>
-    <div style="display:flex;justify-content:between;font-size:0.78rem;"><span style="color:#aeaeb2;">?? Tel�fono de contacto:</span><span style="font-weight:600;margin-left:auto;">${clubPhone}</span></div>
+    <div style="display:flex;justify-content:between;font-size:0.78rem;"><span style="color:#aeaeb2;">👥 Aforo máximo:</span><span style="font-weight:600;margin-left:auto;">${clubCapacity}</span></div>
+    <div style="display:flex;justify-content:between;font-size:0.78rem;"><span style="color:#aeaeb2;">📞 Teléfono de contacto:</span><span style="font-weight:600;margin-left:auto;">${clubPhone}</span></div>
   `;
   body.appendChild(detailCard);
 
@@ -3627,7 +3627,7 @@ window.showClubLanding = function(clubId) {
   resCard.style.cssText = 'background:linear-gradient(135deg,rgba(196,129,58,0.12),rgba(0,0,0,0.3));border:1px solid rgba(196,129,58,0.4);border-radius:18px;padding:16px;text-align:center;box-shadow:0 0 15px rgba(196,129,58,0.15);';
   resCard.innerHTML = `
     <h4 style="font-size:0.9rem;margin:0 0 0.25rem;font-weight:700;color:#fff;">Reservar Mesa VIP o Entrada</h4>
-    <p style="font-size:0.72rem;color:#aeaeb2;margin:0 0 1rem;">Consigue tu reserva con TrustScore� garantizado y acceso r�pido.</p>
+    <p style="font-size:0.72rem;color:#aeaeb2;margin:0 0 1rem;">Consigue tu reserva con TrustScore™ garantizado y acceso rápido.</p>
     <button id="club-land-book-btn" class="btn btn-primary w-full" style="padding:0.75rem;font-size:0.8rem;font-weight:700;">Reservar ahora</button>
   `;
   resCard.querySelector('#club-land-book-btn').onclick = () => {

@@ -51,7 +51,7 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
           'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-specdec',
+          model: 'llama-3.3-70b-versatile',
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userMsg }
