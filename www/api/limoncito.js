@@ -28,15 +28,49 @@ export default async function handler(req, res) {
   const apiKey = rawKey.trim();
   const isGroq = apiKey.startsWith('gsk_');
 
+  // Query Google Places if key is configured and message matches search intent
+  let mapsContext = "";
+  const mapsApiKey = process.env.GOOGLE_MAPS_API_KEY;
+  const isSearchQuery = /(?:club|spa|local|sitio|hotel|donde|encuentra|buscar|mapa|swinger|liberal|evento|fiesta)/i.test(userMsg);
+  
+  if (mapsApiKey && isSearchQuery) {
+    try {
+      const placesUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(userMsg)}&key=${mapsApiKey}`;
+      const mapsRes = await fetch(placesUrl);
+      if (mapsRes.ok) {
+        const mapsData = await mapsRes.ok ? await mapsRes.json() : null;
+        if (mapsData && mapsData.results && mapsData.results.length > 0) {
+          mapsContext = "\n--- RESULTADOS DE GOOGLE MAPS EN TIEMPO REAL ---\n";
+          mapsData.results.slice(0, 5).forEach((place, idx) => {
+            mapsContext += `${idx + 1}. **${place.name}**\n`;
+            mapsContext += `   Dirección: ${place.formatted_address || 'No disponible'}\n`;
+            if (place.rating) {
+              mapsContext += `   Calificación: ${place.rating} ⭐ (${place.user_ratings_total} reseñas)\n`;
+            }
+            if (place.business_status) {
+              mapsContext += `   Estado: ${place.business_status === 'OPERATIONAL' ? 'Abierto y operativo' : 'Cerrado o inactivo'}\n`;
+            }
+          });
+          mapsContext += "----------------------------------------------\n";
+        }
+      }
+    } catch (e) {
+      console.error("Google Places API error:", e);
+    }
+  }
+
   const systemPrompt = `Eres Shadow, el oráculo del swinging y asistente IA oficial de SwingerSphere — la plataforma premium de lifestyle en España y Latinoamérica.
 Tu personalidad: cercano, sabio, discreto, informado, inclusivo y sin prejuicios. Usas emojis con moderación.
 Respondes SIEMPRE en español. Eres el Oráculo Supremo del ambiente swinger y LGTBI+; eres un experto absoluto en: banderas del orgullo LGTBI+ y su historia/significado, además de prácticas BDSM, fetiches, relaciones abiertas, normas, booking de hoteles/viajes, y CRM de clubes.
+Cuando te pregunten por clubes o spas nudistas: utiliza y cita las direcciones reales, horarios y valoraciones que recibas de Google Maps.
+Cuando te pregunten por eventos de un club: indica qué eventos organiza (por ejemplo, noches temáticas de singles, fiestas de parejas VIP, etc.) buscando activamente la información o utilizando los datos disponibles en internet y en la base de conocimientos.
 Cuando el usuario pregunte sobre pagar: la membresía PRO cuesta 9,99 EUR/mes. Métodos: tarjeta via Transak (convertida automáticamente a USDC) y USDC directo en redes Polygon, Arbitrum o Ethereum.
 Cuando el usuario mencione una ciudad o viaje: recomienda hoteles, eventos y entradas del sistema de Booking con precios.
 Cuando un club pregunte: ofrece planes CRM desde 40 EUR e insignia de Certificación.
 
 Contexto relevante de tu base de conocimiento:
 ${context || 'Sin contexto específico'}
+${mapsContext}
 
 Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
 
