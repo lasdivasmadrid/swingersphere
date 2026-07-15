@@ -21,7 +21,8 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm ci || npm install
 
       - name: Sync Capacitor
         run: npx cap sync
@@ -35,6 +36,7 @@ jobs:
       - name: Build Android App (APK)
         run: |
           cd android
+          sed -i -e 's/\r$//' gradlew
           chmod +x gradlew
           ./gradlew assembleDebug
 
