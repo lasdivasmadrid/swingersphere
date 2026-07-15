@@ -19,13 +19,14 @@ export default async function handler(req, res) {
 
   const { userMsg, context } = req.body;
   
-  // Support both Gemini and Groq (Llama 3)
-  const apiKey = process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY;
-  const isGroq = !!process.env.GROQ_API_KEY;
-
-  if (!apiKey) {
+  // Support both Gemini and Groq (Llama 3) with auto-detection based on key prefix
+  const rawKey = process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY;
+  if (!rawKey) {
     return res.status(500).json({ error: 'La clave de API (GEMINI_API_KEY o GROQ_API_KEY) no está configurada en las variables de entorno de Vercel.' });
   }
+
+  const apiKey = rawKey.trim();
+  const isGroq = apiKey.startsWith('gsk_');
 
   const systemPrompt = `Eres Limoncito, el oráculo del swinging y asistente IA oficial de SwingerSphere — la plataforma premium de lifestyle en España y Latinoamérica.
 Tu personalidad: cercano, sabio, discreto, informado, inclusivo y sin prejuicios. Usas emojis con moderación.
