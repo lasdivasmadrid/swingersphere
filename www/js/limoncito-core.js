@@ -572,6 +572,11 @@ const ConciergeDetector = (() => {
 
   function detect(msg) {
     const lw = msg.toLowerCase();
+    
+    // Check if there is an explicit intent of travel or concierge guide
+    const travelIntent = /(?:voy|viajo|viaje|visito|viajar|ir a|escapada|vacaciones|turismo|concierge)/.test(lw);
+    if (!travelIntent) return null;
+
     let city = null;
 
     for (const [key, data] of Object.entries(CITY_DATA)) {

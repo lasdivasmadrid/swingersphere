@@ -394,8 +394,8 @@
     {
       id: 'loc1',
       title: 'Clubs y locales swinger en Madrid',
-      tags: ['madrid','locales','clubs','swinger','sharon','limb','sublime','trama','espana'],
-      content: 'Locales Swinger y Liberales en Madrid:\n\n🏛️ LIMB CLUB (Avenida de América, 33):\n• Discoteca elegante de 600m² con ambiente selecto.\n• Varias plantas, pista de baile y playrooms privados.\n• Muy concurrido los fines de semana.\n\n🏛️ SHARON CLUB (Calle de Orense, 26):\n• Exclusivo para parejas con estricto código de vestimenta.\n• Ambiente elegante y privado.\n\n🏛️ SUBBLIME (Calle de Juan de Olías, 8):\n• Discoteca y club swinger de referencia en la zona norte.\n• Pista de baile, zona lounge y reservados.'
+      tags: ['madrid','locales','clubs','swinger','sharon','limb','sublime','trama','bakanal','bakanal bk','espana'],
+      content: 'Locales Swinger y Liberales en Madrid:\n\n🏛️ BAKANAL CLUB (Humanes de Madrid):\n• Club swinger y liberal de gran reputación, ideal para parejas y singles liberales.\n• Cuenta con instalaciones completas que incluyen jacuzzi, sauna, pista de baile y amplios playrooms temáticos.\n• Destaca por su ambiente dinámico y fiestas temáticas los fines de semana.\n\n🏛️ LIMB CLUB (Avenida de América, 33):\n• Discoteca elegante de 600m² con ambiente selecto.\n• Varias plantas, pista de baile y playrooms privados.\n• Muy concurrido los fines de semana.\n\n🏛️ SHARON CLUB (Calle de Orense, 26):\n• Exclusivo para parejas con estricto código de vestimenta.\n• Ambiente elegante y privado.\n\n🏛️ SUBBLIME (Calle de Juan de Olías, 8):\n• Discoteca y club swinger de referencia en la zona norte.\n• Pista de baile, zona lounge y reservados.'
     },
     {
       id: 'loc2',
