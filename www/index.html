@@ -51,88 +51,35 @@
       padding-top: 96px;
     }
 
-    /* Hero section split layout */
+    /* Hero section luxury portal card layout */
     .landing-hero {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: var(--space-10);
+      display: flex;
       align-items: center;
-      padding: var(--space-12) var(--space-6);
+      justify-content: center;
+      min-height: calc(100vh - 96px);
+      padding: var(--space-8) var(--space-4);
+      width: 100%;
       max-width: 1100px;
       margin: 0 auto;
-      min-height: calc(100vh - 96px);
     }
-    .hero-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-5);
-      text-align: left;
-    }
-    .hero-globe-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+    .luxury-portal-card {
       width: 100%;
-      max-width: 440px;
-      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      background: rgba(10, 11, 15, 0.70);
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 40px rgba(212,175,55,0.05);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
     }
-    .hero-globe-wrapper {
-      position: relative;
-      width: 360px;
-      height: 360px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(196,129,58,0.06) 0%, transparent 70%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #hero-globe {
-      width: 350px;
-      height: 350px;
-      cursor: grab;
-      filter: drop-shadow(0 0 40px rgba(196,129,58,0.22));
-    }
-    .globe-overlay-stats {
-      position: absolute;
-      bottom: -10px;
-      background: rgba(10, 11, 15, 0.75);
-      border: 1px solid var(--gold-border);
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius-full);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--white);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-      animation: pulse-ring 2.5s ease-in-out infinite;
-    }
-
-    @media (max-width: 900px) {
-      .landing-hero {
+    @media (max-width: 800px) {
+      .luxury-portal-card {
         grid-template-columns: 1fr;
-        text-align: center;
-        padding: var(--space-6) var(--space-4) var(--space-12);
-        min-height: auto;
       }
-      .hero-info {
-        align-items: center;
-        text-align: center;
-      }
-      .hero-globe-container {
-        order: -1;
-        margin-bottom: var(--space-8);
-      }
-      .hero-globe-wrapper {
-        width: 280px;
-        height: 280px;
-      }
-      #hero-globe {
-        width: 270px;
-        height: 270px;
+      .portal-info-panel {
+        display: none !important;
       }
     }
 
@@ -282,51 +229,95 @@
         <a href="app.html" class="btn btn-secondary btn-sm" id="nav-enter">Entrar</a>
       </div>
     </nav>
-    <section class="landing-hero">
-      <div class="hero-info">
-        <div class="landing-badge">
-          <span id="hero-badge">🛡️ La red más segura del lifestyle</span>
-        </div>
-        <h1 class="landing-title" style="font-family: var(--font-title); font-weight: 800; font-size: 3rem; line-height: 1.15; letter-spacing: -0.04em;">
-          <span id="hero-title1">La comunidad lifestyle</span><br>
-          <span class="landing-title-accent gradient-text" id="hero-title2">más segura del mundo</span>
-        </h1>
-        <p class="landing-subtitle" id="hero-subtitle" style="font-size: 1.05rem; color: var(--silver); line-height: 1.7; max-width: 520px; margin-bottom: 0.5rem;">
-          Privacidad extrema, reputación verificable y comunidad real.
-          El lugar donde la confianza se construye, no se asume.
-        </p>
-        <div class="landing-cta-row" style="display: flex; gap: 1rem; width: 100%;">
-          <a href="app.html" class="btn btn-primary btn-lg" id="cta-register" style="box-shadow: 0 4px 30px rgba(196,129,58,0.4), inset 0 1px 0 rgba(255,255,255,0.2); background: linear-gradient(135deg, var(--gold) 0%, var(--copper) 100%); border-radius: 14px;">
-            🔮 Unirme ahora
-          </a>
-          <a href="app.html" class="btn btn-secondary btn-lg" id="cta-enter" style="border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02);">
-            Explorar la app →
-          </a>
+    <section class="landing-hero" style="min-height: calc(100vh - 96px); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 1100px; margin: 0 auto; padding: var(--space-8) var(--space-4);">
+      <div class="luxury-portal-card reveal" style="width: 100%; display: grid; grid-template-columns: 1fr 1.1fr; background: rgba(10, 11, 15, 0.70); border: 1px solid rgba(212, 175, 55, 0.22); border-radius: 28px; overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 40px rgba(212,175,55,0.05); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);">
+        
+        <!-- Left Panel: Why SwingerSphere (with Custom SVGs) -->
+        <div class="portal-info-panel" style="background: linear-gradient(135deg, rgba(20, 21, 26, 0.8) 0%, rgba(10, 11, 15, 0.9) 100%); padding: var(--space-8); border-right: 1px solid rgba(255, 255, 255, 0.03); display: flex; flex-direction: column; justify-content: center; gap: var(--space-6);">
+          <h2 class="portal-heading" style="font-family: var(--font-title); font-size: 1.8rem; font-weight: 800; color: var(--white); letter-spacing: -0.02em; margin-bottom: var(--space-2);">¿Por qué SwingerSphere?</h2>
+          
+          <!-- Feature 1: Exclusiva -->
+          <div class="portal-feature" style="display: flex; gap: var(--space-4); align-items: flex-start;">
+            <div class="portal-feat-icon" style="width: 40px; height: 40px; border-radius: 10px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.2); display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0;">
+              <svg class="icon-svg" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 2px;">Comunidad Exclusiva</h3>
+              <p style="font-size: 0.82rem; color: var(--silver); line-height: 1.5;">Solo por invitación o verificación. Perfiles 100% reales, sin bots ni cuentas falsas.</p>
+            </div>
+          </div>
+
+          <!-- Feature 2: Privacidad -->
+          <div class="portal-feature" style="display: flex; gap: var(--space-4); align-items: flex-start;">
+            <div class="portal-feat-icon" style="width: 40px; height: 40px; border-radius: 10px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.2); display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0;">
+              <svg class="icon-svg" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 2px;">Privacidad Extrema</h3>
+              <p style="font-size: 0.82rem; color: var(--silver); line-height: 1.5;">Fotos efímeras autodestruibles en memoria. Protección avanzada contra capturas de pantalla.</p>
+            </div>
+          </div>
+
+          <!-- Feature 3: TrustScore -->
+          <div class="portal-feature" style="display: flex; gap: var(--space-4); align-items: flex-start;">
+            <div class="portal-feat-icon" style="width: 40px; height: 40px; border-radius: 10px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.2); display: flex; align-items: center; justify-content: center; color: var(--gold); flex-shrink: 0;">
+              <svg class="icon-svg" viewBox="0 0 24 24" style="width: 20px; height: 20px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 11 2 2 4-4"/></svg>
+            </div>
+            <div>
+              <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 2px;">Reputación Verificable</h3>
+              <p style="font-size: 0.82rem; color: var(--silver); line-height: 1.5;">TrustScore™ dinámico basado en interacciones reales. Confianza instantánea.</p>
+            </div>
+          </div>
+
+          <!-- Mini Globe inside Left Panel -->
+          <div style="margin-top: var(--space-4); display: flex; align-items: center; gap: 1.25rem; background: rgba(212, 175, 55, 0.03); border: 1px solid rgba(212, 175, 55, 0.08); padding: 1rem; border-radius: 16px;">
+            <canvas id="hero-globe" width="100" height="100" style="width: 90px; height: 90px; filter: drop-shadow(0 0 15px rgba(212,175,55,0.15));"></canvas>
+            <div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--white);" id="globe-stats">● 3,142 en España</div>
+              <div style="font-size: 0.72rem; color: var(--silver-dark); margin-top: 2px;">Parejas y locales activos en vivo.</div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Stats (Moved under Hero left column for better visual balance) -->
-        <div class="landing-stats reveal" style="display: flex; gap: 3rem; margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem; width: 100%;">
-          <div class="stat-item" style="align-items: flex-start;">
-            <span class="stat-number" data-target="284" data-suffix="K" style="font-family: var(--font-title); font-size: 2.2rem; font-weight: 800;">0</span>
-            <span class="stat-label" id="stat-members" style="font-size: 0.7rem; letter-spacing: 0.1em;">Miembros</span>
+        <!-- Right Panel: Access Portal Form -->
+        <div class="portal-access-panel" style="padding: var(--space-8) var(--space-8); display: flex; flex-direction: column; justify-content: center; gap: var(--space-5);">
+          <div style="text-align: center; margin-bottom: var(--space-4);">
+            <div style="font-size: 1.8rem; font-weight: 800; font-family: var(--font-title); letter-spacing: -0.04em;" class="gradient-text">SwingerSphere</div>
+            <p style="font-size: 0.8rem; color: var(--silver); font-style: italic; margin-top: 4px;">La comunidad más exclusiva para parejas liberales</p>
           </div>
-          <div class="stat-item" style="align-items: flex-start;">
-            <span class="stat-number" data-target="1240" data-suffix="" style="font-family: var(--font-title); font-size: 2.2rem; font-weight: 800;">0</span>
-            <span class="stat-label" id="stat-events" style="font-size: 0.7rem; letter-spacing: 0.1em;">Eventos</span>
-          </div>
-          <div class="stat-item" style="align-items: flex-start;">
-            <span class="stat-number" data-target="67" data-suffix="" style="font-family: var(--font-title); font-size: 2.2rem; font-weight: 800;">0</span>
-            <span class="stat-label" id="stat-countries" style="font-size: 0.7rem; letter-spacing: 0.1em;">Países</span>
-          </div>
-        </div>
-      </div>
 
-      <!-- Right Column: Interactive 3D Globe -->
-      <div class="hero-globe-container">
-        <div class="hero-globe-wrapper">
-          <canvas id="hero-globe" width="350" height="350"></canvas>
-          <div class="globe-overlay-stats">● 2,842 en línea</div>
+          <!-- Form Fields -->
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+            <div>
+              <label style="font-size: 0.75rem; color: var(--silver); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: var(--space-2);">E-mail</label>
+              <div class="input-wrap" style="position: relative;">
+                <span class="input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--silver-dark); pointer-events: none;">✉</span>
+                <input type="email" id="portal-email" placeholder="Introduce tu e-mail" style="width: 100%; padding: 0.8rem 1rem 0.8rem 2.8rem; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; color: var(--white); font-size: 0.875rem;" required>
+              </div>
+            </div>
+
+            <div>
+              <label style="font-size: 0.75rem; color: var(--silver); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: var(--space-2);">Código de Acceso / Invitación</label>
+              <div class="input-wrap" style="position: relative;">
+                <span class="input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--silver-dark); pointer-events: none;">🔑</span>
+                <input type="password" id="portal-invite" placeholder="Introduce tu contraseña o invitación" style="width: 100%; padding: 0.8rem 1rem 0.8rem 2.8rem; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; color: var(--white); font-size: 0.875rem;" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button id="do-portal-login" onclick="window.location.href='app.html'" style="width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--gold) 0%, var(--copper) 100%); border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 800; color: #fff; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(196,129,58,0.35); text-align: center; margin-top: var(--space-2);">
+            Entrar a la app →
+          </button>
+
+          <!-- Register link info -->
+          <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: var(--space-4); text-align: center;">
+            <h4 style="font-size: 0.85rem; font-weight: 700; color: var(--white); margin-bottom: var(--space-2);">🔑 ¿Cómo me registro?</h4>
+            <p style="font-size: 0.78rem; color: var(--silver-dark); line-height: 1.6;">Para unirte a <strong>SwingerSphere</strong> necesitas la invitación de un miembro activo o club verificado. Así garantizamos un entorno seguro, discreto y sin bots.</p>
+          </div>
         </div>
+
       </div>
     </section>
 
