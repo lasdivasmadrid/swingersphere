@@ -419,6 +419,7 @@ window.showCertificationForm = function(badgeType) {
     }
 
     if (window.SecurityLog) SecurityLog.write('CERT_REQUEST_SUBMITTED', {id: request.id, type: badge.id, name: nameVal});
+    if (window.Analytics) window.Analytics.trackEvent('cert_requested', { badgeName: badge.name, businessName: nameVal, email: emailVal });
 
     ov.remove();
 

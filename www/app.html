@@ -221,6 +221,7 @@ function agVerify(){
 
 <!-- Globe Engine (continents + fly-in dots + EM2) -->
 <script src="js/security.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/limoncito-core.js"></script>
 <script src="js/shadow-kb-lifestyle.js"></script>
 <script src="js/shadow-kb-bible.js"></script>
@@ -1403,6 +1404,9 @@ function showEditProfileModal() {
     
     if (window.SecurityLog) {
       SecurityLog.write('PROFILE_UPDATE', { name: u.name, hasAvatar: !!u.avatarImage, hasCover: !!u.coverImage });
+    }
+    if (window.Analytics) {
+      window.Analytics.trackEvent('profile_created', { name: u.name, type: u.badge, city: u.location, bio: u.bio });
     }
 
     showToast('✅ Perfil actualizado', 'success');

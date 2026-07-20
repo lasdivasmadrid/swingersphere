@@ -256,6 +256,7 @@ window.showVenueContactForm = function(plan) {
       ts: new Date().toISOString(),
     };
     if (window.SecurityLog) SecurityLog.write('VENUE_REQUEST', data);
+    if (window.Analytics) window.Analytics.trackEvent('venue_ad_requested', { venueName: data.name, plan: data.plan, contact: data.email || data.phone });
     try { var reqs = JSON.parse(localStorage.getItem('ss_venue_requests')||'[]'); reqs.unshift(data); localStorage.setItem('ss_venue_requests', JSON.stringify(reqs.slice(0,50))); } catch(e){}
     ov.remove();
     showToast('📨 Solicitud enviada! Te contactamos en 24-48h.','copper');
