@@ -19,12 +19,13 @@ export default async function handler(req, res) {
 
   const { userMsg, context } = req.body;
   
-  // Support both Gemini and Groq (Llama 3) with prioritized fallback and Vercel environment safety
+  // Support Hugging Face, Gemini and Groq with prioritized fallback and Vercel environment safety
+  const hfToken = (process.env.HF_TOKEN || '').trim();
   const geminiKey = (process.env.GEMINI_API_KEY || '').trim();
   const groqKey = (process.env.GROQ_API_KEY || '').trim();
 
-  if (!geminiKey && !groqKey) {
-    return res.status(500).json({ error: 'La clave de API (GEMINI_API_KEY o GROQ_API_KEY) no está configurada en las variables de entorno de Vercel.' });
+  if (!hfToken && !geminiKey && !groqKey) {
+    return res.status(500).json({ error: 'La clave de API (HF_TOKEN, GEMINI_API_KEY o GROQ_API_KEY) no está configurada en las variables de entorno de Vercel.' });
   }
 
   // Query Google Places if key is configured and message matches search intent
@@ -72,6 +73,50 @@ ${context || 'Sin contexto específico'}
 ${mapsContext}
 
 Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
+
+  async function callHuggingFace(token) {
+    const url = 'https://router.huggingface.co/v1/chat/completions';
+    const models = [
+      'Qwen/Qwen2.5-72B-Instruct',
+      'meta-llama/Llama-3.3-70B-Instruct',
+      'Qwen/Qwen2.5-7B-Instruct',
+      'meta-llama/Llama-3.1-8B-Instruct'
+    ];
+    
+    const errorsList = [];
+    for (const model of models) {
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            model: model,
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: userMsg }
+            ],
+            temperature: 0.7,
+            max_tokens: 600
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const text = data?.choices?.[0]?.message?.content;
+          if (text) return text.trim();
+        } else {
+          const errData = await response.json().catch(() => ({}));
+          errorsList.push(`${model}: ${errData?.error?.message || `HTTP ${response.status}`}`);
+        }
+      } catch (e) {
+        errorsList.push(`${model}: ${e.message}`);
+      }
+    }
+    throw new Error(`[${errorsList.join(' | ')}]`);
+  }
 
   async function callGemini(key) {
     const models = [
@@ -163,8 +208,18 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
   let responseText = "";
   const errors = [];
 
-  // Try Gemini first if defined (User's preference)
-  if (geminiKey) {
+  // Try Hugging Face first if defined (Option 2 — Free globally)
+  if (hfToken) {
+    try {
+      responseText = await callHuggingFace(hfToken);
+    } catch (e) {
+      console.error("Hugging Face call failed, trying Gemini/Groq:", e);
+      errors.push(`Hugging Face Error: ${e.message}`);
+    }
+  }
+
+  // Fallback to Gemini
+  if (!responseText && geminiKey) {
     try {
       responseText = await callGemini(geminiKey);
     } catch (e) {
@@ -173,7 +228,7 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
     }
   }
 
-  // Fallback to Groq if Gemini wasn't defined or failed
+  // Fallback to Groq
   if (!responseText && groqKey) {
     try {
       responseText = await callGroq(groqKey);
@@ -183,11 +238,11 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
     }
   }
 
-  // If both failed or are not configured
+  // If all failed or are not configured
   if (!responseText) {
     const combinedErrors = errors.length > 0 ? errors.join(' | ') : 'Sin claves válidas configuradas.';
     return res.status(500).json({
-      error: `⚠️ Error de la IA en el Servidor: ${combinedErrors}. Comprueba que has configurado la variable de entorno GEMINI_API_KEY en Vercel con el valor correcto y has hecho un Redeploy.`
+      error: `⚠️ Error de la IA en el Servidor: ${combinedErrors}. Comprueba que has configurado la variable de entorno HF_TOKEN en Vercel con el valor correcto y has hecho un Redeploy.`
     });
   }
 
