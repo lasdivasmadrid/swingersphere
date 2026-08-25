@@ -194,6 +194,198 @@
     }
     .lang-opt:hover { background: rgba(212,175,55,0.06); }
     .lang-opt.selected { color: var(--gold); font-weight: 700; }
+
+    /* Wizard Steps styling */
+    .wizard-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
+    }
+    .wizard-step {
+      display: none;
+      animation: slide-in 0.35s var(--ease-out) forwards;
+    }
+    .wizard-step.active {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateX(16px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .wizard-progress {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+    .progress-bar-bg {
+      flex: 1;
+      height: 4px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 2px;
+      margin: 0 var(--space-3);
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 25%;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--copper) 100%);
+      transition: width 0.3s var(--ease-out);
+    }
+    .wizard-back-btn {
+      font-size: 0.8rem;
+      color: var(--silver);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.2s;
+    }
+    .wizard-back-btn:hover {
+      color: var(--white);
+      background: rgba(255,255,255,0.06);
+    }
+    .wizard-options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+    .wizard-option-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      cursor: pointer;
+      transition: all 0.25s var(--ease-out);
+    }
+    .wizard-option-card:hover {
+      border-color: var(--copper-border);
+      background: rgba(196,129,58,0.06);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(196,129,58,0.08);
+    }
+    .wizard-option-card.selected {
+      border-color: var(--copper);
+      background: rgba(196,129,58,0.12);
+      box-shadow: 0 0 15px rgba(196,129,58,0.15);
+    }
+    .wizard-option-icon {
+      font-size: 1.5rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s;
+    }
+    .wizard-option-card:hover .wizard-option-icon {
+      background: rgba(196,129,58,0.15);
+      transform: scale(1.05);
+    }
+    .wizard-option-details {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    .wizard-option-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .wizard-option-desc {
+      font-size: 0.78rem;
+      color: var(--silver);
+      margin-top: 2px;
+    }
+    .step-header {
+      text-align: center;
+      margin-bottom: var(--space-3);
+    }
+    .step-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      font-family: var(--font-title);
+      letter-spacing: -0.02em;
+    }
+    .step-subtitle {
+      font-size: 0.8rem;
+      color: var(--silver);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .dob-input-grid {
+      display: flex;
+      gap: var(--space-3);
+      justify-content: center;
+      margin-top: var(--space-2);
+    }
+    .dob-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      flex: 1;
+    }
+    .dob-field label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--silver-dark);
+      font-weight: 700;
+    }
+    .dob-input {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 0.75rem 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      text-align: center;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+    .dob-input:focus {
+      border-color: var(--copper);
+    }
+    .trust-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: var(--space-4);
+      margin-top: var(--space-2);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      text-align: left;
+    }
+    .trust-badge-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .trust-badge-icon {
+      font-size: 1rem;
+      color: var(--copper);
+    }
+    .trust-badge-text {
+      font-size: 0.7rem;
+      color: var(--silver-dark);
+      line-height: 1.2;
+    }
   </style>
 </head>
 <body>
@@ -281,42 +473,193 @@
 
         </div>
 
-        <!-- Right Panel: Access Portal Form -->
-        <div class="portal-access-panel" style="padding: var(--space-8) var(--space-8); display: flex; flex-direction: column; justify-content: center; gap: var(--space-5);">
-          <div style="text-align: center; margin-bottom: var(--space-4);">
-            <div style="font-size: 1.8rem; font-weight: 800; font-family: var(--font-title); letter-spacing: -0.04em;" class="gradient-text">SwingerSphere</div>
-            <p style="font-size: 0.8rem; color: var(--silver); font-style: italic; margin-top: 4px;">La comunidad más exclusiva para parejas liberales</p>
-          </div>
+        <!-- Right Panel: Access Portal Form / Wizard -->
+        <div class="portal-access-panel" style="padding: var(--space-6) var(--space-8); display: flex; flex-direction: column; justify-content: center; min-height: 520px;">
+          
+          <div class="wizard-container">
+            <!-- Progress Tracker -->
+            <div class="wizard-progress">
+              <button id="wizard-back" class="wizard-back-btn" style="visibility: hidden;" onclick="prevStep()">
+                <span>←</span> Atrás
+              </button>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="wizard-progress-bar"></div>
+              </div>
+              <span style="font-size: 0.75rem; color: var(--silver-dark); font-weight: 700;" id="wizard-step-num">1 / 4</span>
+            </div>
 
-          <!-- Form Fields -->
-          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
-            <div>
-              <label style="font-size: 0.75rem; color: var(--silver); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: var(--space-2);">E-mail</label>
-              <div class="input-wrap" style="position: relative;">
-                <span class="input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--silver-dark); pointer-events: none;">✉</span>
-                <input type="email" id="portal-email" placeholder="Introduce tu e-mail" style="width: 100%; padding: 0.8rem 1rem 0.8rem 2.8rem; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; color: var(--white); font-size: 0.875rem;" required>
+            <!-- STEP 1: Yo soy -->
+            <div class="wizard-step active" id="step-1">
+              <div class="step-header">
+                <h3 class="step-title gradient-text">¿Quién eres?</h3>
+                <p class="step-subtitle">Selecciona tu perfil para una experiencia personalizada</p>
+              </div>
+              <div class="wizard-options-grid">
+                <div class="wizard-option-card" onclick="selectIdentity('couple_hm', 'Pareja H+M')">
+                  <div class="wizard-option-icon">👫</div>
+                  <div class="wizard-option-details">
+                    <span class="wizard-option-title">Pareja H+M</span>
+                    <span class="wizard-option-desc">Hombre y Mujer liberales</span>
+                  </div>
+                </div>
+                <div class="wizard-option-card" onclick="selectIdentity('couple_ff', 'Pareja F+F')">
+                  <div class="wizard-option-icon">👭</div>
+                  <div class="wizard-option-details">
+                    <span class="wizard-option-title">Pareja F+F</span>
+                    <span class="wizard-option-desc">Dos mujeres liberales</span>
+                  </div>
+                </div>
+                <div class="wizard-option-card" onclick="selectIdentity('couple_mm', 'Pareja H+H')">
+                  <div class="wizard-option-icon">👬</div>
+                  <div class="wizard-option-details">
+                    <span class="wizard-option-title">Pareja H+H</span>
+                    <span class="wizard-option-desc">Dos hombres liberales</span>
+                  </div>
+                </div>
+                <div class="wizard-option-card" onclick="selectIdentity('single_f', 'Mujer')">
+                  <div class="wizard-option-icon">👩</div>
+                  <div class="wizard-option-details">
+                    <span class="wizard-option-title">Mujer</span>
+                    <span class="wizard-option-desc">Chica soltera buscando explorar</span>
+                  </div>
+                </div>
+                <div class="wizard-option-card" onclick="selectIdentity('single_m', 'Hombre')">
+                  <div class="wizard-option-icon">👨</div>
+                  <div class="wizard-option-details">
+                    <span class="wizard-option-title">Hombre</span>
+                    <span class="wizard-option-desc">Chico soltero buscando explorar</span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div>
-              <label style="font-size: 0.75rem; color: var(--silver); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: var(--space-2);">Código de Acceso / Invitación</label>
-              <div class="input-wrap" style="position: relative;">
-                <span class="input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--silver-dark); pointer-events: none;">🔑</span>
-                <input type="password" id="portal-invite" placeholder="Introduce tu contraseña o invitación" style="width: 100%; padding: 0.8rem 1rem 0.8rem 2.8rem; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; color: var(--white); font-size: 0.875rem;" required>
+            <!-- STEP 2: Busco -->
+            <div class="wizard-step" id="step-2">
+              <div class="step-header">
+                <h3 class="step-title gradient-text">¿Qué buscas?</h3>
+                <p class="step-subtitle">Encuentra exactamente las conexiones que deseas</p>
               </div>
+              <div class="wizard-options-grid">
+                <div class="wizard-option-card" onclick="selectPreference('couples', 'Parejas')">
+                  <div class="wizard-option-icon">👫</div>
+                  <div class="wizard-option-details">
+                    <span class="wizard-option-title">Parejas</span>
+                    <span class="wizard-option-desc">Conectar con otras parejas</span>
+                  </div>
+                </div>
+                <div class="wizard-option-card" onclick="selectPreference('singles_f', 'Mujeres')">
+                  <div class="wizard-option-icon">👩</div>
+                  <div class="wizard-option-details">
+                    <span class="wizard-option-title">Mujeres</span>
+                    <span class="wizard-option-desc">Chicas solteras</span>
+                  </div>
+                </div>
+                <div class="wizard-option-card" onclick="selectPreference('singles_m', 'Hombres')">
+                  <div class="wizard-option-icon">👨</div>
+                  <div class="wizard-option-details">
+                    <span class="wizard-option-title">Hombres</span>
+                    <span class="wizard-option-desc">Chicos solteros</span>
+                  </div>
+                </div>
+                <div class="wizard-option-card" onclick="selectPreference('all', 'Todos')">
+                  <div class="wizard-option-icon">🌐</div>
+                  <div class="wizard-option-details">
+                    <span class="wizard-option-title">Todos</span>
+                    <span class="wizard-option-desc">Abierto a cualquier tipo de conexión</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 3: Edad -->
+            <div class="wizard-step" id="step-3">
+              <div class="step-header">
+                <h3 class="step-title gradient-text">Fecha de Nacimiento</h3>
+                <p class="step-subtitle">Verifica que eres mayor de edad para acceder a la red</p>
+              </div>
+              
+              <div class="dob-input-grid">
+                <div class="dob-field" style="width: 70px;">
+                  <label>Día</label>
+                  <input type="number" id="wiz-dob-day" placeholder="DD" min="1" max="31" class="dob-input">
+                </div>
+                <div class="dob-field" style="width: 70px;">
+                  <label>Mes</label>
+                  <input type="number" id="wiz-dob-month" placeholder="MM" min="1" max="12" class="dob-input">
+                </div>
+                <div class="dob-field" style="width: 100px;">
+                  <label>Año</label>
+                  <input type="number" id="wiz-dob-year" placeholder="AAAA" min="1920" max="2026" class="dob-input">
+                </div>
+              </div>
+
+              <!-- Warning Message -->
+              <div id="wiz-age-warning" style="font-size: 0.8rem; color: var(--danger); text-align: center; min-height: 1.25rem; font-weight: 600;"></div>
+
+              <button onclick="verifyWizardAge()" style="width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--gold) 0%, var(--copper) 100%); border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 800; color: #fff; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(196,129,58,0.35); text-align: center; margin-top: var(--space-2);">
+                Confirmar y continuar
+              </button>
+            </div>
+
+            <!-- STEP 4: Credenciales -->
+            <div class="wizard-step" id="step-4">
+              <div class="step-header">
+                <h3 class="step-title gradient-text">Acceso Seguro</h3>
+                <p class="step-subtitle">Introduce tus datos de acceso o código de invitación</p>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                <div>
+                  <label style="font-size: 0.7rem; color: var(--silver); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">E-mail</label>
+                  <div class="input-wrap" style="position: relative;">
+                    <span class="input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--silver-dark); pointer-events: none;">✉</span>
+                    <input type="email" id="wiz-email" placeholder="Introduce tu e-mail" style="width: 100%; padding: 0.8rem 1rem 0.8rem 2.8rem; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; color: var(--white); font-size: 0.875rem;" required>
+                  </div>
+                </div>
+
+                <div>
+                  <label style="font-size: 0.7rem; color: var(--silver); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">Código de Acceso / Invitación</label>
+                  <div class="input-wrap" style="position: relative;">
+                    <span class="input-icon" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--silver-dark); pointer-events: none;">🔑</span>
+                    <input type="password" id="wiz-invite" placeholder="Contraseña o código de invitación" style="width: 100%; padding: 0.8rem 1rem 0.8rem 2.8rem; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; color: var(--white); font-size: 0.875rem;" required>
+                  </div>
+                </div>
+
+                <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; text-align: left; margin: var(--space-1) 0;">
+                  <input type="checkbox" id="wiz-check" style="width: 18px; height: 18px; margin-top: 2px; accent-color: var(--copper); cursor: pointer;" checked>
+                  <span style="font-size: 0.75rem; color: var(--silver); line-height: 1.4;">
+                    Soy mayor de 18 años y acepto las <a href="normas-fondos.html" target="_blank" style="color: var(--copper); text-decoration: underline;">normas y política de privacidad</a>.
+                  </span>
+                </label>
+              </div>
+
+              <button id="wiz-submit-btn" onclick="submitWizard()" style="width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--gold) 0%, var(--copper) 100%); border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 800; color: #fff; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(196,129,58,0.35); text-align: center; margin-top: var(--space-2);">
+                Entrar a la app →
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Trust Badges Section -->
+          <div class="trust-footer">
+            <div class="trust-badge-item">
+              <span class="trust-badge-icon">🛡️</span>
+              <span class="trust-badge-text"><strong>Consent Vault™</strong><br>Acciones encriptadas</span>
+            </div>
+            <div class="trust-badge-item">
+              <span class="trust-badge-icon">📸</span>
+              <span class="trust-badge-text"><strong>Verificación IA</strong><br>Perfiles 100% reales</span>
+            </div>
+            <div class="trust-badge-item">
+              <span class="trust-badge-icon">🔒</span>
+              <span class="trust-badge-text"><strong>Privacidad Total</strong><br>Sin bases de datos</span>
+            </div>
+            <div class="trust-badge-item">
+              <span class="trust-badge-icon">💬</span>
+              <span class="trust-badge-text"><strong>Soporte 24/7</strong><br>Moderación activa</span>
             </div>
           </div>
 
-          <!-- Submit Button -->
-          <button id="do-portal-login" onclick="window.location.href='app.html'" style="width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--gold) 0%, var(--copper) 100%); border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 800; color: #fff; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(196,129,58,0.35); text-align: center; margin-top: var(--space-2);">
-            Entrar a la app →
-          </button>
-
-          <!-- Register link info -->
-          <div style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: var(--space-4); text-align: center;">
-            <h4 style="font-size: 0.85rem; font-weight: 700; color: var(--white); margin-bottom: var(--space-2);">🔑 ¿Cómo me registro?</h4>
-            <p style="font-size: 0.78rem; color: var(--silver-dark); line-height: 1.6;">Para unirte a <strong>SwingerSphere</strong> necesitas la invitación de un miembro activo o club verificado. Así garantizamos un entorno seguro, discreto y sin bots.</p>
-          </div>
         </div>
 
       </div>
@@ -673,52 +1016,86 @@ document.querySelectorAll('.feature-card').forEach(card => {
     card.style.setProperty('--mouse-y', `${y}px`);
   });
 });
-</script>
 
-<!-- Age Verification Overlay -->
-<div id="age-gate" style="position:fixed;inset:0;z-index:99999;background:rgba(6,7,10,0.98);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);display:flex;align-items:center;justify-content:center;padding:1rem;">
-  <div style="background: linear-gradient(135deg, rgba(20,21,26,0.85) 0%, rgba(10,11,15,0.9) 100%); border: 1px solid rgba(212,175,55,0.22); border-radius: 28px; padding: 3rem 2.5rem; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 0 100px rgba(196,129,58,0.12), inset 0 1px 0 rgba(255,255,255,0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
-    <div style="width: 72px; height: 72px; background: radial-gradient(circle, rgba(196,129,58,0.15) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2.2rem; border: 1px solid rgba(196,129,58,0.25); animation: pulse-ring 2.5s infinite;">🔮</div>
-    <h2 style="font-family: var(--font-title); font-size: 1.6rem; font-weight: 800; color: var(--white); margin-bottom: 0.5rem; letter-spacing: -0.02em;">Acceso Restringido</h2>
-    <p style="font-size: 0.85rem; color: var(--silver); margin-bottom: 2rem; line-height: 1.6;">SwingerSphere es una comunidad premium exclusivamente para adultos. Introduce tu fecha de nacimiento para verificar tu mayoría de edad.</p>
-    
-    <!-- Birthday Inputs -->
-    <div style="display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 1.5rem;">
-      <div style="display: flex; flex-direction: column; gap: 0.25rem; width: 70px;">
-        <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--silver-dark); font-weight: 700;">Día</span>
-        <input type="number" id="dob-day" placeholder="DD" min="1" max="31" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 0.6rem 0.5rem; font-size: 1.1rem; font-weight: 700; color: var(--white); text-align: center; width: 100%;">
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 0.25rem; width: 70px;">
-        <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--silver-dark); font-weight: 700;">Mes</span>
-        <input type="number" id="dob-month" placeholder="MM" min="1" max="12" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 0.6rem 0.5rem; font-size: 1.1rem; font-weight: 700; color: var(--white); text-align: center; width: 100%;">
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 0.25rem; width: 100px;">
-        <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--silver-dark); font-weight: 700;">Año</span>
-        <input type="number" id="dob-year" placeholder="AAAA" min="1920" max="2026" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 0.6rem 0.5rem; font-size: 1.1rem; font-weight: 700; color: var(--white); text-align: center; width: 100%;">
-      </div>
-    </div>
+// ── WIZARD SYSTEM ────────────────────────────────────────
+let currentWizardStep = 1;
+const wizardState = {
+  identity: '',
+  preference: '',
+  dob: '',
+  email: '',
+  inviteCode: ''
+};
 
-    <!-- Feedback warning message -->
-    <div id="age-warning" style="font-size: 0.8rem; color: var(--danger); min-height: 1.25rem; margin-bottom: 1.5rem; font-weight: 600;"></div>
+function updateWizardProgress() {
+  const percent = (currentWizardStep / 4) * 100;
+  const fillBar = document.getElementById('wizard-progress-bar');
+  if (fillBar) fillBar.style.width = percent + '%';
+  const stepNum = document.getElementById('wizard-step-num');
+  if (stepNum) stepNum.textContent = currentWizardStep + ' / 4';
+  
+  // Show/Hide back button
+  const backBtn = document.getElementById('wizard-back');
+  if (backBtn) backBtn.style.visibility = currentWizardStep > 1 ? 'visible' : 'hidden';
+}
 
-    <button id="age-submit" onclick="ageVerify()" style="width:100%; padding: 0.9rem; background: linear-gradient(135deg, var(--gold) 0%, var(--copper) 100%); border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 800; color: #fff; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 20px rgba(196,129,58,0.35);">Verificar mi edad →</button>
-    <p style="font-size:0.68rem; color:var(--silver-dark); margin-top:1.5rem; line-height:1.6;">⚖️ Sede legal: Madrid, España · GDPR · LOPD · DSA · MiCA<br>🔒 Conexión cifrada · Privacidad Garantizada</p>
-  </div>
-</div>
-<script>
-(function(){
-  // Check if verified
-  if(sessionStorage.getItem('ss_age_ok')==='1' || localStorage.getItem('ss_age_ok')==='1'){
-    document.getElementById('age-gate').style.display='none';
-    return;
+function showStep(stepNum) {
+  document.querySelectorAll('.wizard-step').forEach(step => {
+    step.classList.remove('active');
+  });
+  const targetStep = document.getElementById('step-' + stepNum);
+  if (targetStep) targetStep.classList.add('active');
+  currentWizardStep = stepNum;
+  updateWizardProgress();
+}
+
+function nextStep() {
+  if (currentWizardStep < 4) {
+    showStep(currentWizardStep + 1);
   }
-})();
+}
 
-function ageVerify(){
-  const day = parseInt(document.getElementById('dob-day').value);
-  const month = parseInt(document.getElementById('dob-month').value);
-  const year = parseInt(document.getElementById('dob-year').value);
-  const warningEl = document.getElementById('age-warning');
+function prevStep() {
+  if (currentWizardStep > 1) {
+    showStep(currentWizardStep - 1);
+  }
+}
+
+function selectIdentity(idType, idLabel) {
+  wizardState.identity = idType;
+  
+  // Highlight selected card
+  const cards = document.querySelectorAll('#step-1 .wizard-option-card');
+  cards.forEach(card => card.classList.remove('selected'));
+  if (event && event.currentTarget) {
+    event.currentTarget.classList.add('selected');
+  }
+  
+  setTimeout(() => {
+    nextStep();
+  }, 200);
+}
+
+function selectPreference(prefType, prefLabel) {
+  wizardState.preference = prefType;
+  
+  // Highlight selected card
+  const cards = document.querySelectorAll('#step-2 .wizard-option-card');
+  cards.forEach(card => card.classList.remove('selected'));
+  if (event && event.currentTarget) {
+    event.currentTarget.classList.add('selected');
+  }
+  
+  setTimeout(() => {
+    nextStep();
+  }, 200);
+}
+
+function verifyWizardAge() {
+  const day = parseInt(document.getElementById('wiz-dob-day').value);
+  const month = parseInt(document.getElementById('wiz-dob-month').value);
+  const year = parseInt(document.getElementById('wiz-dob-year').value);
+  const warningEl = document.getElementById('wiz-age-warning');
 
   if (isNaN(day) || isNaN(month) || isNaN(year)) {
     warningEl.textContent = '❌ Por favor, rellena todos los campos.';
@@ -739,20 +1116,65 @@ function ageVerify(){
   }
 
   if (age >= 18) {
-    sessionStorage.setItem('ss_age_ok','1');
-    localStorage.setItem('ss_age_ok','1');
-    if (window.Analytics) window.Analytics.trackEvent('age_verified', { dob: `${day}/${month}/${year}`, lang: typeof savedLang !== 'undefined' ? savedLang : 'es' });
-    const gate = document.getElementById('age-gate');
-    gate.style.transition = 'opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    gate.style.opacity = '0';
-    setTimeout(() => gate.style.display = 'none', 600);
+    wizardState.dob = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    warningEl.textContent = '';
+    nextStep();
   } else {
     warningEl.textContent = '⛔ Acceso denegado. Debes ser mayor de 18 años.';
-    document.getElementById('age-submit').disabled = true;
-    document.getElementById('age-submit').style.opacity = '0.3';
-    document.getElementById('age-submit').style.cursor = 'not-allowed';
   }
 }
+
+function submitWizard() {
+  const email = document.getElementById('wiz-email').value;
+  const invite = document.getElementById('wiz-invite').value;
+  const checked = document.getElementById('wiz-check').checked;
+  
+  if (!email || !invite) {
+    alert('Por favor, rellena todos los campos.');
+    return;
+  }
+  
+  if (!checked) {
+    alert('Debes aceptar las normas y la política de privacidad.');
+    return;
+  }
+  
+  // Set localStorage states to simulate active/registered session
+  localStorage.setItem('ss_age_ok', '1');
+  localStorage.setItem('ss_user_dob', wizardState.dob);
+  
+  // Generate/save temporary profile based on wizard choices
+  const myProfile = {
+    id: 'me',
+    name: 'Alex & Sara',
+    username: '@alexsara',
+    initials: 'AS',
+    verifyLevel: 2,
+    online: true,
+    locationApprox: 'Madrid',
+    languages: ['es'],
+    interests: ['Viajes', 'Eventos'],
+    bio: `Usuario registrado como ${wizardState.identity === 'couple_hm' ? 'Pareja H+M' : 'Miembro'} buscando ${wizardState.preference}.`,
+    trustScore: 80,
+    eventsAttended: 0,
+    communities: 1,
+    followers: 0,
+    passportStamps: ['ibiza'],
+    colorAccent: '#c4813a',
+    coverGradient: 'linear-gradient(135deg,#1a0a00 0%,#4a2e0f 40%,#8a5a25 100%)',
+    trustBreakdown: { verification: 50, activity: 30, events: 0, reputation: 60, antiquity: 10 },
+    albumItems: [ {privacy:'public',emoji:'🌅'} ],
+    avatarImage: null,
+    coverImage: null
+  };
+  localStorage.setItem('ss_my_profile', JSON.stringify(myProfile));
+  
+  // Go to app
+  window.location.href = 'app.html';
+}
+
+// Update UI
+updateWizardProgress();
 </script>
 
 </body>
