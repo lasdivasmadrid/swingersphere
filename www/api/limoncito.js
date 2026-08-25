@@ -74,40 +74,54 @@ ${mapsContext}
 Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
 
   async function callGemini(key) {
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${key}`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: systemPrompt + '\n\nUsuario: ' + userMsg }] }],
-        tools: [{ google_search: {} }], // Enable Live Google Search Grounding!
-        generationConfig: { temperature: 0.7, maxOutputTokens: 600 },
-        safetySettings: [
-          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-          { category: 'HARM_CATEGORY_HATE_SPEECH',       threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
-        ],
-      }),
-    });
+    const models = [
+      'gemini-3.6-flash',
+      'gemini-2.5-flash',
+      'gemini-1.5-flash'
+    ];
+    let lastError = null;
 
-    if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
-      throw new Error(errData?.error?.message || `Gemini HTTP ${response.status}`);
+    for (const model of models) {
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${key}`;
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: systemPrompt + '\n\nUsuario: ' + userMsg }] }],
+            tools: [{ google_search: {} }], // Enable Live Google Search Grounding!
+            generationConfig: { temperature: 0.7, maxOutputTokens: 600 },
+            safetySettings: [
+              { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+              { category: 'HARM_CATEGORY_HATE_SPEECH',       threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+            ],
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (text) return text.trim();
+        } else {
+          const errData = await response.json().catch(() => ({}));
+          lastError = new Error(errData?.error?.message || `Gemini HTTP ${response.status} with model ${model}`);
+        }
+      } catch (e) {
+        lastError = e;
+      }
     }
-
-    const data = await response.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!text) throw new Error('Respuesta vacía de Gemini');
-    return text.trim();
+    throw lastError || new Error('Failed to connect to Gemini with any model');
   }
 
   async function callGroq(key) {
     const url = 'https://api.groq.com/openai/v1/chat/completions';
     const models = [
+      'llama-4-scout',
+      'llama-4-maverick',
+      'llama3-70b-8192',
       'llama-3.3-70b-versatile',
       'llama-3.3-70b-specdec',
-      'llama-3.1-70b-versatile',
-      'llama3-70b-8192',
-      'mixtral-8x7b-32768'
+      'llama-3.1-70b-versatile'
     ];
     
     let lastError = null;
