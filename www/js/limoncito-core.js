@@ -186,7 +186,7 @@ const LimocitoLLM = (() => {
     
     return intro + "\n\n" + body + bookingRecs + "\n\n" +
       "--- \n" +
-      "🤖 *Shadow está operando en Modo Simulación Local. Para activar las respuestas hiper-inteligentes de la IA real de Google Gemini (100% GRATIS), haz clic en el engranaje ⚙️ de la cabecera y configura tu API Key en 10 segundos.*";
+      "🤖 *Shadow (Respuesta de respaldo local de SwingerSphere)*";
   }
 
   async function generate(userMsg, context) {
