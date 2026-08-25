@@ -79,7 +79,7 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
       'gemini-2.5-flash',
       'gemini-1.5-flash'
     ];
-    let lastError = null;
+    const errorsList = [];
 
     for (const model of models) {
       try {
@@ -104,13 +104,13 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
           if (text) return text.trim();
         } else {
           const errData = await response.json().catch(() => ({}));
-          lastError = new Error(errData?.error?.message || `Gemini HTTP ${response.status} with model ${model}`);
+          errorsList.push(`${model}: ${errData?.error?.message || `HTTP ${response.status}`}`);
         }
       } catch (e) {
-        lastError = e;
+        errorsList.push(`${model}: ${e.message}`);
       }
     }
-    throw lastError || new Error('Failed to connect to Gemini with any model');
+    throw new Error(`[${errorsList.join(' | ')}]`);
   }
 
   async function callGroq(key) {
@@ -124,7 +124,7 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
       'llama-3.1-70b-versatile'
     ];
     
-    let lastError = null;
+    const errorsList = [];
     for (const model of models) {
       try {
         const response = await fetch(url, {
@@ -150,13 +150,13 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
           if (text) return text.trim();
         } else {
           const errData = await response.json().catch(() => ({}));
-          lastError = new Error(errData?.error?.message || `Groq HTTP ${response.status} with model ${model}`);
+          errorsList.push(`${model}: ${errData?.error?.message || `HTTP ${response.status}`}`);
         }
       } catch (e) {
-        lastError = e;
+        errorsList.push(`${model}: ${e.message}`);
       }
     }
-    throw lastError || new Error('Failed to connect to Groq with any model');
+    throw new Error(`[${errorsList.join(' | ')}]`);
   }
 
   let responseText = "";
