@@ -75,15 +75,16 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
 
   async function callGemini(key) {
     const models = [
+      'gemini-3.7-flash',
       'gemini-3.6-flash',
-      'gemini-2.5-flash',
+      'gemini-3.5-flash',
       'gemini-1.5-flash'
     ];
     const errorsList = [];
 
     for (const model of models) {
       try {
-        const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${key}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
         const response = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
