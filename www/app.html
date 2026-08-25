@@ -1094,7 +1094,98 @@ function buildMyChatsList() {
 }
 
 // EVENTS
-let eventsView='list', leafMap=null;
+let eventsView='list', leafMap=null, eventsFetchedCity=null;
+
+async function loadDynamicEvents() {
+  const contentEl = document.getElementById('events-content');
+  if (!contentEl) return;
+
+  // Show a beautiful loading state
+  contentEl.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:1rem;padding:2rem 0;align-items:center;justify-content:center;color:var(--silver-dark);">
+      <div class="spinner" style="border:3px solid rgba(196,129,58,0.1);border-top:3px solid var(--copper);width:36px;height:36px;border-radius:50%;animation:spin 1s linear infinite;"></div>
+      <span style="font-size:0.8rem;margin-top:0.5rem;color:var(--copper-pale);">Sincronizando eventos y salas en tu ciudad...</span>
+    </div>
+    <style>
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+  `;
+
+  // Detect city
+  let city = 'Madrid';
+  try {
+    const geoRes = await fetch('https://ipapi.co/json/').catch(() => null);
+    if (geoRes && geoRes.ok) {
+      const geoData = await geoRes.json().catch(() => null);
+      if (geoData && geoData.city) {
+        city = geoData.city;
+      }
+    }
+  } catch (e) {
+    console.warn("Geolocalización fallida, usando ciudad por defecto:", e);
+  }
+
+  // Update location badge
+  const cityBadge = document.querySelector('.badge-silver');
+  if (cityBadge) {
+    cityBadge.textContent = `📍 ${city}`;
+  }
+
+  // If we haven't loaded for this city, call API
+  if (eventsFetchedCity !== city) {
+    try {
+      const prompt = `Genera un JSON con una lista de 4 o 5 eventos reales o muy probables de ocio nocturno, baile, berbenas, discotecas o ambiente swinger en la ciudad de ${city} para las próximas semanas. Devuelve SOLAMENTE un array de JSON sin introducciones ni bloques de código de markdown. El formato de cada objeto del array debe ser estrictamente:
+[
+  {
+    "id": "evX",
+    "title": "Nombre del evento",
+    "club": "Nombre del local o discoteca",
+    "clubVerified": true,
+    "date": "Fecha legible (ej: 15 Ago 2026)",
+    "time": "Hora (ej: 22:00)",
+    "location": "${city}, España",
+    "lat": Latitud aproximada,
+    "lng": Longitud aproximada,
+    "attendees": Número estimado de asistentes,
+    "maxAttendees": Capacidad máxima,
+    "anonymous": false,
+    "price": "Precio estimado (ej: 15€)",
+    "emoji": "Emoji temático",
+    "tags": ["Tag1", "Tag2"],
+    "color": "gradient CSS (ej: linear-gradient(135deg,#1a0a00,#4a2e0f))"
+  }
+]`;
+
+      const response = await window.LimocitoLLM.generate(prompt, `Ubicación actual: ${city}`);
+      if (response) {
+        const start = response.indexOf('[');
+        const end = response.lastIndexOf(']');
+        if (start !== -1 && end !== -1 && end > start) {
+          const jsonStr = response.substring(start, end + 1);
+          const parsedEvents = JSON.parse(jsonStr);
+          if (Array.isArray(parsedEvents) && parsedEvents.length > 0) {
+            parsedEvents.forEach((ev, idx) => {
+              ev.id = `ev_dyn_${idx}`;
+            });
+            EVENTS = parsedEvents;
+            eventsFetchedCity = city;
+          }
+        }
+      }
+    } catch (err) {
+      console.error("Error generating dynamic events:", err);
+    }
+  }
+
+  // Update counts badge
+  const countBadge = document.querySelector('.badge-copper');
+  if (countBadge) {
+    countBadge.textContent = `🎉 ${EVENTS.length} ${t('events_title')}`;
+  }
+
+  switchEvView();
+}
+
 function renderEvents() {
   eventsView='list';
   const s=document.getElementById('screen-events');
@@ -1108,7 +1199,7 @@ function renderEvents() {
         <div class="radar-icon">📡</div>
         <div><div style="font-weight:600;font-size:0.875rem;">${t('radar_title')}</div>
           <div style="font-size:0.75rem;color:var(--silver-dark);">${t('radar_sub')}</div>
-          <div class="flex gap-2 mt-2"><span class="badge badge-copper">🎉 3 ${t('events_title')}</span><span class="badge badge-silver">📍 &lt; 50km</span></div>
+          <div class="flex gap-2 mt-2"><span class="badge badge-copper">🎉 ...</span><span class="badge badge-silver">📍 ...</span></div>
         </div>
       </div>
       <div class="flex items-center justify-between">
@@ -1119,7 +1210,7 @@ function renderEvents() {
         </div>
         <button class="btn btn-primary btn-sm">+ Crear</button>
       </div>
-      <div id="events-content">${buildEventsList()}</div>
+      <div id="events-content"></div>
     </div>
     <div class="overlay" id="ev-overlay" style="display:none;"></div>`;
 
@@ -1130,6 +1221,7 @@ function renderEvents() {
     };
   });
   attachEventEvents(s);
+  loadDynamicEvents();
 }
 function switchEvView() {
   const c=document.getElementById('events-content');c.style.opacity='0';
