@@ -235,7 +235,12 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
       }
     } catch (e) {
       console.warn('[ShadowCore] Serverless API call failed, falling back to local simulation:', e.message);
-      return `⚠️ **Error de la IA en el Servidor:** ${e.message}\n\n*Comprueba que has configurado la variable de entorno GEMINI_API_KEY en Vercel con el valor correcto y has hecho un Redeploy.*`;
+      try {
+        const localResp = generateSimulatedResponse(userMsg, context);
+        return `⚠️ **[Modo Resiliente Activo — Cuota del Servidor Agotada]**\n\n` + localResp;
+      } catch (err) {
+        return `⚠️ **Error de la IA en el Servidor:** ${e.message}\n\n*Comprueba que has configurado la variable de entorno GEMINI_API_KEY en Vercel con el valor correcto y has hecho un Redeploy.*`;
+      }
     }
   }
 
