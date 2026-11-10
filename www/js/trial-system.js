@@ -292,7 +292,7 @@ var PaywallUI = {
     return '' +
     // Header Banner
     '<div style="position:relative;width:100%;height:140px;border-radius:18px;overflow:hidden;margin-bottom:1.25rem;border:1px solid rgba(255,255,255,0.06);box-shadow:0 8px 32px rgba(0,0,0,0.4);">' +
-      '<img src="img/payment_hero.png" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.6) saturate(1.1);">' +
+      '<img src="img/payment_hero.webp" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.6) saturate(1.1);">' +
       '<div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(17,21,28,0.95) 0%,rgba(17,21,28,0.1) 100%);"></div>' +
       '<div style="position:absolute;bottom:0.75rem;left:50%;transform:translateX(-50%);text-align:center;width:100%;padding:0 1rem;">' +
         '<div style="font-size:0.58rem;color:var(--copper);font-weight:800;text-transform:uppercase;letter-spacing:2px;margin-bottom:0.15rem;">💎 MEMBRESÍA PREMIUM</div>' +
@@ -410,7 +410,7 @@ var PaywallUI = {
     // Limoncito mini-help
     '<div style="background:rgba(196,129,58,0.04);border:1px solid rgba(196,129,58,0.12);border-radius:12px;padding:0.75rem;margin-bottom:0.75rem;">' +
       '<div style="display:flex;align-items:center;gap:0.4rem;margin-bottom:0.35rem;">' +
-        '<img src="limoncito.png" style="width:20px;height:20px;border-radius:50%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
+        '<img src="limoncito.webp" style="width:20px;height:20px;border-radius:50%;object-fit:cover;" onerror="this.style.display=\'none\'">' +
         '<span style="font-size:0.72rem;font-weight:700;">Limoncito</span>' +
         '<span style="font-size:0.55rem;color:#30d158;margin-left:auto;">● online</span>' +
       '</div>' +

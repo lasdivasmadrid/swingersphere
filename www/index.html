@@ -2,12 +2,70 @@
 <html lang="es" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <meta name="theme-color" content="#060608">
+  
+  <!-- SEO & Indexing -->
   <title>SwingerSphere — La comunidad lifestyle más segura del mundo</title>
-  <meta name="description" content="La primera red social lifestyle global donde la privacidad, la reputación verificable y la comunidad están por encima del negocio.">
+  <meta name="description" content="La primera red social lifestyle global donde la privacidad, la reputación verificable y la comunidad están por encima del negocio. Eventos, clubes exclusivos y parejas verificadas.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://swingersphere.vercel.app/">
+
+  <!-- Open Graph / Facebook / WhatsApp / Telegram -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://swingersphere.vercel.app/">
+  <meta property="og:title" content="SwingerSphere — Red Social Lifestyle & Eventos Exclusivos">
+  <meta property="og:description" content="Privacidad extrema, reputación verificable y comunidad real +18. Encuentra eventos de ocio, clubes verificados y parejas afines.">
+  <meta property="og:image" content="https://swingersphere.vercel.app/img/splash_logo.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="SwingerSphere Lifestyle Luxury Platform">
+  <meta property="og:site_name" content="SwingerSphere">
+  <meta property="og:locale" content="es_ES">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SwingerSphere — Red Social Lifestyle +18">
+  <meta name="twitter:description" content="Privacidad extrema, reputación verificable y comunidad real +18. Eventos y clubes verificados.">
+  <meta name="twitter:image" content="https://swingersphere.vercel.app/img/splash_logo.webp">
+
+  <!-- Favicons & Mobile Icons -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>">
+  <link rel="apple-touch-icon" href="img/splash_logo.webp">
   <link rel="manifest" href="manifest.json">
+
+  <!-- Performance & Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Schema.org Structured Data (JSON-LD) for Google Knowledge Graph -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://swingersphere.vercel.app/#organization",
+        "name": "SwingerSphere",
+        "url": "https://swingersphere.vercel.app/",
+        "logo": "https://swingersphere.vercel.app/img/splash_logo.webp",
+        "description": "Plataforma social lifestyle con máxima privacidad, verificación de reputación y eventos exclusivos para adultos +18.",
+        "email": "soporte@swingersphere.com"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://swingersphere.vercel.app/#website",
+        "url": "https://swingersphere.vercel.app/",
+        "name": "SwingerSphere",
+        "publisher": {
+          "@id": "https://swingersphere.vercel.app/#organization"
+        },
+        "inLanguage": "es"
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="css/design-system.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/components.css">
@@ -609,6 +667,11 @@
               </div>
 
               <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                <!-- Honeypot AntiSpam Trap (Invisible to humans, triggers on bots) -->
+                <div style="display:none !important; position:absolute; left:-9999px;" aria-hidden="true">
+                  <input type="text" id="wiz-hp-city" name="user_bot_trap_city" tabindex="-1" autocomplete="off">
+                </div>
+
                 <div>
                   <label style="font-size: 0.7rem; color: var(--silver); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 6px;">E-mail</label>
                   <div class="input-wrap" style="position: relative;">
@@ -628,7 +691,7 @@
                 <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; text-align: left; margin: var(--space-1) 0;">
                   <input type="checkbox" id="wiz-check" style="width: 18px; height: 18px; margin-top: 2px; accent-color: var(--copper); cursor: pointer;" checked>
                   <span style="font-size: 0.75rem; color: var(--silver); line-height: 1.4;">
-                    Soy mayor de 18 años y acepto las <a href="normas-fondos.html" target="_blank" style="color: var(--copper); text-decoration: underline;">normas y política de privacidad</a>.
+                    Soy mayor de 18 años y acepto el <a href="legal.html" target="_blank" style="color: var(--copper); text-decoration: underline;">Aviso Legal</a>, las <a href="normas-fondos.html" target="_blank" style="color: var(--copper); text-decoration: underline;">Normas</a> y la <a href="privacidad.html" target="_blank" style="color: var(--copper); text-decoration: underline;">Política de Privacidad</a>.
                   </span>
                 </label>
               </div>
@@ -781,13 +844,76 @@
 
     <!-- Footer -->
     <footer class="landing-footer">
-      <p>© 2026 SwingerSphere · Todos los derechos reservados · Solo para adultos +18</p>
+      <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1.2rem; margin-bottom:1rem; font-size:0.8rem;">
+        <a href="legal.html" style="color:var(--silver); text-decoration:none;">Aviso Legal</a>
+        <span style="color:var(--border);">•</span>
+        <a href="privacidad.html" style="color:var(--silver); text-decoration:none;">Privacidad</a>
+        <span style="color:var(--border);">•</span>
+        <a href="cookies.html" style="color:var(--silver); text-decoration:none;">Cookies</a>
+        <span style="color:var(--border);">•</span>
+        <a href="normas-fondos.html" style="color:var(--silver); text-decoration:none;">Normas & Fondos</a>
+        <span style="color:var(--border);">•</span>
+        <a href="javascript:void(0)" onclick="openContactModal()" style="color:var(--copper); text-decoration:none; font-weight:600;">💬 Contacto y Soporte</a>
+      </div>
+      <p>© 2026 SwingerSphere S.L. · Todos los derechos reservados · Plataforma exclusiva para mayores de 18 años</p>
       <p style="margin-top:0.5rem;">
         <span style="color:var(--copper);">🛡️ TrustScore™</span> ·
         <span style="color:var(--copper);">🔐 Consent Vault™</span> ·
         <span style="color:var(--copper);">✈️ Passport Lifestyle™</span>
       </p>
     </footer>
+
+    <!-- Botón Flotante de Contacto -->
+    <div id="floating-contact-btn" onclick="openContactModal()" style="position:fixed; bottom:24px; right:24px; z-index:998; background:linear-gradient(135deg, var(--gold) 0%, var(--copper) 100%); color:#fff; width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; cursor:pointer; box-shadow:0 8px 24px rgba(196,129,58,0.45); transition:transform 0.25s ease;" title="Contacto y Soporte">
+      💬
+    </div>
+
+    <!-- Modal de Contacto -->
+    <div id="contact-modal" style="display:none; position:fixed; inset:0; z-index:1001; background:rgba(6,6,8,0.85); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); align-items:center; justify-content:center; padding:1rem;">
+      <div style="background:#111318; border:1px solid rgba(212,175,55,0.3); border-radius:24px; padding:2rem; max-width:440px; width:100%; position:relative; box-shadow:0 20px 60px rgba(0,0,0,0.8);">
+        <button onclick="closeContactModal()" style="position:absolute; top:1rem; right:1rem; background:transparent; border:none; color:var(--silver); font-size:1.4rem; cursor:pointer;">✕</button>
+        <div style="text-align:center; margin-bottom:1.5rem;">
+          <div style="font-size:2.5rem; margin-bottom:0.5rem;">✨</div>
+          <h3 style="font-size:1.3rem; font-weight:700; color:var(--white);">Atención y Soporte Oficial</h3>
+          <p style="font-size:0.8rem; color:var(--silver); margin-top:0.3rem;">Discreción garantizada. ¿Tienes dudas o buscas alianzas para tu club?</p>
+        </div>
+        
+        <div style="display:flex; flex-direction:column; gap:0.75rem;">
+          <a href="https://t.me/swingersphere" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:0.75rem; padding:0.9rem 1.2rem; background:rgba(0,136,204,0.12); border:1px solid rgba(0,136,204,0.3); border-radius:14px; color:#fff; text-decoration:none; font-weight:600; font-size:0.9rem;">
+            <span style="font-size:1.4rem;">✈️</span>
+            <div><div>Canal Oficial Telegram</div><span style="font-size:0.72rem; color:#8cd2f5; font-weight:400;">Comunidad y soporte en vivo</span></div>
+          </a>
+
+          <a href="https://wa.me/?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20SwingerSphere" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:0.75rem; padding:0.9rem 1.2rem; background:rgba(37,211,102,0.12); border:1px solid rgba(37,211,102,0.3); border-radius:14px; color:#fff; text-decoration:none; font-weight:600; font-size:0.9rem;">
+            <span style="font-size:1.4rem;">🟢</span>
+            <div><div>WhatsApp Asistencial</div><span style="font-size:0.72rem; color:#8ce5aa; font-weight:400;">Consultas para parejas y clubes</span></div>
+          </a>
+
+          <a href="mailto:soporte@swingersphere.com" style="display:flex; align-items:center; gap:0.75rem; padding:0.9rem 1.2rem; background:rgba(196,129,58,0.12); border:1px solid rgba(196,129,58,0.3); border-radius:14px; color:#fff; text-decoration:none; font-weight:600; font-size:0.9rem;">
+            <span style="font-size:1.4rem;">✉️</span>
+            <div><div>soporte@swingersphere.com</div><span style="font-size:0.72rem; color:var(--copper); font-weight:400;">Atención privada 24/7</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Banner de Consentimiento de Cookies (RGPD / AEPD) -->
+    <div id="cookie-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:1000; background:rgba(10,11,15,0.96); border-top:1px solid rgba(212,175,55,0.3); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); padding:1.2rem 1.5rem; box-shadow:0 -10px 40px rgba(0,0,0,0.7);">
+      <div style="max-width:1100px; margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem;">
+        <div style="flex:1; min-width:280px;">
+          <div style="font-size:0.95rem; font-weight:700; color:var(--white); display:flex; align-items:center; gap:0.4rem; margin-bottom:0.3rem;">
+            <span>🍪</span> Privacidad y Cookies
+          </div>
+          <p style="font-size:0.8rem; color:var(--silver); line-height:1.4; margin:0;">
+            Utilizamos cookies técnicas necesarias para la navegación segura (+18) y almacenamiento de preferencias. No realizamos seguimiento publicitario invasivo de terceros. Consulta nuestra <a href="cookies.html" target="_blank" style="color:var(--copper); text-decoration:underline;">Política de Cookies</a>.
+          </p>
+        </div>
+        <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+          <button onclick="acceptAllCookies()" style="padding:0.6rem 1.2rem; background:linear-gradient(135deg, var(--gold) 0%, var(--copper) 100%); border:none; border-radius:10px; color:#fff; font-size:0.85rem; font-weight:700; cursor:pointer;">Aceptar Todas</button>
+          <button onclick="rejectOptionalCookies()" style="padding:0.6rem 1.2rem; background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:10px; color:var(--silver); font-size:0.85rem; font-weight:600; cursor:pointer;">Solo Esenciales</button>
+        </div>
+      </div>
+    </div>
 
   </div>
 </div>
@@ -1124,7 +1250,23 @@ function verifyWizardAge() {
   }
 }
 
+// Anti-Spam protection tracking
+const formLoadTime = Date.now();
+
 function submitWizard() {
+  // 1. AntiSpam Honeypot Check
+  const honeypot = document.getElementById('wiz-hp-city');
+  if (honeypot && honeypot.value.trim() !== '') {
+    console.warn('Bot detected via honeypot.');
+    return; // Silently reject bot submission
+  }
+
+  // 2. AntiSpam Timing Check (bots submit instantly)
+  if (Date.now() - formLoadTime < 1200) {
+    console.warn('Submission too fast, suspicious activity.');
+    return;
+  }
+
   const email = document.getElementById('wiz-email').value;
   const invite = document.getElementById('wiz-invite').value;
   const checked = document.getElementById('wiz-check').checked;
@@ -1172,6 +1314,51 @@ function submitWizard() {
   // Go to app
   window.location.href = 'app.html';
 }
+
+// ── CONTACT MODAL CONTROLLERS ────────────────────────────
+function openContactModal() {
+  const m = document.getElementById('contact-modal');
+  if (m) m.style.display = 'flex';
+}
+
+function closeContactModal() {
+  const m = document.getElementById('contact-modal');
+  if (m) m.style.display = 'none';
+}
+
+// Close contact modal on backdrop click
+document.addEventListener('click', (e) => {
+  const m = document.getElementById('contact-modal');
+  if (m && e.target === m) {
+    m.style.display = 'none';
+  }
+});
+
+// ── COOKIE CONSENT BANNER (RGPD / AEPD) ──────────────────
+function checkCookieConsent() {
+  const consent = localStorage.getItem('ss_cookies_consent');
+  if (!consent) {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'block';
+  }
+}
+
+function acceptAllCookies() {
+  localStorage.setItem('ss_cookies_consent', 'all');
+  const banner = document.getElementById('cookie-banner');
+  if (banner) banner.style.display = 'none';
+}
+
+function rejectOptionalCookies() {
+  localStorage.setItem('ss_cookies_consent', 'essential');
+  const banner = document.getElementById('cookie-banner');
+  if (banner) banner.style.display = 'none';
+}
+
+// Initialize cookies check on load
+window.addEventListener('load', () => {
+  setTimeout(checkCookieConsent, 800);
+});
 
 // Update UI
 updateWizardProgress();

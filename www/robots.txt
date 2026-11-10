@@ -1,0 +1,6 @@
+# Robots.txt for SwingerSphere
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://swingersphere.vercel.app/sitemap.xml
