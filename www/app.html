@@ -1131,8 +1131,25 @@ async function loadDynamicEvents() {
     cityBadge.textContent = `📍 ${city}`;
   }
 
-  // If we haven't loaded for this city, call API
-  if (eventsFetchedCity !== city) {
+  // 24-Hour Cache Check (Prevents burning AI tokens repeatedly)
+  const cacheKey = 'ss_events_cache_' + city.toLowerCase().replace(/[^a-z0-9]/g, '_');
+  const cachedStr = localStorage.getItem(cacheKey);
+  let needFetch = true;
+
+  if (cachedStr) {
+    try {
+      const cacheObj = JSON.parse(cachedStr);
+      // Valid for 24 hours
+      if (cacheObj && cacheObj.timestamp && (Date.now() - cacheObj.timestamp < 24 * 3600 * 1000) && Array.isArray(cacheObj.events) && cacheObj.events.length > 0) {
+        EVENTS = cacheObj.events;
+        eventsFetchedCity = city;
+        needFetch = false;
+      }
+    } catch(e) {}
+  }
+
+  // If not cached, call API
+  if (needFetch && eventsFetchedCity !== city) {
     try {
       const prompt = `Genera un JSON con una lista de 4 o 5 eventos reales o muy probables de ocio nocturno, baile, berbenas, discotecas o ambiente swinger en la ciudad de ${city} para las próximas semanas. Devuelve SOLAMENTE un array de JSON sin introducciones ni bloques de código de markdown. El formato de cada objeto del array debe ser estrictamente:
 [
@@ -1144,15 +1161,15 @@ async function loadDynamicEvents() {
     "date": "Fecha legible (ej: 15 Ago 2026)",
     "time": "Hora (ej: 22:00)",
     "location": "${city}, España",
-    "lat": Latitud aproximada,
-    "lng": Longitud aproximada,
-    "attendees": Número estimado de asistentes,
-    "maxAttendees": Capacidad máxima,
+    "lat": 40.4168,
+    "lng": -3.7038,
+    "attendees": 120,
+    "maxAttendees": 200,
     "anonymous": false,
     "price": "Precio estimado (ej: 15€)",
     "emoji": "Emoji temático",
     "tags": ["Tag1", "Tag2"],
-    "color": "gradient CSS (ej: linear-gradient(135deg,#1a0a00,#4a2e0f))"
+    "color": "linear-gradient(135deg,#1a0a00,#4a2e0f)"
   }
 ]`;
 
@@ -1166,9 +1183,16 @@ async function loadDynamicEvents() {
           if (Array.isArray(parsedEvents) && parsedEvents.length > 0) {
             parsedEvents.forEach((ev, idx) => {
               ev.id = `ev_dyn_${idx}`;
+              ev.lat = parseFloat(ev.lat) || 40.4168;
+              ev.lng = parseFloat(ev.lng) || -3.7038;
             });
             EVENTS = parsedEvents;
             eventsFetchedCity = city;
+            // Save to 24-hour cache
+            localStorage.setItem(cacheKey, JSON.stringify({
+              timestamp: Date.now(),
+              events: EVENTS
+            }));
           }
         }
       }
@@ -1292,15 +1316,76 @@ function buildCalView() {
   </div>`;
 }
 function initLeafMap() {
-  if(!window.L){document.getElementById('events-map').innerHTML='<div style="height:100%;display:flex;align-items:center;justify-content:center;color:var(--silver-dark);flex-direction:column;gap:0.5rem;"><div class="spinner"></div><span>Cargando mapa...</span></div>';return;}
-  const el=document.getElementById('events-map');if(!el||leafMap)return;
-  leafMap=L.map('events-map',{center:[42,4],zoom:4,attributionControl:false});
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20}).addTo(leafMap);
-  EVENTS.forEach(ev=>{
-    const icon=L.divIcon({className:'',html:`<div style="background:linear-gradient(135deg,#c4813a,#e09455);width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid rgba(255,255,255,0.25);box-shadow:0 4px 12px rgba(196,129,58,0.5);display:flex;align-items:center;justify-content:center;"><span style="transform:rotate(45deg);font-size:1rem;">${ev.emoji}</span></div>`,iconSize:[38,38],iconAnchor:[19,38],popupAnchor:[0,-42]});
-    L.marker([ev.lat,ev.lng],{icon,title:ev.title}).addTo(leafMap).bindPopup(`<div style="min-width:190px;font-family:Inter,sans-serif;"><div style="font-weight:700;font-size:0.8rem;margin-bottom:0.25rem;color:#f2f2f7;">${ev.title}</div><div style="font-size:0.7rem;color:#a0a0b0;margin-bottom:0.4rem;">📍 ${ev.location}</div><div style="font-size:0.7rem;color:#c4813a;font-weight:600;">${ev.price}</div></div>`);
+  const el = document.getElementById('events-map');
+  if (!el) return;
+
+  if (!window.L) {
+    el.innerHTML = '<div style="height:100%;display:flex;align-items:center;justify-content:center;color:var(--silver-dark);flex-direction:column;gap:0.5rem;"><div class="spinner" style="border:3px solid rgba(196,129,58,0.1);border-top:3px solid var(--copper);width:32px;height:32px;border-radius:50%;animation:spin 1s linear infinite;"></div><span>Cargando mapa en tiempo real...</span></div>';
+    setTimeout(initLeafMap, 300);
+    return;
+  }
+
+  if (leafMap) {
+    try { leafMap.remove(); } catch(e){}
+    leafMap = null;
+  }
+
+  // Filter valid events with numeric coordinates
+  const validEvents = EVENTS.filter(ev => {
+    const lat = parseFloat(ev.lat);
+    const lng = parseFloat(ev.lng);
+    return !isNaN(lat) && !isNaN(lng) && lat !== 0;
   });
-  const bounds=EVENTS.map(ev=>[ev.lat,ev.lng]);leafMap.fitBounds(bounds,{padding:[40,40]});
+
+  // Center on first event or Madrid
+  const centerLat = validEvents.length > 0 ? parseFloat(validEvents[0].lat) : 40.4168;
+  const centerLng = validEvents.length > 0 ? parseFloat(validEvents[0].lng) : -3.7038;
+
+  leafMap = L.map('events-map', {
+    center: [centerLat, centerLng],
+    zoom: 12,
+    zoomControl: true,
+    attributionControl: false
+  });
+
+  // Modern Voyager tile layer (crisp real streets, venues, labels, and dark luxury aesthetic)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(leafMap);
+
+  validEvents.forEach(ev => {
+    const lat = parseFloat(ev.lat);
+    const lng = parseFloat(ev.lng);
+    const icon = L.divIcon({
+      className: '',
+      html: `<div style="background:linear-gradient(135deg,#c4813a,#e09455);width:36px;height:36px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid rgba(255,255,255,0.4);box-shadow:0 4px 14px rgba(196,129,58,0.6);display:flex;align-items:center;justify-content:center;cursor:pointer;"><span style="transform:rotate(45deg);font-size:1.05rem;">${ev.emoji || '🎉'}</span></div>`,
+      iconSize: [36, 36],
+      iconAnchor: [18, 36],
+      popupAnchor: [0, -38]
+    });
+
+    L.marker([lat, lng], { icon, title: ev.title })
+      .addTo(leafMap)
+      .bindPopup(`
+        <div style="min-width:180px;font-family:sans-serif;color:#111;">
+          <strong style="display:block;font-size:0.85rem;margin-bottom:3px;color:#c4813a;">${ev.title}</strong>
+          <div style="font-size:0.75rem;color:#555;margin-bottom:4px;">📍 ${ev.location}</div>
+          <div style="font-size:0.75rem;font-weight:bold;color:#222;">${ev.price || 'Consultar'}</div>
+        </div>
+      `);
+  });
+
+  // Force Leaflet to recalculate container bounds and render tiles immediately
+  setTimeout(() => {
+    if (leafMap) {
+      leafMap.invalidateSize();
+      if (validEvents.length > 1) {
+        const bounds = validEvents.map(ev => [parseFloat(ev.lat), parseFloat(ev.lng)]);
+        leafMap.fitBounds(bounds, { padding: [40, 40], maxZoom: 14 });
+      }
+    }
+  }, 200);
 }
 function attachEventEvents(s) {
   s.querySelectorAll('.rsvp-btn').forEach(btn=>{

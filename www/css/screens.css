@@ -433,12 +433,12 @@
 
 /* Leaflet dark theme overrides */
 .leaflet-container {
-  background: #0d0d10 !important;
+  background: #111318 !important;
   font-family: var(--font-sans) !important;
 }
 
 .leaflet-tile {
-  filter: brightness(0.7) saturate(0.5);
+  filter: contrast(1.05);
 }
 
 .leaflet-popup-content-wrapper {
