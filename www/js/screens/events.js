@@ -239,10 +239,10 @@ function initLeafletMap(t) {
       attributionControl: false,
     });
 
-    // Dark tile layer
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      subdomains: 'abcd',
-      maxZoom: 20,
+    // OpenStreetMap tile layer (100% free, no API key required)
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors',
     }).addTo(leafletMap);
 
     // Custom copper marker icon

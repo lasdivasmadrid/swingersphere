@@ -29,10 +29,18 @@
   <meta name="twitter:description" content="Privacidad extrema, reputación verificable y comunidad real +18. Eventos y clubes verificados.">
   <meta name="twitter:image" content="https://swingersphere.vercel.app/img/splash_logo.webp">
 
-  <!-- Favicons & Mobile Icons -->
+  <!-- Favicons & Mobile Icons (PWA & iOS Springboard) -->
+  <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/icon-192.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>">
-  <link rel="apple-touch-icon" href="img/splash_logo.webp">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="180x180" href="img/apple-touch-icon.png">
   <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SwingerSphere">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#060608">
 
   <!-- Performance & Fonts Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1362,6 +1370,13 @@ window.addEventListener('load', () => {
 
 // Update UI
 updateWizardProgress();
+
+// PWA Service Worker Registration
+if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(err => console.log('SW reg error:', err));
+  });
+}
 </script>
 
 </body>
