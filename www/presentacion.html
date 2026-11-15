@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SwingerSphere · Presentación Ejecutiva para Clubes</title>
+  <link rel="icon" type="image/png" href="img/icon-192.png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #0b0d13;
+      --card-bg: rgba(22, 26, 36, 0.85);
+      --gold: #d4af37;
+      --gold-light: #ffd700;
+      --gold-dark: #aa7c11;
+      --silver: #aeaeb2;
+      --green: #30d158;
+      --red: #ff453a;
+      --border: rgba(212, 175, 55, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background: var(--bg);
+      color: #f2f2f7;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top progress bar */
+    .progress-bar-container {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 12.5%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transition: width 0.4s ease;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    }
+
+    /* Top presentation header */
+    .pres-header {
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(11, 13, 19, 0.95);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    .pres-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .pres-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--gold);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+    .pres-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    .pres-title span {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pres-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-pres {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-pres:hover {
+      background: rgba(212, 175, 55, 0.2);
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+    .slide-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-family: monospace;
+    }
+
+    /* Main Deck Stage */
+    .deck-viewport {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 40px;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 20px 40px 30px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(40px) scale(0.98);
+      transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0) scale(1);
+    }
+    .slide.prev {
+      transform: translateX(-40px) scale(0.98);
+    }
+
+    /* Typography */
+    h1, h2, h3 {
+      font-family: 'Cinzel', serif;
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #ffd700 0%, #d4af37 50%, #aa7c11 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Cards & Layout */
+    .deck-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    /* Bottom Floating Navigation Bar */
+    .pres-footer {
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(11, 13, 19, 0.95);
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      z-index: 100;
+    }
+    .nav-arrow {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #000;
+      border: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .nav-arrow:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+    }
+    .dots-indicator {
+      display: flex;
+      gap: 8px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .dot.active {
+      background: var(--gold-light);
+      width: 28px;
+      border-radius: 6px;
+      box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+    }
+
+    /* Comparison Table Styling */
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .comp-table th {
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold-light);
+      padding: 10px;
+      text-align: left;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+    .comp-table td {
+      padding: 9px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #d1d1d6;
+    }
+    .comp-table tr.highlight td {
+      background: rgba(212, 175, 55, 0.12);
+      color: #fff;
+      font-weight: 700;
+      border-color: rgba(212, 175, 55, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      .deck-viewport { padding: 10px; }
+      .slide { inset: 10px; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; gap: 12px; }
+      .hide-mobile { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="pres-header">
+    <div class="pres-brand">
+      <img src="img/icon-192.png" alt="SwingerSphere Logo" class="pres-logo">
+      <div class="pres-title">SWINGER<span>SPHERE</span> · Clubes B2B</div>
+    </div>
+    <div class="pres-controls">
+      <span class="slide-badge" id="slideBadge">01 / 08</span>
+      <button class="btn-pres" onclick="window.location.href='Dossier_Comercial_SwingerSphere_Clubes.pdf'" download>
+        📥 Descargar PDF
+      </button>
+      <button class="btn-pres" onclick="window.open('app.html', '_blank')">
+        📱 Ver App en Vivo
+      </button>
+      <button class="btn-pres" onclick="toggleFullScreen()">
+        ⛶ Pantalla Completa
+      </button>
+    </div>
+  </header>
+
+  <!-- Slide Stage -->
+  <main class="deck-viewport" id="deckViewport">
+
+    <!-- ── SLIDE 1: PORTADA EJECUTIVA ── -->
+    <section class="slide active" id="slide-1">
+      <div class="deck-card" style="text-align: center; padding: 48px 30px; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -50px; left: 50%; transform: translateX(-50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, transparent 70%); pointer-events: none;"></div>
+        
+        <div style="display: inline-block; background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.4); color: #ffd700; font-size: 0.75rem; font-weight: 800; letter-spacing: 2px; padding: 5px 16px; border-radius: 20px; text-transform: uppercase; margin-bottom: 24px;">
+          ALIANZA ESTRATÉGICA PARA CLUBES LIBERALES 2026/2027
+        </div>
+
+        <div style="width: 110px; height: 110px; margin: 0 auto 20px; border-radius: 30px; background: #0c0a09; border: 2px solid var(--gold); box-shadow: 0 0 40px rgba(212,175,55,0.4); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+          <img src="img/icon-512.png" alt="SwingerSphere" style="width: 100px; height: 100px; object-fit: contain;">
+        </div>
+
+        <h1 style="font-size: 2.8rem; font-weight: 900; margin-bottom: 8px; letter-spacing: 1px;">
+          SWINGER<span class="gold-gradient-text">SPHERE</span>
+        </h1>
+        <p style="font-size: 1.15rem; color: #ffd700; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; margin-bottom: 24px;">
+          The Global Elite Lifestyle Ecosystem
+        </p>
+
+        <p style="font-size: 1rem; color: #c7c7cc; max-width: 650px; margin: 0 auto 30px; line-height: 1.6;">
+          La plataforma y red privada de alta gama que conecta a los mejores clubes swinger y liberales de Europa con miles de parejas verificadas: <strong>0% comisiones en taquilla</strong>, <strong>sincronización automática de agenda</strong> y <strong>expositor VIP in-situ</strong>.
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; padding: 12px 24px;">
+            <div style="font-size: 1.4rem; font-weight: 900; color: #ffd700;">0%</div>
+            <div style="font-size: 0.75rem; color: #8e8e93;">Comisión de Entradas</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(48,209,88,0.3); border-radius: 12px; padding: 12px 24px;">
+            <div style="font-size: 1.4rem; font-weight: 900; color: #30d158;">Auto-Sync</div>
+            <div style="font-size: 0.75rem; color: #8e8e93;">Sincronizado con tu Web</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; padding: 12px 24px;">
+            <div style="font-size: 1.4rem; font-weight: 900; color: #ffd700;">TrustScore™</div>
+            <div style="font-size: 0.75rem; color: #8e8e93;">Filtro de Puerta Selecto</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 2: EL DILEMA DEL SECTOR ── -->
+    <section class="slide" id="slide-2">
+      <div class="deck-card">
+        <div style="font-size: 0.75rem; color: var(--gold-light); font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;">01 · EL DIAGNÓSTICO</div>
+        <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 20px;">Los 4 Grandes Dolores de los Clubes Liberales</h2>
+
+        <div class="grid-4">
+          <div style="background: rgba(255,69,58,0.06); border: 1px solid rgba(255,69,58,0.25); border-radius: 16px; padding: 20px; transition: transform 0.2s;" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform='translateY(0)'">
+            <div style="font-size: 2rem; margin-bottom: 12px;">👴</div>
+            <h3 style="font-size: 1rem; color: #ff6961; margin-bottom: 8px;">Portales Antiguos</h3>
+            <p style="font-size: 0.8rem; color: #aeaeb2; line-height: 1.5;">
+              Joyclub o Wyylde nacieron hace más de 15 años. Son foros web densos, poco atractivos y difíciles de usar en móviles por parejas jóvenes.
+            </p>
+          </div>
+
+          <div style="background: rgba(255,69,58,0.06); border: 1px solid rgba(255,69,58,0.25); border-radius: 16px; padding: 20px; transition: transform 0.2s;" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform='translateY(0)'">
+            <div style="font-size: 2rem; margin-bottom: 12px;">🚫</div>
+            <h3 style="font-size: 1rem; color: #ff6961; margin-bottom: 8px;">Censura en Redes</h3>
+            <p style="font-size: 0.8rem; color: #aeaeb2; line-height: 1.5;">
+              Instagram y Facebook banean cuentas y censuran carteles de fiestas swinger. Los clubes pierden visibilidad continuamente.
+            </p>
+          </div>
+
+          <div style="background: rgba(255,69,58,0.06); border: 1px solid rgba(255,69,58,0.25); border-radius: 16px; padding: 20px; transition: transform 0.2s;" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform='translateY(0)'">
+            <div style="font-size: 2rem; margin-bottom: 12px;">🧛‍♂️</div>
+            <h3 style="font-size: 1rem; color: #ff6961; margin-bottom: 8px;">Comisiones Vampiro</h3>
+            <p style="font-size: 0.8rem; color: #aeaeb2; line-height: 1.5;">
+              Portales de entradas cobran del 10% al 15% de comisión y retienen el dinero recaudado de la taquilla durante 15 a 30 días.
+            </p>
+          </div>
+
+          <div style="background: rgba(255,69,58,0.06); border: 1px solid rgba(255,69,58,0.25); border-radius: 16px; padding: 20px; transition: transform 0.2s;" onmouseenter="this.style.transform='translateY(-4px)'" onmouseleave="this.style.transform='translateY(0)'">
+            <div style="font-size: 2rem; margin-bottom: 12px;">🚪</div>
+            <h3 style="font-size: 1rem; color: #ff6961; margin-bottom: 8px;">Filtro de Puerta Difícil</h3>
+            <p style="font-size: 0.8rem; color: #aeaeb2; line-height: 1.5;">
+              Llegan asistentes desinformados sin respetar el código de etiqueta o conducta del club, creando fricción y dañando la atmósfera.
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.3); border-radius: 14px; padding: 14px 20px; text-align: center;">
+          <strong style="color: #ffd700; font-size: 0.95rem;">💡 El resultado:</strong>
+          <span style="color: #e5e5ea; font-size: 0.85rem; margin-left: 6px;">Los clubes necesitan un canal moderno, privado y directo que dignifique su imagen y llene sus salas con parejas verificadas sin quitarles un solo euro de su taquilla.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 3: LA SOLUCIÓN SWINGERSPHERE (ECOSISTEMA 360°) ── -->
+    <section class="slide" id="slide-3">
+      <div class="deck-card">
+        <div style="font-size: 0.75rem; color: var(--gold-light); font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;">02 · LA PROPUESTA DE VALOR</div>
+        <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 20px;">Ecosistema 360° Diseñado para que el Club se Sienta en su Casa</h2>
+
+        <div class="grid-2">
+          <div style="display: flex; gap: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(212,175,55,0.25); border-radius: 16px; padding: 18px;">
+            <div style="font-size: 2.2rem; flex-shrink: 0;">🏰</div>
+            <div>
+              <h3 style="font-size: 1.05rem; color: #ffd700; margin-bottom: 4px;">Micro-site Exclusivo en la App</h3>
+              <p style="font-size: 0.8rem; color: #aeaeb2; line-height: 1.5;">
+                Página dedicada con fotografía en alta definición de vuestras instalaciones (piscina, jacuzzi, barra bar, playrooms), horarios, mapa GPS con 1 clic y reseñas verificadas.
+              </p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(48,209,88,0.3); border-radius: 16px; padding: 18px;">
+            <div style="font-size: 2.2rem; flex-shrink: 0;">💸</div>
+            <div>
+              <h3 style="font-size: 1.05rem; color: #30d158; margin-bottom: 4px;">0% Comisiones de Entradas (Opción A)</h3>
+              <p style="font-size: 0.8rem; color: #aeaeb2; line-height: 1.5;">
+                SwingerSphere NO custodia ni retiene el dinero de vuestra taquilla. Los clientes reservan de forma directa en vuestro WhatsApp oficial o en vuestro propio portal.
+              </p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(212,175,55,0.25); border-radius: 16px; padding: 18px;">
+            <div style="font-size: 2.2rem; flex-shrink: 0;">⚡</div>
+            <div>
+              <h3 style="font-size: 1.05rem; color: #ffd700; margin-bottom: 4px;">Sincronización Automática Web</h3>
+              <p style="font-size: 0.8rem; color: #aeaeb2; line-height: 1.5;">
+                Conectamos nuestro motor inteligente a vuestra página web oficial. Cada vez que publicáis una fiesta en vuestro sitio, se actualiza sola en SwingerSphere. Trabajo cero para vuestro equipo.
+              </p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(212,175,55,0.25); border-radius: 16px; padding: 18px;">
+            <div style="font-size: 2.2rem; flex-shrink: 0;">🛡️</div>
+            <div>
+              <h3 style="font-size: 1.05rem; color: #ffd700; margin-bottom: 4px;">Filtro de Puerta TrustScore™</h3>
+              <p style="font-size: 0.8rem; color: #aeaeb2; line-height: 1.5;">
+                El cliente llega con nivel de reputación y firma de consentimiento en el estilo de vida (ConsentVault™). Saben cómo comportarse y respetan las normas del local.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 4: DEMOSTRACIÓN CASO BAKANAL ── -->
+    <section class="slide" id="slide-4">
+      <div class="deck-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div>
+            <div style="font-size: 0.75rem; color: var(--gold-light); font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">03 · CASO DE ÉXITO EN VIVO</div>
+            <h2 style="font-size: 1.8rem; font-weight: 800; margin: 0;">Bakanal Swinger Club Madrid</h2>
+          </div>
+          <span style="background: rgba(48,209,88,0.15); color: #30d158; border: 1px solid rgba(48,209,88,0.3); border-radius: 20px; padding: 4px 14px; font-size: 0.75rem; font-weight: 800;">
+            ● WEB SINCRONIZADA EN DIRECTO
+          </span>
+        </div>
+
+        <div class="grid-2" style="align-items: center;">
+          <!-- Left: Hero Card Visual -->
+          <div style="position: relative; border-radius: 18px; overflow: hidden; border: 1px solid rgba(212,175,55,0.45); box-shadow: 0 12px 30px rgba(0,0,0,0.8);">
+            <div style="height: 140px; background: linear-gradient(180deg, rgba(12,10,9,0.3) 0%, rgba(12,10,9,0.92) 100%), url('img/clubs/bakanal-pool.webp') center/cover no-repeat; display: flex; align-items: flex-end; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 50px; height: 50px; border-radius: 14px; background: #0c0a09; border: 2px solid var(--gold); overflow: hidden;">
+                  <img src="img/clubs/bakanal-apple-icon.png" alt="Bakanal Monograma" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div>
+                  <h3 style="font-size: 1.15rem; color: #fff; margin: 0;">Bakanal SW Club</h3>
+                  <div style="font-size: 0.75rem; color: #ffd700;">4.6 ★★★★★ (282 reseñas Google) · Madrid</div>
+                </div>
+              </div>
+            </div>
+            <div style="padding: 16px; background: #12151d;">
+              <div style="font-size: 0.8rem; color: #d1d1d6; line-height: 1.5; margin-bottom: 12px;">
+                Piscina climatizada con iluminación azul, 300 m² terraza exterior, barra bar y playrooms temáticos.
+              </div>
+              <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px; margin-bottom: 12px; font-size: 0.78rem;">
+                <span style="color: #ffd700; font-weight: 700;">🍷 Próximas Fiestas Noviembre:</span> Pecados Ocultos, Gran Fiesta Sin Filtros & Cena de Navidad.
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn-pres" style="flex: 1; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000; font-weight: 800; justify-content: center;" onclick="window.open('app.html', '_blank')">
+                  Ver Espacio Club
+                </button>
+                <button class="btn-pres" style="background: #25D366; color: #fff; border: none; font-weight: 700;" onclick="window.open('https://wa.me/34659505501', '_blank')">
+                  💬 WhatsApp
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Key Integration Highlights -->
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 14px;">
+              <strong style="color: #ffd700; font-size: 0.9rem;">1. Fotografía & Material 100% Real</strong>
+              <p style="font-size: 0.8rem; color: #aeaeb2; margin-top: 4px; line-height: 1.4;">
+                Sin plantillas genéricas. Mostramos las zonas reales de vuestro club (piscinas, camas balinesas, zonas de aguas) para enamorar a las parejas desde la pantalla.
+              </p>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 14px;">
+              <strong style="color: #30d158; font-size: 0.9rem;">2. Flujo Opción A: Pase VIP Directo</strong>
+              <p style="font-size: 0.8rem; color: #aeaeb2; margin-top: 4px; line-height: 1.4;">
+                Al solicitar entrada, la app genera un código VIP (#SS-8K92) y abre WhatsApp directamente con el teléfono del club con la fecha y número de personas ya rellenados.
+              </p>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.25); border-radius: 12px; padding: 14px;">
+              <strong style="color: #ffd700; font-size: 0.9rem;">3. Replicable para Cualquier Club Friendly</strong>
+              <p style="font-size: 0.8rem; color: #aeaeb2; margin-top: 4px; line-height: 1.4;">
+                El sistema está preparado para integrar cualquier club de España y Europa en 48 horas con exactamente la misma excelencia técnica.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 5: ESTUDIO COMPARATIVO DE PRECIOS ── -->
+    <section class="slide" id="slide-5">
+      <div class="deck-card">
+        <div style="font-size: 0.75rem; color: var(--gold-light); font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;">04 · RADIOGRAFÍA DEL MERCADO</div>
+        <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 16px;">Precios de Mensualidades en España y Europa</h2>
+
+        <p style="font-size: 0.85rem; color: #aeaeb2; margin-bottom: 14px;">
+          La media del sector en Europa ronda los <strong>25€ a 45€ al mes</strong>. SwingerSphere ofrece una tarifa plana de <strong>10€/mes</strong> y <strong>reinvierte el 40% (4€) en convenios con los clubes</strong>:
+        </p>
+
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Plataforma</th>
+              <th>Perfil</th>
+              <th>Precio 1 Mes</th>
+              <th>Precio 3-6 Meses</th>
+              <th>Propuesta y Limitaciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Wyylde</strong></td>
+              <td>Swinger / Liberal</td>
+              <td style="color: #ff6961; font-weight:700;">29,99 € – 39,99 €</td>
+              <td>~24,99 € / mes</td>
+              <td>Precios elevados para hombres solos. Muchos perfiles inactivos.</td>
+            </tr>
+            <tr>
+              <td><strong>Joyclub</strong></td>
+              <td>Swinger / Lifestyle</td>
+              <td style="color: #ff6961; font-weight:700;">24,90 € – 29,90 €</td>
+              <td>~19,90 € / mes</td>
+              <td>Estructura antigua de foro de escritorio; interfaz saturada en móvil.</td>
+            </tr>
+            <tr>
+              <td><strong>3Fun</strong></td>
+              <td>Swinger / Tríos</td>
+              <td style="color: #ff6961; font-weight:700;">29,99 €</td>
+              <td>~20,00 € / mes</td>
+              <td>App moderna pero con perfiles falsos y fugas de ubicación.</td>
+            </tr>
+            <tr>
+              <td><strong>Bumble Premium</strong></td>
+              <td>Solteros Mainstream</td>
+              <td style="color: #ff6961; font-weight:700;">39,99 € – 44,99 €</td>
+              <td>~26,60 € / mes</td>
+              <td>Una de las más caras del mercado para un solo mes.</td>
+            </tr>
+            <tr>
+              <td><strong>Tinder Gold / Plat.</strong></td>
+              <td>Solteros Mainstream</td>
+              <td style="color: #ff6961; font-weight:700;">25,99 € – 42,99 €</td>
+              <td>~15,99 € / mes</td>
+              <td>Precios cambiantes por algoritmo según edad y comportamiento.</td>
+            </tr>
+            <tr class="highlight">
+              <td><strong style="color: #ffd700;">💎 SwingerSphere</strong></td>
+              <td><strong style="color: #ffd700;">Lifestyle Premium</strong></td>
+              <td><strong style="color: #ffd700; font-size: 1.1rem;">10,00 € / mes</strong></td>
+              <td><strong style="color: #ffd700;">10,00 € / mes</strong></td>
+              <td><strong style="color: #ffd700;">Tarifa plana universal. 40% a convenios de clubes + 0% comisiones a salas.</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid-2" style="margin-top: 14px;">
+          <div style="background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.3); border-radius: 10px; padding: 10px 14px; font-size: 0.78rem;">
+            <strong style="color: #ffd700;">🤝 Fondo del 40% para Convenios:</strong>
+            De los 10€ de cada usuario, 4€ van directo a financiar descuentos en copas y entradas VIP en los clubes asociados.
+          </div>
+          <div style="background: rgba(48,209,88,0.08); border: 1px solid rgba(48,209,88,0.3); border-radius: 10px; padding: 10px 14px; font-size: 0.78rem;">
+            <strong style="color: #30d158;">🎁 300 Socios Fundadores:</strong>
+            Las primeras 300 parejas influyentes entran gratis de por vida, generando la masa crítica que acudirá a vuestras fiestas.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 6: EXPOSITOR IN-SITU & PASAPORTE ── -->
+    <section class="slide" id="slide-6">
+      <div class="deck-card">
+        <div style="font-size: 0.75rem; color: var(--gold-light); font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;">05 · PRESENCIA FÍSICA EN SALA</div>
+        <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 16px;">El Expositor Oficial In-Situ & Passport Lifestyle™</h2>
+
+        <div class="grid-2" style="align-items: center;">
+          <!-- Left: Table Tent 3D mockup card -->
+          <div style="background: #000; border: 2px solid var(--gold); border-radius: 16px; padding: 24px; text-align: center; box-shadow: 0 16px 40px rgba(0,0,0,0.85); position: relative;">
+            <div style="font-size: 0.7rem; color: #ffd700; letter-spacing: 2px; font-weight: 800; margin-bottom: 8px;">SWINGERSPHERE · VIP CLUB ACCESS</div>
+            <div style="width: 140px; height: 140px; margin: 0 auto 12px; background: #fff; padding: 8px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255,255,255,0.2);">
+              <img src="img/qr-code-raw.png" alt="Código QR Universal" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <div style="font-size: 0.95rem; font-weight: 800; color: #fff;">Escanea con tu Móvil</div>
+            <div style="font-size: 0.75rem; color: #aeaeb2; margin-top: 4px;">Abre https://www.swingersphere.com/</div>
+            <div style="margin-top: 14px; display: inline-block; background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.4); color: #ffd700; font-size: 0.7rem; padding: 4px 12px; border-radius: 20px; font-weight: 700;">
+              ✦ Soporte de barra / recepción incluido
+            </div>
+          </div>
+
+          <!-- Right: Passport Lifestyle explanation -->
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.3); border-radius: 14px; padding: 16px;">
+              <h3 style="font-size: 1.05rem; color: #ffd700; margin-bottom: 6px;">🛂 ¿Qué pasa cuando escanean el QR?</h3>
+              <ul style="font-size: 0.8rem; color: #d1d1d6; padding-left: 16px; line-height: 1.6;">
+                <li>El cliente entra de inmediato a la app en su móvil sin descargas lentas.</li>
+                <li>Ve la cartelera de las próximas semanas del club y reserva con antelación.</li>
+                <li>Gana el <strong>sello digital exclusivo de vuestro club</strong> en su Pasaporte Lifestyle.</li>
+              </ul>
+            </div>
+
+            <div style="background: rgba(48,209,88,0.06); border: 1px solid rgba(48,209,88,0.25); border-radius: 14px; padding: 16px;">
+              <h3 style="font-size: 1.05rem; color: #30d158; margin-bottom: 6px;">🎯 Gamificación y Fidelización</h3>
+              <p style="font-size: 0.8rem; color: #d1d1d6; line-height: 1.5;">
+                Las parejas compiten sanamente por coleccionar sellos de los mejores clubes de España y Europa. Quien acude a vuestro club, quiere volver para subir de nivel en la comunidad.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 7: OFERTA SOCIO FUNDADOR 0€ ── -->
+    <section class="slide" id="slide-7">
+      <div class="deck-card">
+        <div style="font-size: 0.75rem; color: var(--gold-light); font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;">06 · CONDICIONES COMERCIALES</div>
+        <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 16px;">Paquete Partner Fundador Platinum (Lanzamiento)</h2>
+
+        <div style="background: linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(20,15,10,0.85) 100%); border: 2px solid var(--gold); border-radius: 18px; padding: 24px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap;">
+            <div>
+              <h3 style="font-size: 1.4rem; color: #fff; margin: 0;">MEMBRESÍA FUNDADOR PLATINUM</h3>
+              <div style="font-size: 0.8rem; color: #ffd700; font-weight: 700; margin-top: 2px;">VÁLIDO PARA LOS 5 PRIMEROS CLUBES DE CADA REGIÓN</div>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-size: 2.2rem; font-weight: 900; color: #30d158;">0 €</span>
+              <span style="font-size: 0.85rem; color: #aeaeb2;"> / 4 MESES</span>
+            </div>
+          </div>
+
+          <div class="grid-2" style="font-size: 0.85rem; color: #e5e5ea; line-height: 1.7;">
+            <div>
+              <div>✓ <strong>Micro-site Dedicado:</strong> Galería HD, horarios, instalaciones y mapa.</div>
+              <div>✓ <strong>Auto-Sync Web:</strong> Sincronización continua de eventos sin trabajo.</div>
+              <div>✓ <strong>0% Comisiones de Entradas:</strong> De por vida, sin excepciones.</div>
+            </div>
+            <div>
+              <div>✓ <strong>Banner Destacado en Radar:</strong> Posicionamiento VIP en vuestra ciudad.</div>
+              <div>✓ <strong>Expositor Físico QR:</strong> Entregado para barra/recepción sin coste.</div>
+              <div>✓ <strong>Sin Permanencia:</strong> Libertad total tras los 4 meses de prueba.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-3" style="text-align: center;">
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px;">
+            <div style="font-size: 1.5rem; color: #ffd700; margin-bottom: 4px;">🤝</div>
+            <strong style="font-size: 0.85rem;">Compromiso del Club</strong>
+            <p style="font-size: 0.75rem; color: #8e8e93; margin-top: 4px;">Colocar el expositor en barra/recepción y validar sellos a los socios.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px;">
+            <div style="font-size: 1.5rem; color: #30d158; margin-bottom: 4px;">🚀</div>
+            <strong style="font-size: 0.85rem;">Puesta en Marcha</strong>
+            <p style="font-size: 0.75rem; color: #8e8e93; margin-top: 4px;">Activación técnica de vuestro espacio y eventos en menos de 48 horas.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px;">
+            <div style="font-size: 1.5rem; color: #ffd700; margin-bottom: 4px;">💎</div>
+            <strong style="font-size: 0.85rem;">Renovación Opcional</strong>
+            <p style="font-size: 0.75rem; color: #8e8e93; margin-top: 4px;">Planes desde 40€ / 45 días o continuidad básica sin coste.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 8: CIERRE & PRÓXIMOS PASOS ── -->
+    <section class="slide" id="slide-8">
+      <div class="deck-card" style="text-align: center; padding: 36px 24px;">
+        <div style="font-size: 0.75rem; color: var(--gold-light); font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">07 · CIERRE & ACTIVACIÓN</div>
+        <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 12px;">¿Empezamos Este Mismo Fin de Semana?</h2>
+        <p style="font-size: 0.95rem; color: #aeaeb2; max-width: 600px; margin: 0 auto 28px; line-height: 1.6;">
+          Vuestro espacio en SwingerSphere puede estar activo este viernes para que todas las parejas de vuestra zona vean vuestra programación y reserven de forma directa.
+        </p>
+
+        <div class="grid-3" style="max-width: 800px; margin: 0 auto 30px; text-align: left;">
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; padding: 18px;">
+            <div style="font-size: 1.5rem; color: #ffd700; font-weight: 900; margin-bottom: 4px;">1</div>
+            <strong style="font-size: 0.9rem; color: #fff;">Confirmación</strong>
+            <p style="font-size: 0.75rem; color: #8e8e93; margin-top: 4px;">Nos facilitáis vuestro logotipo y fotos de instalaciones.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; padding: 18px;">
+            <div style="font-size: 1.5rem; color: #ffd700; font-weight: 900; margin-bottom: 4px;">2</div>
+            <strong style="font-size: 0.9rem; color: #fff;">Conexión API</strong>
+            <p style="font-size: 0.75rem; color: #8e8e93; margin-top: 4px;">Sincronizamos vuestra web oficial con el radar de la app.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; padding: 18px;">
+            <div style="font-size: 1.5rem; color: #ffd700; font-weight: 900; margin-bottom: 4px;">3</div>
+            <strong style="font-size: 0.9rem; color: #fff;">Entrega del Stand</strong>
+            <p style="font-size: 0.75rem; color: #8e8e93; margin-top: 4px;">Colocamos el expositor QR en vuestra sala para el fin de semana.</p>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+          <a href="https://wa.me/34659505501?text=Hola%2C%20quiero%20activar%20el%20paquete%20Partner%20Fundador%20de%20SwingerSphere%20para%20mi%20club." target="_blank" class="btn-pres" style="background: #25D366; color: #fff; border: none; font-size: 0.95rem; padding: 12px 28px; text-decoration: none; font-weight: 800; border-radius: 12px; box-shadow: 0 4px 20px rgba(37,211,102,0.4);">
+            💬 Activar por WhatsApp (+34 659 50 55 01)
+          </a>
+          <a href="Dossier_Comercial_SwingerSphere_Clubes.pdf" download class="btn-pres" style="background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000; font-size: 0.95rem; padding: 12px 28px; text-decoration: none; font-weight: 800; border-radius: 12px; box-shadow: 0 4px 20px rgba(212,175,55,0.35);">
+            📥 Descargar Dossier en PDF
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer class="pres-footer">
+    <button class="nav-arrow" id="prevBtn" onclick="prevSlide()" title="Anterior (←)">
+      ‹
+    </button>
+    <div class="dots-indicator" id="dotsIndicator">
+      <div class="dot active" onclick="goToSlide(0)"></div>
+      <div class="dot" onclick="goToSlide(1)"></div>
+      <div class="dot" onclick="goToSlide(2)"></div>
+      <div class="dot" onclick="goToSlide(3)"></div>
+      <div class="dot" onclick="goToSlide(4)"></div>
+      <div class="dot" onclick="goToSlide(5)"></div>
+      <div class="dot" onclick="goToSlide(6)"></div>
+      <div class="dot" onclick="goToSlide(7)"></div>
+    </div>
+    <button class="nav-arrow" id="nextBtn" onclick="nextSlide()" title="Siguiente (→ o Espacio)">
+      ›
+    </button>
+  </footer>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progressBar');
+    const slideBadge = document.getElementById('slideBadge');
+    const dots = document.querySelectorAll('.dot');
+
+    function updateSlide() {
+      slides.forEach((s, idx) => {
+        s.classList.remove('active', 'prev');
+        if (idx === currentSlide) {
+          s.classList.add('active');
+        } else if (idx < currentSlide) {
+          s.classList.add('prev');
+        }
+      });
+
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === currentSlide);
+      });
+
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = pct + '%';
+      slideBadge.textContent = String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(idx) {
+      if (idx >= 0 && idx < totalSlides) {
+        currentSlide = idx;
+        updateSlide();
+      }
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullScreen();
+      }
+    });
+
+    // Touch swipe support for tablets / phones
+    let touchStartX = 0;
+    let touchEndX = 0;
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+    document.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX - 50) nextSlide();
+      if (touchEndX > touchStartX + 50) prevSlide();
+    }, false);
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+  </script>
+</body>
+</html>

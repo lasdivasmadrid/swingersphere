@@ -99,6 +99,15 @@ window.showVenuePricing = function() {
   hdr.appendChild(closeBtn);
   modal.appendChild(hdr);
 
+  // Quick Action Buttons for B2B Dossier and Presentation
+  var docsBar = document.createElement('div');
+  docsBar.style.cssText = 'display:flex;gap:8px;padding:0.75rem 1rem 0;';
+  docsBar.innerHTML = '<a href="presentacion.html" target="_blank" style="flex:1;background:linear-gradient(135deg,rgba(212,175,55,0.2),rgba(212,175,55,0.05));border:1px solid rgba(212,175,55,0.4);border-radius:10px;padding:0.55rem;text-align:center;text-decoration:none;color:#ffd700;font-size:0.74rem;font-weight:800;display:flex;align-items:center;justify-content:center;gap:4px;">' +
+    '📊 Presentación Interactiva</a>' +
+    '<a href="Dossier_Comercial_SwingerSphere_Clubes.pdf" download style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:0.55rem;text-align:center;text-decoration:none;color:#fff;font-size:0.74rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:4px;">' +
+    '📥 Dossier PDF</a>';
+  modal.appendChild(docsBar);
+
   // Plans
   var plansWrap = document.createElement('div');
   plansWrap.style.cssText = 'padding:1rem;display:flex;flex-direction:column;gap:0.75rem;';

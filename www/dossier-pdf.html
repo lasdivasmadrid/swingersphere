@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dossier Comercial SwingerSphere B2B - Alianza Estratégica con Clubes</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 12mm 14mm 14mm 14mm;
+      @bottom-right {
+        content: counter(page) " / " counter(pages);
+        font-family: 'Inter', sans-serif;
+        font-size: 8pt;
+        color: #8a7a60;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      background-color: #0b0c10;
+      color: #e5e5ea;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 9.5pt;
+      line-height: 1.5;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 267mm;
+      page-break-after: always;
+      position: relative;
+      padding: 10mm 6mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: radial-gradient(circle at 80% 20%, rgba(212,175,55,0.06) 0%, rgba(11,12,16,1) 70%);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    @media print {
+      body { background: #000; }
+      .page {
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        min-height: 270mm;
+        padding: 4mm 0;
+      }
+      .no-print { display: none !important; }
+    }
+
+    /* Luxury Gold Gradients & Accents */
+    .gold-text {
+      background: linear-gradient(135deg, #ffd700 0%, #d4af37 50%, #aa7c11 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+
+    .gold-badge {
+      display: inline-block;
+      background: rgba(212,175,55,0.12);
+      border: 1px solid rgba(212,175,55,0.45);
+      color: #ffd700;
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    h1, h2, h3, .heading-font {
+      font-family: 'Cinzel', serif;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+
+    h2 {
+      font-size: 15pt;
+      font-weight: 800;
+      margin-bottom: 4mm;
+      border-bottom: 1px solid rgba(212,175,55,0.3);
+      padding-bottom: 2mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    h3 {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #ffd700;
+      margin-bottom: 2mm;
+    }
+
+    p {
+      color: #c7c7cc;
+      margin-bottom: 3mm;
+      font-size: 9.2pt;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 10px;
+      padding: 4mm;
+      margin-bottom: 3.5mm;
+    }
+
+    .card-highlight {
+      background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(20,15,10,0.6) 100%);
+      border: 1px solid rgba(212,175,55,0.5);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3.5mm;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 3mm 0;
+      font-size: 8.5pt;
+    }
+
+    th {
+      background: rgba(212,175,55,0.18);
+      color: #ffd700;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 7.5pt;
+      letter-spacing: 0.5px;
+      padding: 6px 8px;
+      text-align: left;
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+
+    td {
+      padding: 5px 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #e5e5ea;
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .footer-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(212,175,55,0.25);
+      padding-top: 2.5mm;
+      font-size: 7.5pt;
+      color: #8e8e93;
+    }
+
+    /* Print toolbar */
+    .print-actions {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 99999;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, #ffd700, #b8860b);
+      color: #000;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-secondary {
+      background: #1c1c1e;
+      color: #ffd700;
+      border: 1px solid rgba(212,175,55,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Print Control (Visible only in browser, hidden when printing) -->
+  <div class="print-actions no-print">
+    <button class="btn-action btn-secondary" onclick="window.location.href='presentacion.html'">
+      📊 Ver Presentación Interactiva
+    </button>
+    <button class="btn-action" onclick="window.print()">
+      🖨️ Guardar como PDF / Imprimir
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- PÁGINA 1: PORTADA EJECUTIVA                                  -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page" style="justify-content:center; text-align:center; padding: 25mm 15mm;">
+    <div>
+      <div class="gold-badge" style="margin-bottom: 6mm;">DOCUMENTO CONFIDENCIAL B2B · ALIANZA ESTRATÉGICA</div>
+      
+      <!-- Logo Globe -->
+      <div style="width: 100px; height: 100px; margin: 0 auto 6mm; border-radius: 28px; background: #0c0a09; border: 2px solid #d4af37; box-shadow: 0 0 35px rgba(212,175,55,0.35); overflow: hidden; display: flex; align-items: center; justify-content: center;">
+        <img src="img/icon-512.png" alt="SwingerSphere" style="width: 90px; height: 90px; object-fit: contain;">
+      </div>
+
+      <h1 style="font-size: 26pt; font-weight: 900; margin-bottom: 2mm; text-transform: uppercase;">
+        SWINGER<span class="gold-text">SPHERE</span>
+      </h1>
+      <p style="font-size: 11pt; color: #ffd700; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; margin-bottom: 8mm;">
+        The Global Elite Lifestyle Ecosystem
+      </p>
+
+      <div style="width: 80px; height: 2px; background: linear-gradient(90deg, transparent, #d4af37, transparent); margin: 0 auto 8mm;"></div>
+
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(212,175,55,0.35); border-radius: 14px; padding: 6mm 10mm; max-width: 500px; margin: 0 auto 10mm;">
+        <h3 style="font-size: 13pt; margin-bottom: 2mm;">DOSSIER COMERCIAL PARA CLUBES</h3>
+        <p style="font-size: 9.5pt; color: #d1d1d6; line-height: 1.6; margin-bottom: 0;">
+          Propuesta integral de afiliación, visibilidad premium, 0% comisiones en entradas y tecnología de sincronización automática para salas liberales de referencia.
+        </p>
+      </div>
+
+      <div class="grid-3" style="max-width: 520px; margin: 0 auto 10mm; text-align: center;">
+        <div class="card" style="margin-bottom:0; padding: 3mm;">
+          <div style="font-size: 14pt; color: #ffd700; font-weight: 800;">0%</div>
+          <div style="font-size: 7.5pt; color: #aeaeb2;">Comisión en Entradas</div>
+        </div>
+        <div class="card" style="margin-bottom:0; padding: 3mm;">
+          <div style="font-size: 14pt; color: #30d158; font-weight: 800;">100%</div>
+          <div style="font-size: 7.5pt; color: #aeaeb2;">Sincronizado con tu Web</div>
+        </div>
+        <div class="card" style="margin-bottom:0; padding: 3mm;">
+          <div style="font-size: 14pt; color: #ffd700; font-weight: 800;">TrustScore™</div>
+          <div style="font-size: 7.5pt; color: #aeaeb2;">Filtro de Puerta Selecto</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar" style="margin-top: 10mm;">
+      <span>SwingerSphere S.L. · Madrid, España</span>
+      <span>Programa Partner Clubes 2026/2027</span>
+      <span>www.swingersphere.com</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- PÁGINA 2: DIAGNÓSTICO DEL SECTOR & LA SOLUCIÓN               -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div>
+      <h2>
+        <span>01 · DIAGNÓSTICO DEL SECTOR LIFESTYLE</span>
+        <span class="gold-badge">ANÁLISIS DE MERCADO</span>
+      </h2>
+
+      <p style="margin-bottom: 4mm;">
+        El sector de los clubes liberales y swingers vive un momento de profunda transformación. La clientela joven y de alto poder adquisitivo demanda discreción, tecnología en su smartphone y una experiencia impecable. Sin embargo, las soluciones actuales fallan en lo esencial:
+      </p>
+
+      <div class="grid-2">
+        <div class="card" style="border-left: 3px solid #ff453a;">
+          <h3 style="color: #ff6961;">❌ La Realidad Actual de los Clubes</h3>
+          <ul style="font-size: 8.5pt; color: #aeaeb2; padding-left: 15px; line-height: 1.6;">
+            <li><strong>Portales obsoletos de hace 20 años:</strong> Webs recargadas (Joyclub, Wyylde, foros lentos) llenas de cuentas inactivas y perfiles sin filtrar.</li>
+            <li><strong>Censura en redes sociales:</strong> Instagram, Facebook y TikTok banean de inmediato cualquier contenido o mención a locales liberales.</li>
+            <li><strong>Comisiones abusivas de intermediarios:</strong> Portales de entradas cobran del 10% al 15% y retienen los fondos de taquilla durante 15 a 30 días.</li>
+            <li><strong>Fricción en puerta:</strong> Curiosos sin cultura del estilo de vida o perfiles inadecuados que perjudican el ambiente del club.</li>
+          </ul>
+        </div>
+
+        <div class="card card-highlight" style="border-left: 3px solid #ffd700;">
+          <h3 style="color: #ffd700;">💎 La Solución SwingerSphere</h3>
+          <ul style="font-size: 8.5pt; color: #e5e5ea; padding-left: 15px; line-height: 1.6;">
+            <li><strong>Diseño de Lujo en Smartphone:</strong> Estética obsidiana y oro, carga en menos de 1 segundo y accesible sin instalaciones invasivas.</li>
+            <li><strong>0% Comisiones en Entradas (Opción A):</strong> SwingerSphere no toca el dinero del club. Toda reserva va directa a vuestro WhatsApp o pasarela propia.</li>
+            <li><strong>Sincronización Automática API:</strong> Vuestra cartelera se actualiza sola desde vuestra web, ahorrándole horas de trabajo al personal.</li>
+            <li><strong>Filtro de Puerta TrustScore™:</strong> Recibís parejas y solteros educados en el respeto, el consentimiento mutuo y el código de vestimenta.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 4mm; margin-bottom: 2mm;">Arquitectura de Sincronización Directa:</h3>
+      <div class="card" style="text-align: center; padding: 4mm;">
+        <div style="display: flex; justify-content: space-around; align-items: center; font-size: 8.5pt;">
+          <div style="flex: 1; padding: 2mm; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="font-size: 16pt;">🌐</div>
+            <strong style="color: #ffd700;">Web Oficial del Club</strong><br>
+            <span style="font-size: 7.5pt; color: #8e8e93;">Publicas tus eventos como siempre</span>
+          </div>
+          <div style="padding: 0 8px; color: #ffd700; font-size: 14pt;">➔</div>
+          <div style="flex: 1; padding: 2mm; background: rgba(212,175,55,0.08); border-radius: 8px; border: 1px solid rgba(212,175,55,0.3);">
+            <div style="font-size: 16pt;">⚡</div>
+            <strong style="color: #ffd700;">Motor SwingerSphere</strong><br>
+            <span style="font-size: 7.5pt; color: #8e8e93;">Lectura automática sin duplicar trabajo</span>
+          </div>
+          <div style="padding: 0 8px; color: #ffd700; font-size: 14pt;">➔</div>
+          <div style="flex: 1; padding: 2mm; background: rgba(48,209,88,0.08); border-radius: 8px; border: 1px solid rgba(48,209,88,0.3);">
+            <div style="font-size: 16pt;">📲</div>
+            <strong style="color: #30d158;">Reserva Directa</strong><br>
+            <span style="font-size: 7.5pt; color: #8e8e93;">WhatsApp o Taquilla del Club (0% comisiones)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>SwingerSphere · Dossier Comercial B2B</span>
+      <span>02 · Diagnóstico y Solución</span>
+      <span>Página 2</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- PÁGINA 3: CASO DE ÉXITO REAL: BAKANAL SWINGER CLUB            -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div>
+      <h2>
+        <span>02 · CASO DE ÉXITO: BAKANAL SWINGER CLUB</span>
+        <span class="gold-badge">INTEGRACIÓN EN VIVO</span>
+      </h2>
+
+      <p style="margin-bottom: 3.5mm;">
+        El estándar de calidad de SwingerSphere ya está implantado con nuestro cliente de lanzamiento en Madrid: <strong>Bakanal Swinger Club</strong>. La plataforma utiliza 100% material real del establecimiento y sincroniza su cartelera semanal sin intervención manual.
+      </p>
+
+      <!-- Showcase Box -->
+      <div class="card card-highlight" style="padding: 4mm;">
+        <div style="display: flex; gap: 4mm; align-items: center; margin-bottom: 3mm;">
+          <div style="width: 50px; height: 50px; border-radius: 12px; background: #0c0a09; border: 2px solid #d4af37; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+            <img src="img/clubs/bakanal-apple-icon.png" alt="Bakanal Monograma" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div style="flex: 1;">
+            <h3 style="margin-bottom: 1px; font-size: 12pt; color: #fff;">BAKANAL SWINGER CLUB MADRID</h3>
+            <div style="font-size: 8pt; color: #ffd700;">★ 4.6 (282 reseñas Google) · Avenida de la Industria, 50, Humanes de Madrid</div>
+            <div style="font-size: 7.5pt; color: #30d158; font-weight: 700;">● Web y Eventos Sincronizados en Tiempo Real (www.bakanalsw.com)</div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-bottom: 3mm;">
+          <div style="background: rgba(0,0,0,0.5); border-radius: 8px; padding: 2.5mm; border: 1px solid rgba(255,255,255,0.08);">
+            <strong style="color: #ffd700; font-size: 8pt;">🏊 Instalaciones de Referencia</strong>
+            <p style="font-size: 7.8pt; color: #aeaeb2; margin-top: 1mm; margin-bottom: 0;">
+              Piscina interior climatizada con spa e iluminación azul, terraza chill-out de 300 m² con piscina exterior, barra bar premium y playrooms temáticos.
+            </p>
+          </div>
+          <div style="background: rgba(0,0,0,0.5); border-radius: 8px; padding: 2.5mm; border: 1px solid rgba(255,255,255,0.08);">
+            <strong style="color: #30d158; font-size: 8pt;">🎫 Flujo de Reserva Opción A</strong>
+            <p style="font-size: 7.8pt; color: #aeaeb2; margin-top: 1mm; margin-bottom: 0;">
+              Generación automática de Pase VIP (#SS-XXXX) y enlace directo a WhatsApp Oficial (+34 659 50 55 01) y al portal de registro del club (bakanalsmartcontrol.com).
+            </p>
+          </div>
+        </div>
+
+        <!-- Real Events Synced Table -->
+        <h3 style="font-size: 9pt; margin-bottom: 1.5mm; color: #ffd700;">Cartelera Semanal Sincronizada en Directo:</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Fiesta Temática</th>
+              <th>Horario</th>
+              <th>Canal de Entrada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>20 Nov</strong></td>
+              <td>🍷 Pecados Ocultos</td>
+              <td>23:00 - 06:00</td>
+              <td style="color: #30d158;">Reserva WhatsApp Directo</td>
+            </tr>
+            <tr>
+              <td><strong>21 Nov</strong></td>
+              <td>🔥 GRAN FIESTA · Sin Filtros</td>
+              <td>23:00 - 06:00</td>
+              <td style="color: #30d158;">Reserva WhatsApp Directo</td>
+            </tr>
+            <tr>
+              <td><strong>22 Nov</strong></td>
+              <td>👠 Cuckold & Hot Wife · La Temática</td>
+              <td>17:00 - 03:00</td>
+              <td style="color: #30d158;">Reserva WhatsApp Directo</td>
+            </tr>
+            <tr>
+              <td><strong>27 Nov</strong></td>
+              <td>🖤 Black Friday Especial</td>
+              <td>23:00 - 06:00</td>
+              <td style="color: #30d158;">Reserva WhatsApp Directo</td>
+            </tr>
+            <tr>
+              <td><strong>28 Nov</strong></td>
+              <td>🎄 GRAN FIESTA · Cena de Navidad Familia Bakanal</td>
+              <td>23:00 - 06:00</td>
+              <td style="color: #30d158;">Reserva WhatsApp Directo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="font-size: 8.5pt; color: #8e8e93; font-style: italic; margin-top: 2mm;">
+        "Exactamente este mismo ecosistema es el que activamos para tu club en menos de 48 horas: tu logotipo, tus fotos de instalaciones, tus horarios y tu enlace de reservas directo."
+      </p>
+    </div>
+
+    <div class="footer-bar">
+      <span>SwingerSphere · Dossier Comercial B2B</span>
+      <span>03 · Caso de Éxito Bakanal</span>
+      <span>Página 3</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- PÁGINA 4: ESTUDIO DE PRECIOS Y COMPARATIVA EUROPEA           -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div>
+      <h2>
+        <span>03 · ESTUDIO DE PRECIOS EN ESPAÑA Y EUROPA</span>
+        <span class="gold-badge">INTELIGENCIA DE MERCADO</span>
+      </h2>
+
+      <p style="margin-bottom: 3.5mm;">
+        Analizamos las tarifas mensuales de las principales plataformas del sector swinger/liberal y de citas en Europa. Los usuarios están agotados de suscripciones caras que oscilan entre 25€ y 45€ al mes. SwingerSphere rompe el mercado con una tarifa plana de <strong>10 €/mes</strong> y reinvierte el <strong>40% en los clubes</strong>:
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Plataforma</th>
+            <th>Categoría</th>
+            <th>Precio 1 Mes</th>
+            <th>Cuota 3 a 6 Meses</th>
+            <th>Modelo de Negocio & Fricciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Wyylde</strong></td>
+            <td>Swinger / Liberal</td>
+            <td style="color: #ff6961; font-weight:700;">29,99 € – 39,99 €</td>
+            <td>~24,99 € / mes</td>
+            <td>Tarifa alta para hombres. Muro de pago para chatear.</td>
+          </tr>
+          <tr>
+            <td><strong>Joyclub</strong></td>
+            <td>Swinger / Lifestyle</td>
+            <td style="color: #ff6961; font-weight:700;">24,90 € – 29,90 €</td>
+            <td>~19,90 € / mes</td>
+            <td>Foro antiguo de escritorio; no adaptado al móvil moderno.</td>
+          </tr>
+          <tr>
+            <td><strong>3Fun</strong></td>
+            <td>Swinger / Tríos</td>
+            <td style="color: #ff6961; font-weight:700;">29,99 €</td>
+            <td>~20,00 € / mes</td>
+            <td>App móvil con filtraciones y perfiles falsos.</td>
+          </tr>
+          <tr>
+            <td><strong>Feeld</strong></td>
+            <td>Liberal / Kink</td>
+            <td>19,99 € – 24,99 €</td>
+            <td>~14,99 € / mes</td>
+            <td>Sin integración ni acuerdos con clubes físicos.</td>
+          </tr>
+          <tr>
+            <td><strong>Tinder Gold/Plat.</strong></td>
+            <td>Solteros Mainstream</td>
+            <td style="color: #ff6961; font-weight:700;">25,99 € – 42,99 €</td>
+            <td>~15,99 € / mes</td>
+            <td>Gamificado; precios cambiantes según edad y género.</td>
+          </tr>
+          <tr>
+            <td><strong>Bumble Premium</strong></td>
+            <td>Solteros Mainstream</td>
+            <td style="color: #ff6961; font-weight:700;">39,99 € – 44,99 €</td>
+            <td>~26,60 € / mes</td>
+            <td>Precio de entrada muy costoso para un solo mes.</td>
+          </tr>
+          <tr style="background: rgba(212,175,55,0.15); border: 1px solid #ffd700;">
+            <td><strong style="color: #ffd700;">💎 SwingerSphere</strong></td>
+            <td><strong style="color: #ffd700;">Lifestyle Premium</strong></td>
+            <td><strong style="color: #ffd700; font-size: 10pt;">10,00 €</strong></td>
+            <td><strong style="color: #ffd700;">10,00 €</strong> *(sin permanencia)*</td>
+            <td><strong>Tarifa plana universal. 40% a convenios con clubes + 0% comisión a salas.</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="grid-2" style="margin-top: 4mm;">
+        <div class="card card-highlight">
+          <h3 style="font-size: 9.5pt;">🤝 El Fondo de Convenios con Clubes (40%)</h3>
+          <p style="font-size: 8.5pt; margin-bottom: 0;">
+            De cada 10€ de cuota mensual, <strong>4€ se destinan íntegramente a financiar acuerdos con los clubes de la red</strong>: copas de bienvenida, descuentos exclusivos en puerta y financiación de eventos privados para fidelizar la asistencia en vuestra sala.
+          </p>
+        </div>
+        <div class="card card-highlight">
+          <h3 style="font-size: 9.5pt;">🎁 300 Socios Fundadores Gratis</h3>
+          <p style="font-size: 8.5pt; margin-bottom: 0;">
+            Para acelerar el arranque, limitamos a <strong>300 plazas</strong> la membresía gratuita de por vida. Esto genera urgencia real (FOMO) y atrae a las parejas más activas e influyentes de cada ciudad desde la primera semana.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>SwingerSphere · Dossier Comercial B2B</span>
+      <span>04 · Estudio Comparativo Europeo</span>
+      <span>Página 4</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- PÁGINA 5: EL EXPOSITOR FÍSICO IN-SITU & PASSPORT LIFESTYLE   -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div>
+      <h2>
+        <span>04 · EXPOSITOR IN-SITU & PASSPORT LIFESTYLE™</span>
+        <span class="gold-badge">PRESENCIA FÍSICA EN SALA</span>
+      </h2>
+
+      <p style="margin-bottom: 3.5mm;">
+        Para conectar el mundo digital con la pista de baile, proporcionamos al club el <strong>Expositor de Mesa de Lujo con Código QR Universal</strong>, concebido para colocarse en barra, mesas VIP y recepción.
+      </p>
+
+      <div class="grid-2" style="align-items: center; margin-bottom: 4mm;">
+        <!-- Stand mockup description -->
+        <div class="card card-highlight">
+          <h3 style="font-size: 10pt;">🏆 Soporte Oficial de Mesa (Table Tent)</h3>
+          <ul style="font-size: 8.5pt; color: #e5e5ea; padding-left: 15px; line-height: 1.6; margin-bottom: 2mm;">
+            <li><strong>Acabado de Lujo:</strong> Orla dorada geométrica sobre fondo obsidiana que encaja en cualquier ambiente nocturno distinguido.</li>
+            <li><strong>Código QR Universal:</strong> Conduce a la plataforma oficial (<code>https://www.swingersphere.com/</code>), neutral y elegante para cualquier club.</li>
+            <li><strong>Impresión Profesional:</strong> Diseñado en proporción vertical estándar para metacrilato o soporte de aluminio dorado.</li>
+          </ul>
+          <div style="background: rgba(0,0,0,0.6); padding: 2mm 3mm; border-radius: 6px; border: 1px solid rgba(212,175,55,0.3); font-size: 7.8pt; color: #ffd700;">
+            ✦ Formato digital disponible para descarga e impresión directa en <code>www/qr-stand.html</code>.
+          </div>
+        </div>
+
+        <!-- Visual representation of QR Stand -->
+        <div style="background: #000; border: 2px solid #d4af37; border-radius: 12px; padding: 4mm; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+          <div style="font-size: 7pt; color: #ffd700; letter-spacing: 2px; font-weight: 800;">SWINGERSPHERE · VIP ACCESS</div>
+          <div style="margin: 3mm auto; width: 110px; height: 110px; background: #fff; padding: 6px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+            <img src="img/qr-code-raw.png" alt="QR Universal" style="width: 100%; height: 100%; object-fit: contain;">
+          </div>
+          <div style="font-size: 8pt; font-weight: 700; color: #fff;">Escanea · Conecta · Disfruta</div>
+          <div style="font-size: 7pt; color: #8e8e93; margin-top: 1mm;">Entra a la red oficial & colecciona tu sello del club</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size: 9.5pt;">🛂 Passport Lifestyle™: Fidelización por Gamificación</h3>
+        <p style="font-size: 8.5pt; margin-bottom: 2mm;">
+          Cada vez que un cliente acude a una fiesta en vuestro local y escanea el código en barra, gana el <strong>sello digital exclusivo de vuestro club</strong> en su Pasaporte Lifestyle de SwingerSphere.
+        </p>
+        <div class="grid-3" style="text-align: center; font-size: 8pt;">
+          <div style="background: rgba(255,255,255,0.03); padding: 2mm; border-radius: 6px;">
+            <div style="font-size: 14pt;">🥇</div>
+            <strong>Repetición de Visitas</strong><br>
+            <span style="font-size: 7.2pt; color: #8e8e93;">Incentiva a volver el próximo fin de semana</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); padding: 2mm; border-radius: 6px;">
+            <div style="font-size: 14pt;">🛡️</div>
+            <strong>Reputación de Pareja</strong><br>
+            <span style="font-size: 7.2pt; color: #8e8e93;">Los sellos aumentan su TrustScore™</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); padding: 2mm; border-radius: 6px;">
+            <div style="font-size: 14pt;">🌍</div>
+            <strong>Turismo Lifestyle</strong><br>
+            <span style="font-size: 7.2pt; color: #8e8e93;">Parejas de paso por tu ciudad te eligen</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>SwingerSphere · Dossier Comercial B2B</span>
+      <span>05 · Presencia In-Situ y Pasaporte</span>
+      <span>Página 5</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- PÁGINA 6: OFERTA FUNDADORES & ACUERDO COMERCIAL              -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div>
+      <h2>
+        <span>05 · PROPUESTA DE ALIANZA & CONDICIONES</span>
+        <span class="gold-badge">OFERTA DE LANZAMIENTO</span>
+      </h2>
+
+      <p style="margin-bottom: 3.5mm;">
+        Para las reuniones de esta semana con directores y propietarios de salas seleccionadas, ofrecemos el paquete <strong>Partner Fundador Platinum</strong> con condiciones preferenciales sin riesgo ni permanencia:
+      </p>
+
+      <div class="card card-highlight" style="padding: 5mm; margin-bottom: 4mm;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2mm;">
+          <h3 style="font-size: 13pt; margin: 0; color: #fff;">PAQUETE SOCIO FUNDADOR PLATINUM</h3>
+          <span style="font-size: 14pt; color: #30d158; font-weight: 900;">0 € / 4 MESES</span>
+        </div>
+        <div style="font-size: 7.8pt; color: #ffd700; margin-bottom: 3mm; font-weight: 700;">EXCLUSIVO PARA LOS 5 PRIMEROS CLUBES DE CADA ZONA</div>
+
+        <ul style="font-size: 8.5pt; color: #e5e5ea; padding-left: 15px; line-height: 1.6; margin-bottom: 3mm;">
+          <li>✓ <strong>Micro-site Dedicado de Lujo:</strong> Ficha oficial con fotos HD, vídeo, instalaciones, horarios y GPS.</li>
+          <li>✓ <strong>Sincronización Automática Web:</strong> Cartelera semanal en tiempo real sin trabajo manual.</li>
+          <li>✓ <strong>0% de Comisiones de Entrada de por Vida:</strong> Pagos directos en puerta o pasarela del club.</li>
+          <li>✓ <strong>Banner Destacado en el Radar:</strong> Máxima visibilidad ante miles de parejas en tu radio de influencia.</li>
+          <li>✓ <strong>Soporte Físico QR para Barra/Recepción:</strong> Expositor elegante entregado listo para colocar.</li>
+          <li>✓ <strong>Sin permanencia ni costes ocultos:</strong> Transcurridos los 4 meses, decides libremente si renovar el plan publicitario (desde 40€/45 días) o mantener la ficha básica gratuita.</li>
+        </ul>
+
+        <div style="border-top: 1px solid rgba(212,175,55,0.3); padding-top: 2.5mm; font-size: 8pt; color: #aeaeb2;">
+          <strong>Compromiso del Club:</strong> Únicamente colocar el expositor oficial en barra o recepción y validar el sello en el pasaporte digital a los asistentes verificados.
+        </div>
+      </div>
+
+      <h3 style="font-size: 10pt; margin-bottom: 2mm;">Próximos Pasos para la Activación en 48 Horas:</h3>
+      <div class="grid-3" style="text-align: center; font-size: 8pt; margin-bottom: 5mm;">
+        <div class="card" style="margin-bottom:0;">
+          <strong style="color:#ffd700;">1. Aprobación</strong><br>
+          <span style="font-size: 7.5pt; color:#aeaeb2;">Validamos logotipo, fotos y datos de contacto de tu local.</span>
+        </div>
+        <div class="card" style="margin-bottom:0;">
+          <strong style="color:#ffd700;">2. Conexión API</strong><br>
+          <span style="font-size: 7.5pt; color:#aeaeb2;">Conectamos el scraper con tu web oficial para sincronizar eventos.</span>
+        </div>
+        <div class="card" style="margin-bottom:0;">
+          <strong style="color:#ffd700;">3. Entrega de Stand</strong><br>
+          <span style="font-size: 7.5pt; color:#aeaeb2;">Colocamos el expositor QR en sala y publicamos la bienvenida.</span>
+        </div>
+      </div>
+
+      <!-- Contact block -->
+      <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 4mm;">
+        <div>
+          <strong style="color: #fff; font-size: 9.5pt;">Equipo de Dirección y Expansión SwingerSphere</strong><br>
+          <span style="font-size: 8pt; color: #8e8e93;">Atención directa y soporte para clubes asociados</span>
+        </div>
+        <div style="text-align: right; font-size: 8.5pt;">
+          <span style="color: #ffd700; font-weight: 700;">partners@swingersphere.com</span><br>
+          <span style="color: #30d158; font-weight: 700;">WhatsApp Business: +34 659 50 55 01</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>SwingerSphere · Dossier Comercial B2B</span>
+      <span>06 · Acuerdo y Activación</span>
+      <span>Página 6</span>
+    </div>
+  </div>
+
+</body>
+</html>
