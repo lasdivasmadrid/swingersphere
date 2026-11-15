@@ -28,14 +28,14 @@ var BOOKING_LISTINGS = [
   {id:'evt-003', category:'events', name:'Cena Lifestyle Barcelona',    location:'Barcelona, Espana',  price:60,  priceUnit:'pareja',  rating:4.6, reviews:67,  certified:false, image:'🍷', description:'Cena gourmet de 5 platos con maridaje de vinos en restaurante privado. Ambiente intimo y sofisticado para conocer parejas afines.', dates:['2026-06-27','2026-07-04','2026-07-11','2026-07-18','2026-07-25','2026-08-01'], capacity:24},
   {id:'evt-004', category:'events', name:'Noche Tematica Valencia',     location:'Valencia, Espana',   price:25,  priceUnit:'persona', rating:4.4, reviews:52,  certified:false, image:'🎭', description:'Noche tematica mensual en local privado del centro. Cada edicion con tematica diferente: mascaras, neon, white party y mas.', dates:['2026-07-03','2026-07-17','2026-08-07','2026-08-21','2026-09-04','2026-09-18'], capacity:50},
 
-  // ─ Tickets ─
-  {id:'tkt-bakanal', category:'tickets', name:'Bakanal Swinger Club Madrid', location:'Humanes de Madrid (Madrid)', price:30, priceUnit:'pareja', rating:4.8, reviews:282, certified:true, image:'img/clubs/bakanal-apple-icon.png', description:'Club privado liberal referente en Madrid. Piscina interior climatizada con iluminación azul, terraza chill-out de 300m² con piscina exterior, fuentes, barra bar, zona de aguas, jacuzzi y playrooms. Eventos temáticos cada fin de semana.', dates:['2026-11-13','2026-11-14','2026-11-15','2026-11-20','2026-11-21','2026-11-22','2026-11-27','2026-11-28'], capacity:200, website:'https://www.bakanalsw.com/', whatsapp:'https://wa.me/34659505501', vipUrl:'https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html'},
-  {id:'tkt-001', category:'tickets', name:'Entrada Privee Madrid',    location:'Madrid, Espana',    price:25,  priceUnit:'pareja',  rating:4.5, reviews:203, certified:true,  image:'🔑', description:'Acceso al club lifestyle mas exclusivo de Madrid. Instalaciones premium con multiples ambientes, terraza y barra libre incluida.', dates:['2026-06-20','2026-06-21','2026-06-27','2026-06-28','2026-07-04','2026-07-05'], capacity:100},
-  {id:'tkt-002', category:'tickets', name:'Kit Kat Berlin',           location:'Berlin, Alemania',  price:20,  priceUnit:'persona', rating:4.8, reviews:478, certified:true,  image:'🖤', description:'El club alternativo mas famoso de Europa. Multiples salas, piscina interior y la mejor musica techno de Berlin. Dress code creativo obligatorio.', dates:['2026-06-20','2026-06-21','2026-06-27','2026-06-28','2026-07-04','2026-07-05'], capacity:200},
-  {id:'tkt-003', category:'tickets', name:'Les Chandelles Paris',     location:'Paris, Francia',    price:80,  priceUnit:'pareja',  rating:4.7, reviews:156, certified:true,  image:'🕯️', description:'Club privado legendario en el corazon de Paris. Ambiente elegante en un hotel particular del siglo XVIII. Cena opcional con champagne.', dates:['2026-06-20','2026-06-21','2026-06-27','2026-06-28','2026-07-04','2026-07-05'], capacity:80},
-  {id:'tkt-004', category:'tickets', name:'Oasis Barcelona',          location:'Barcelona, Espana', price:35,  priceUnit:'pareja',  rating:4.4, reviews:118, certified:false, image:'🌺', description:'Club lifestyle con piscina interior climatizada, jacuzzi y zona relax. Ambiente acogedor y seguro. Noches tematicas cada fin de semana.', dates:['2026-06-21','2026-06-28','2026-07-05','2026-07-12','2026-07-19','2026-07-26'], capacity:70},
-  {id:'tkt-005', category:'tickets', name:'Entrada Limb Club Madrid',  location:'Madrid, Espana',    price:30,  priceUnit:'pareja',  rating:4.6, reviews:92,  certified:true,  image:'🏛️', description:'Acceso oficial a la famosa discoteca y club swinger de 600m². Varias plantas y playrooms privados premium.', dates:['2026-07-10','2026-07-11','2026-07-17','2026-07-18','2026-07-24','2026-07-25'], capacity:150},
-  {id:'tkt-006', category:'tickets', name:'Entrada Sharon Club Madrid', location:'Madrid, Espana',    price:40,  priceUnit:'pareja',  rating:4.7, reviews:64,  certified:true,  image:'👠', description:'Acceso exclusivo al Sharon Club para parejas. Código de vestimenta estricto, ambiente selecto y playrooms elegantes.', dates:['2026-07-10','2026-07-11','2026-07-17','2026-07-18','2026-07-24','2026-07-25'], capacity:80},
+  // ─ Tickets (Opción A: Reserva Directa con el Club - 0% Comisiones SwingerSphere) ─
+  {id:'tkt-bakanal', category:'tickets', name:'Bakanal Swinger Club Madrid', location:'Humanes de Madrid (Madrid)', price:30, priceUnit:'pareja', rating:4.8, reviews:282, certified:true, image:'img/clubs/bakanal-apple-icon.png', description:'Club privado liberal referente en Madrid. Piscina interior climatizada con iluminación azul, terraza chill-out de 300m² con piscina exterior, fuentes, barra bar, zona de aguas, jacuzzi y playrooms. Eventos temáticos cada fin de semana sincronizados.', dates:['2026-11-20','2026-11-21','2026-11-22','2026-11-27','2026-11-28','2026-11-29'], capacity:200, website:'https://www.bakanalsw.com/', whatsapp:'https://wa.me/34659505501', vipUrl:'https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html'},
+  {id:'tkt-001', category:'tickets', name:'Entrada Privee Madrid',    location:'Madrid, Espana',    price:25,  priceUnit:'pareja',  rating:4.5, reviews:203, certified:true,  image:'🔑', description:'Acceso al club lifestyle mas exclusivo de Madrid. Instalaciones premium con multiples ambientes, terraza y barra libre incluida.', dates:['2026-11-20','2026-11-21','2026-11-27','2026-11-28'], capacity:100, whatsapp:'https://wa.me/34659505501'},
+  {id:'tkt-002', category:'tickets', name:'Kit Kat Berlin',           location:'Berlin, Alemania',  price:20,  priceUnit:'persona', rating:4.8, reviews:478, certified:true,  image:'🖤', description:'El club alternativo mas famoso de Europa. Multiples salas, piscina interior y la mejor musica techno de Berlin. Dress code creativo obligatorio.', dates:['2026-11-20','2026-11-21','2026-11-27','2026-11-28'], capacity:200, whatsapp:'https://wa.me/34659505501'},
+  {id:'tkt-003', category:'tickets', name:'Les Chandelles Paris',     location:'Paris, Francia',    price:80,  priceUnit:'pareja',  rating:4.7, reviews:156, certified:true,  image:'🕯️', description:'Club privado legendario en el corazon de Paris. Ambiente elegante en un hotel particular del siglo XVIII. Cena opcional con champagne.', dates:['2026-11-20','2026-11-21','2026-11-27','2026-11-28'], capacity:80, whatsapp:'https://wa.me/34659505501'},
+  {id:'tkt-004', category:'tickets', name:'Oasis Barcelona',          location:'Barcelona, Espana', price:35,  priceUnit:'pareja',  rating:4.4, reviews:118, certified:false, image:'🌺', description:'Club lifestyle con piscina interior climatizada, jacuzzi y zona relax. Ambiente acogedor y seguro. Noches tematicas cada fin de semana.', dates:['2026-11-20','2026-11-21','2026-11-27','2026-11-28'], capacity:70, whatsapp:'https://wa.me/34659505501'},
+  {id:'tkt-005', category:'tickets', name:'Entrada Limb Club Madrid',  location:'Madrid, Espana',    price:30,  priceUnit:'pareja',  rating:4.6, reviews:92,  certified:true,  image:'🏛️', description:'Acceso oficial a la famosa discoteca y club swinger de 600m². Varias plantas y playrooms privados premium.', dates:['2026-11-20','2026-11-21','2026-11-27','2026-11-28'], capacity:150, whatsapp:'https://wa.me/34659505501'},
+  {id:'tkt-006', category:'tickets', name:'Entrada Sharon Club Madrid', location:'Madrid, Espana',    price:40,  priceUnit:'pareja',  rating:4.7, reviews:64,  certified:true,  image:'👠', description:'Acceso exclusivo al Sharon Club para parejas. Código de vestimenta estricto, ambiente selecto y playrooms elegantes.', dates:['2026-11-20','2026-11-21','2026-11-27','2026-11-28'], capacity:80, whatsapp:'https://wa.me/34659505501'},
 
   // ─ Travel ─
   {id:'trv-001', category:'travel', name:'Cap d\'Agde 5 dias',          location:'Cap d\'Agde, Francia', price:890,  priceUnit:'pp',     rating:4.5, reviews:76,  certified:true,  image:'🗼', description:'Escapada completa al pueblo naturista mas famoso de Europa. Incluye vuelo, apartamento frente al mar, seguro y guia lifestyle.', dates:['2026-07-07','2026-07-14','2026-07-21','2026-08-04','2026-08-11','2026-08-18'], capacity:2},
@@ -623,7 +623,9 @@ window.showBookingDetail = function(listingId) {
   var ctaBtn = document.createElement('button');
   ctaBtn.className = 'btn btn-primary w-full';
   ctaBtn.style.cssText += 'font-size:0.88rem;padding:0.75rem;margin-top:1rem;font-weight:700;';
-  ctaBtn.textContent = 'Reservar ahora';
+  ctaBtn.textContent = (listing.category === 'tickets' || (listing.id && listing.id.indexOf('tkt-') === 0)) 
+    ? 'Continuar a Reserva Directa con el Club →' 
+    : 'Reservar ahora';
   ctaBtn.onclick = function() {
     if (!_bkSelectedDate) {
       if(typeof showToast==='function') showToast('Selecciona una fecha','error');
@@ -715,46 +717,107 @@ window.processBooking = function(listingId, date, people) {
   }
   modal.appendChild(summary);
 
-  // Payment options
-  var payLabel = document.createElement('div');
-  payLabel.style.cssText = 'font-size:0.78rem;font-weight:700;color:var(--fg-primary);margin-bottom:0.6rem;text-align:center;';
-  payLabel.textContent = 'Metodo de pago';
-  modal.appendChild(payLabel);
+  // If ticket / club listing: Opción A (Reserva Directa, sin gestión de dinero en la app)
+  if (listing.category === 'tickets' || (listing.id && listing.id.indexOf('tkt-') === 0) || listing.whatsapp || listing.vipUrl) {
+    var code = 'SS-' + _bkGenCode();
+    var waUrl = listing.whatsapp || 'https://wa.me/34659505501';
+    var waMessage = encodeURIComponent('Hola ' + listing.name + ', quiero reservar mi acceso para el ' + _bkFormatDate(date) + ' (' + people + ' personas) a través de SwingerSphere. Código de Pase VIP: ' + code);
+    var waFullUrl = waUrl + (waUrl.indexOf('?') !== -1 ? '&' : '?') + 'text=' + waMessage;
 
-  var payBtns = document.createElement('div');
-  payBtns.style.cssText = 'display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem;';
+    var optAInfo = document.createElement('div');
+    optAInfo.style.cssText = 'background:rgba(48,209,88,0.08);border:1px solid rgba(48,209,88,0.25);border-radius:14px;padding:0.875rem;margin-bottom:1rem;text-align:center;';
+    optAInfo.innerHTML = '<div style="font-size:0.72rem;font-weight:700;color:#30d158;margin-bottom:0.25rem;">🛡️ Opción A: Reserva Directa & Registro Oficial</div>' +
+      '<div style="font-size:0.72rem;color:#aeaeb2;line-height:1.4;">SwingerSphere no gestiona ni custodia el dinero de las entradas de los clubes. Tu pago y acceso se coordinan de forma 100% directa y transparente con el club.</div>' +
+      '<div style="margin-top:0.5rem;font-size:0.68rem;color:#ffd700;background:rgba(0,0,0,0.5);border-radius:6px;padding:3px 8px;display:inline-block;font-family:monospace;letter-spacing:1px;">Pase VIP Club: ' + code + '</div>';
+    modal.appendChild(optAInfo);
 
-  // ── Wallet balance display ──────────────────────────────────────
-  var walletBal = (window.wallet && typeof wallet.getBalance === 'function') ? wallet.getBalance() : 0;
-  var balInfo = document.createElement('div');
-  balInfo.style.cssText = 'text-align:center;font-size:0.72rem;color:#aeaeb2;margin-bottom:0.6rem;padding:0.5rem;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid var(--border);';
-  balInfo.innerHTML = '💰 Saldo wallet: <strong style="color:var(--copper);">' + walletBal.toFixed(2) + ' USDC</strong>';
-  if (walletBal < total) {
-    balInfo.innerHTML += '<br><span style="color:#ff6b6b;font-size:0.65rem;">⚠ Saldo insuficiente — recarga primero</span>';
+    var directBtns = document.createElement('div');
+    directBtns.style.cssText = 'display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1rem;';
+
+    // WhatsApp Direct
+    var waBtn = document.createElement('a');
+    waBtn.href = waFullUrl;
+    waBtn.target = '_blank';
+    waBtn.rel = 'noopener';
+    waBtn.className = 'btn btn-primary w-full';
+    waBtn.style.cssText = 'background:#25D366;border:none;color:#fff;font-weight:800;font-size:0.85rem;padding:0.75rem;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;border-radius:12px;box-shadow:0 4px 14px rgba(37,211,102,0.3);';
+    waBtn.innerHTML = '<span>💬</span> Contactar & Reservar por WhatsApp';
+    waBtn.onclick = function() {
+      _bkSaveBooking({
+        id: 'bk-' + Date.now(),
+        code: code,
+        listingId: listing.id,
+        listingName: listing.name,
+        listingImage: listing.image,
+        location: listing.location,
+        category: listing.category,
+        date: date,
+        people: people,
+        total: total,
+        method: 'Directo Club (Opción A)',
+        status: 'confirmed',
+        createdAt: new Date().toISOString()
+      });
+      if (typeof showToast === 'function') showToast('🎫 Reserva registrada · Abriendo WhatsApp del club...', 'success');
+      setTimeout(function() { ov.remove(); }, 800);
+    };
+    directBtns.appendChild(waBtn);
+
+    // Official VIP portal
+    if (listing.vipUrl || listing.website) {
+      var vipLink = document.createElement('a');
+      vipLink.href = listing.vipUrl || listing.website;
+      vipLink.target = '_blank';
+      vipLink.rel = 'noopener';
+      vipLink.className = 'btn btn-secondary w-full';
+      vipLink.style.cssText = 'background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.4);color:#ffd700;font-weight:700;font-size:0.82rem;padding:0.7rem;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;border-radius:12px;';
+      vipLink.innerHTML = '<span>👑</span> Registro VIP Oficial del Club';
+      directBtns.appendChild(vipLink);
+    }
+
+    modal.appendChild(directBtns);
+  } else {
+    // Payment options for non-club items (Hotels, Travel packages)
+    var payLabel = document.createElement('div');
+    payLabel.style.cssText = 'font-size:0.78rem;font-weight:700;color:var(--fg-primary);margin-bottom:0.6rem;text-align:center;';
+    payLabel.textContent = 'Metodo de pago';
+    modal.appendChild(payLabel);
+
+    var payBtns = document.createElement('div');
+    payBtns.style.cssText = 'display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem;';
+
+    // ── Wallet balance display ──────────────────────────────────────
+    var walletBal = (window.wallet && typeof wallet.getBalance === 'function') ? wallet.getBalance() : 0;
+    var balInfo = document.createElement('div');
+    balInfo.style.cssText = 'text-align:center;font-size:0.72rem;color:#aeaeb2;margin-bottom:0.6rem;padding:0.5rem;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid var(--border);';
+    balInfo.innerHTML = '💰 Saldo wallet: <strong style="color:var(--copper);">' + walletBal.toFixed(2) + ' USDC</strong>';
+    if (walletBal < total) {
+      balInfo.innerHTML += '<br><span style="color:#ff6b6b;font-size:0.65rem;">⚠ Saldo insuficiente — recarga primero</span>';
+    }
+    payBtns.appendChild(balInfo);
+
+    // Card payment (On-Ramp → wallet → pay)
+    var cardBtn = document.createElement('button');
+    cardBtn.className = 'btn btn-primary w-full';
+    cardBtn.style.cssText += 'font-size:0.82rem;padding:0.65rem;';
+    cardBtn.textContent = '💳 Pagar con tarjeta — ' + total + ' EUR';
+    cardBtn.onclick = function() {
+      _bkSimulatedPayment(listing, date, people, total, 'tarjeta', ov);
+    };
+    payBtns.appendChild(cardBtn);
+
+    // Crypto payment (direct wallet pay)
+    var cryptoBtn = document.createElement('button');
+    cryptoBtn.className = 'btn btn-secondary w-full';
+    cryptoBtn.style.cssText += 'font-size:0.82rem;padding:0.65rem;';
+    cryptoBtn.textContent = '🪙 Pagar con crypto — ' + total + ' USDC';
+    cryptoBtn.onclick = function() {
+      _bkSimulatedPayment(listing, date, people, total, 'crypto', ov);
+    };
+    payBtns.appendChild(cryptoBtn);
+
+    modal.appendChild(payBtns);
   }
-  payBtns.appendChild(balInfo);
-
-  // Card payment (On-Ramp → wallet → pay)
-  var cardBtn = document.createElement('button');
-  cardBtn.className = 'btn btn-primary w-full';
-  cardBtn.style.cssText += 'font-size:0.82rem;padding:0.65rem;';
-  cardBtn.textContent = '💳 Pagar con tarjeta — ' + total + ' EUR';
-  cardBtn.onclick = function() {
-    _bkSimulatedPayment(listing, date, people, total, 'tarjeta', ov);
-  };
-  payBtns.appendChild(cardBtn);
-
-  // Crypto payment (direct wallet pay)
-  var cryptoBtn = document.createElement('button');
-  cryptoBtn.className = 'btn btn-secondary w-full';
-  cryptoBtn.style.cssText += 'font-size:0.82rem;padding:0.65rem;';
-  cryptoBtn.textContent = '🪙 Pagar con crypto — ' + total + ' USDC';
-  cryptoBtn.onclick = function() {
-    _bkSimulatedPayment(listing, date, people, total, 'crypto', ov);
-  };
-  payBtns.appendChild(cryptoBtn);
-
-  modal.appendChild(payBtns);
 
   // Cancel
   var cancelBtn = document.createElement('button');

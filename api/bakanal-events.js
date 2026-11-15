@@ -1,4 +1,4 @@
-// www/api/bakanal-events.js — Sincronización en tiempo real de eventos con Bakanal Swinger Club (www.bakanalsw.com)
+// api/bakanal-events.js — Sincronización en tiempo real de eventos con Bakanal Swinger Club (www.bakanalsw.com)
 
 export default async function handler(req, res) {
   // Configuración de CORS
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   try {
     const response = await fetch('https://www.bakanalsw.com/eventos.php', {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 SwingerSphere-Sync/1.0'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 SwingerSphere-Sync/2.0'
       }
     });
 
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
       for (const m of matches) {
         const jsonContent = m.replace(/<script type=["']application\/ld\+json["']>/, '').replace(/<\/script>/, '').trim();
         try {
-          const parsed = JSON.parse(jsonContent);
+          const parsed = jsonContent ? JSON.parse(jsonContent) : null;
           if (Array.isArray(parsed) && parsed.length > 0 && parsed[0]['@type'] === 'Event') {
             rawEvents = parsed;
             break;
@@ -41,12 +41,20 @@ export default async function handler(req, res) {
       }
     }
 
-    // Si encontramos eventos en el schema JSON-LD de Bakanal, los transformamos a formato SwingerSphere
-    const events = rawEvents.map((ev, index) => {
+    const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    const nowThreshold = new Date(Date.now() - 24 * 3600 * 1000);
+
+    // Filtrar y normalizar eventos
+    const validEvents = rawEvents.filter(ev => {
+      if (!ev.startDate) return false;
+      const d = new Date(ev.startDate);
+      return !isNaN(d.getTime()) && d >= nowThreshold;
+    });
+
+    const eventsToUse = validEvents.length > 0 ? validEvents : rawEvents;
+
+    const events = eventsToUse.map((ev, index) => {
       const startDate = new Date(ev.startDate);
-      const isWeekend = startDate.getDay() === 0 || startDate.getDay() === 5 || startDate.getDay() === 6;
-      
-      const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
       const fechaLegible = `${startDate.getDate()} ${meses[startDate.getMonth()]} ${startDate.getFullYear()}`;
       
       let hora = "23:00 - 06:00";
@@ -54,62 +62,62 @@ export default async function handler(req, res) {
         hora = "17:00 - 03:00";
       }
 
-      // Emojis y etiquetas dinámicas según la temática
+      // Limpiar títulos con codificación errónea de caracteres
+      let title = (ev.name || 'Fiesta Temática Bakanal')
+        .replace(//g, '·')
+        .replace(/&amp;/g, '&')
+        .replace(/&nbsp;/g, ' ')
+        .trim();
+
       let emoji = "🎉";
       let tags = ["Club Bakanal", "Humanes de Madrid"];
-      const lowerName = (ev.name || '').toLowerCase();
-      
-      if (lowerName.includes('semáforo') || lowerName.includes('semaforo')) {
-        emoji = "🚦";
-        tags.push("Fiesta del Semáforo", "Pulseras de Color");
-      } else if (lowerName.includes('ice-breaker') || lowerName.includes('hielo')) {
-        emoji = "🧊";
-        tags.push("Rompehielos", "Nuevas Parejas");
+      const lowerName = title.toLowerCase();
+
+      if (lowerName.includes('pecado')) {
+        emoji = "🍷";
+        tags.push("Sensual", "Pecados Ocultos");
+      } else if (lowerName.includes('cuckold') || lowerName.includes('hot wife')) {
+        emoji = "🔥";
+        tags.push("Hot Wife", "Cuckold");
+      } else if (lowerName.includes('ciegas') || lowerName.includes('blindfold')) {
+        emoji = "🎭";
+        tags.push("Noche a Ciegas", "Misterio");
+      } else if (lowerName.includes('black friday')) {
+        emoji = "🖤";
+        tags.push("Black Friday", "Fiesta Especial");
+      } else if (lowerName.includes('navidad') || lowerName.includes('krampus') || lowerName.includes('christmas')) {
+        emoji = "🎄";
+        tags.push("Cena de Navidad", "Gala Especial");
       } else if (lowerName.includes('bi')) {
         emoji = "💜";
-        tags.push("Bi-Friendly", "Libre");
-      } else if (lowerName.includes('cuckold') || lowerName.includes('hot wife')) {
-        emoji = "♠️";
-        tags.push("Hot Wife", "Voyerismo");
-      } else if (lowerName.includes('black friday') || lowerName.includes('dark')) {
-        emoji = "🖤";
-        tags.push("Black Friday", "Dark Desire");
-      } else if (lowerName.includes('navidad')) {
-        emoji = "🎄";
-        tags.push("Cena de Gala", "Especial Navidad");
-      } else if (lowerName.includes('ciegas') || lowerName.includes('blindfold')) {
-        emoji = "👁️";
-        tags.push("Antifaces", "Sensorial");
-      } else if (lowerName.includes('sin filtros')) {
-        emoji = "🔥";
-        tags.push("Sin Filtros", "Desinhibida");
-      } else {
-        emoji = "🥂";
-        tags.push("Noche Liberal", "Piscina & Spa");
+        tags.push("Bi-Friendly", "Zona de Aguas");
+      } else if (lowerName.includes('sin filtro')) {
+        emoji = "✨";
+        tags.push("Sin Filtros", "Desinhibición");
       }
 
       return {
         id: `ev_bakanal_${index + 1}`,
-        title: ev.name,
-        club: "Bakanal Club Liberal",
+        title: title,
+        club: "Bakanal Swinger Club",
         clubVerified: true,
         clubId: "bakanal",
         date: fechaLegible,
         time: hora,
         startDate: ev.startDate,
-        endDate: ev.endDate,
-        location: "Avenida de la Industria, 50, Humanes de Madrid (Madrid)",
+        endDate: ev.endDate || ev.startDate,
+        location: "Avenida de la Industria, 50, 28970 Humanes de Madrid (Madrid)",
         lat: 40.2544,
         lng: -3.8267,
-        attendees: Math.floor(65 + Math.random() * 55),
+        attendees: Math.floor(75 + (index * 14)) % 190,
         maxAttendees: 200,
         anonymous: false,
-        price: "Consultar en club / VIP",
+        price: "Acceso VIP",
         emoji: emoji,
         tags: tags,
         color: "linear-gradient(135deg,#1f1309 0%,#4a2910 50%,#b8742b 100%)",
-        description: ev.description || "Evento oficial sincronizado con Bakanal Swinger Club.",
-        whatsappUrl: "https://wa.me/34659505501?text=Hola%20Bakanal%2C%20quiero%20reservar%20para%20el%20evento%3A%20" + encodeURIComponent(ev.name),
+        description: ev.description || "Evento oficial organizado en las exclusivas instalaciones de Bakanal Swinger Club en Humanes de Madrid. Piscina climatizada, spa, terraza chill-out de 300 m² y playrooms.",
+        whatsappUrl: "https://wa.me/34659505501?text=" + encodeURIComponent(`Hola Bakanal, quiero información y reservar para ${title}`),
         webUrl: "https://www.bakanalsw.com/eventos.php",
         vipRegisterUrl: "https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html"
       };
@@ -120,6 +128,8 @@ export default async function handler(req, res) {
       club: {
         name: "Bakanal Swinger Club",
         slug: "bakanal",
+        logoUrl: "img/clubs/bakanal-apple-icon.png",
+        heroImageUrl: "img/clubs/bakanal-pool.webp",
         location: "Avenida de la Industria, 50, 28970 Humanes de Madrid",
         coords: { lat: 40.2544, lng: -3.8267 },
         rating: 4.6,
@@ -136,82 +146,30 @@ export default async function handler(req, res) {
 
   } catch (err) {
     console.error("Error en sincronización con Bakanal:", err);
-    // Respuesta de contingencia con eventos conocidos en caso de corte externo
+    // Respuesta de contingencia con eventos reales conocidos
     return res.status(200).json({
       success: true,
       syncedAt: new Date().toISOString(),
       isFallback: true,
+      club: {
+        name: "Bakanal Swinger Club",
+        slug: "bakanal",
+        logoUrl: "img/clubs/bakanal-apple-icon.png",
+        heroImageUrl: "img/clubs/bakanal-pool.webp",
+        location: "Avenida de la Industria, 50, 28970 Humanes de Madrid",
+        coords: { lat: 40.2544, lng: -3.8267 },
+        rating: 4.6,
+        reviewsCount: 282,
+        telephone: "+34659505501",
+        whatsapp: "https://wa.me/34659505501",
+        website: "https://www.bakanalsw.com/",
+        verified: true
+      },
       events: [
         {
           id: "ev_bakanal_1",
-          title: "Ice-Breaker · Viernes para Romper el Hielo",
-          club: "Bakanal Club Liberal",
-          clubVerified: true,
-          clubId: "bakanal",
-          date: "13 Nov 2026",
-          time: "23:00 - 06:00",
-          location: "Avenida de la Industria, 50, Humanes de Madrid (Madrid)",
-          lat: 40.2544,
-          lng: -3.8267,
-          attendees: 84,
-          maxAttendees: 200,
-          anonymous: false,
-          price: "Acceso VIP",
-          emoji: "🧊",
-          tags: ["Rompehielos", "Nuevas Parejas", "Piscina Climatizada"],
-          color: "linear-gradient(135deg,#0a1a2e 0%,#1a3a5a 100%)",
-          description: "La noche social por excelencia para conocer gente sin presiones. Dinámicas suaves para romper el hielo.",
-          whatsappUrl: "https://wa.me/34659505501?text=Hola%20Bakanal%2C%20quiero%20reservar%20para%20el%20evento%20Ice-Breaker",
-          webUrl: "https://www.bakanalsw.com/eventos.php"
-        },
-        {
-          id: "ev_bakanal_2",
-          title: "GRAN FIESTA · Fiesta del Semáforo",
-          club: "Bakanal Club Liberal",
-          clubVerified: true,
-          clubId: "bakanal",
-          date: "14 Nov 2026",
-          time: "23:00 - 06:00",
-          location: "Avenida de la Industria, 50, Humanes de Madrid (Madrid)",
-          lat: 40.2544,
-          lng: -3.8267,
-          attendees: 165,
-          maxAttendees: 200,
-          anonymous: false,
-          price: "Acceso VIP",
-          emoji: "🚦",
-          tags: ["Fiesta del Semáforo", "Pulseras de Color", "Máxima Desinhibición"],
-          color: "linear-gradient(135deg,#1f1309 0%,#b8742b 100%)",
-          description: "Tú eliges el color, tú marcas el nivel: Verde (Light), Amarillo (Medio), Rojo (Hardcore).",
-          whatsappUrl: "https://wa.me/34659505501?text=Hola%20Bakanal%2C%20quiero%20reservar%20para%20la%20Fiesta%20del%20Semaforo",
-          webUrl: "https://www.bakanalsw.com/eventos.php"
-        },
-        {
-          id: "ev_bakanal_3",
-          title: "Bi Night · Noche Bi-Friendly",
-          club: "Bakanal Club Liberal",
-          clubVerified: true,
-          clubId: "bakanal",
-          date: "15 Nov 2026",
-          time: "17:00 - 03:00",
-          location: "Avenida de la Industria, 50, Humanes de Madrid (Madrid)",
-          lat: 40.2544,
-          lng: -3.8267,
-          attendees: 92,
-          maxAttendees: 200,
-          anonymous: false,
-          price: "Acceso VIP",
-          emoji: "💜",
-          tags: ["Bi-Friendly", "Sin Etiquetas", "Zona de Aguas"],
-          color: "linear-gradient(135deg,#2e0a2e 0%,#5a1a5a 100%)",
-          description: "Inspirado en las bi-friendly parties europeas. Exploración natural sin barreras de género.",
-          whatsappUrl: "https://wa.me/34659505501?text=Hola%20Bakanal%2C%20quiero%20reservar%20para%20la%20Bi%20Night",
-          webUrl: "https://www.bakanalsw.com/eventos.php"
-        },
-        {
-          id: "ev_bakanal_4",
           title: "Pecados Ocultos",
-          club: "Bakanal Club Liberal",
+          club: "Bakanal Swinger Club",
           clubVerified: true,
           clubId: "bakanal",
           date: "20 Nov 2026",
@@ -224,16 +182,86 @@ export default async function handler(req, res) {
           anonymous: false,
           price: "Acceso VIP",
           emoji: "🍷",
-          tags: ["Pecados Ocultos", "Sensual", "Elegante"],
-          color: "linear-gradient(135deg,#1a000a 0%,#4a0f2e 100%)",
-          description: "Una noche de misterio, miradas cómplices y tentaciones. Ambiente sensual, íntimo y sugerente.",
+          tags: ["Club Bakanal", "Pecados Ocultos", "Sensual", "Elegante"],
+          color: "linear-gradient(135deg,#1f1309 0%,#4a2910 50%,#b8742b 100%)",
+          description: "Una noche de misterio, miradas cómplices y tentaciones. Ambiente sensual, íntimo y sugerente en las instalaciones VIP de Bakanal.",
           whatsappUrl: "https://wa.me/34659505501?text=Hola%20Bakanal%2C%20quiero%20reservar%20para%20Pecados%20Ocultos",
-          webUrl: "https://www.bakanalsw.com/eventos.php"
+          webUrl: "https://www.bakanalsw.com/eventos.php",
+          vipRegisterUrl: "https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html"
+        },
+        {
+          id: "ev_bakanal_2",
+          title: "GRAN FIESTA · Sin Filtros",
+          club: "Bakanal Swinger Club",
+          clubVerified: true,
+          clubId: "bakanal",
+          date: "21 Nov 2026",
+          time: "23:00 - 06:00",
+          location: "Avenida de la Industria, 50, Humanes de Madrid (Madrid)",
+          lat: 40.2544,
+          lng: -3.8267,
+          attendees: 155,
+          maxAttendees: 200,
+          anonymous: false,
+          price: "Acceso VIP",
+          emoji: "✨",
+          tags: ["Club Bakanal", "Sin Filtros", "Piscina Climatizada"],
+          color: "linear-gradient(135deg,#1f1309 0%,#b8742b 100%)",
+          description: "Noche de pura libertad y desinhibición. Música envolvente, piscina climatizada con iluminación azul y playrooms abiertos.",
+          whatsappUrl: "https://wa.me/34659505501?text=Hola%20Bakanal%2C%20quiero%20reservar%20para%20la%20Gran%20Fiesta%20Sin%20Filtros",
+          webUrl: "https://www.bakanalsw.com/eventos.php",
+          vipRegisterUrl: "https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html"
+        },
+        {
+          id: "ev_bakanal_3",
+          title: "Cuckold & Hot Wife · La Temática",
+          club: "Bakanal Swinger Club",
+          clubVerified: true,
+          clubId: "bakanal",
+          date: "22 Nov 2026",
+          time: "17:00 - 03:00",
+          location: "Avenida de la Industria, 50, Humanes de Madrid (Madrid)",
+          lat: 40.2544,
+          lng: -3.8267,
+          attendees: 98,
+          maxAttendees: 200,
+          anonymous: false,
+          price: "Acceso VIP",
+          emoji: "🔥",
+          tags: ["Club Bakanal", "Hot Wife", "Cuckold"],
+          color: "linear-gradient(135deg,#2e0a0a 0%,#5a1a1a 100%)",
+          description: "Tarde y noche dedicada a la fantasía Cuckold y Hot Wife con el máximo respeto y complicidad en un ambiente de absoluta privacidad.",
+          whatsappUrl: "https://wa.me/34659505501?text=Hola%20Bakanal%2C%20quiero%20reservar%20para%20Cuckold%20y%20Hot%20Wife",
+          webUrl: "https://www.bakanalsw.com/eventos.php",
+          vipRegisterUrl: "https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html"
+        },
+        {
+          id: "ev_bakanal_4",
+          title: "Black Friday Especial",
+          club: "Bakanal Swinger Club",
+          clubVerified: true,
+          clubId: "bakanal",
+          date: "27 Nov 2026",
+          time: "23:00 - 06:00",
+          location: "Avenida de la Industria, 50, Humanes de Madrid (Madrid)",
+          lat: 40.2544,
+          lng: -3.8267,
+          attendees: 175,
+          maxAttendees: 200,
+          anonymous: false,
+          price: "Acceso VIP",
+          emoji: "🖤",
+          tags: ["Club Bakanal", "Black Friday", "Fiesta Exclusiva"],
+          color: "linear-gradient(135deg,#0c0a09 0%,#2e1706 100%)",
+          description: "La noche más intensa del mes. Dress code elegante negro, ambiente misterioso y sorpresas en sala.",
+          whatsappUrl: "https://wa.me/34659505501?text=Hola%20Bakanal%2C%20quiero%20reservar%20para%20el%20Black%20Friday",
+          webUrl: "https://www.bakanalsw.com/eventos.php",
+          vipRegisterUrl: "https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html"
         },
         {
           id: "ev_bakanal_5",
-          title: "GRAN FIESTA · Cena de Navidad de la Familia Bakanal",
-          club: "Bakanal Club Liberal",
+          title: "GRAN FIESTA · Cena de Navidad Familia Bakanal",
+          club: "Bakanal Swinger Club",
           clubVerified: true,
           clubId: "bakanal",
           date: "28 Nov 2026",
@@ -241,16 +269,17 @@ export default async function handler(req, res) {
           location: "Avenida de la Industria, 50, Humanes de Madrid (Madrid)",
           lat: 40.2544,
           lng: -3.8267,
-          attendees: 180,
+          attendees: 190,
           maxAttendees: 200,
           anonymous: false,
           price: "Reserva Imprescindible",
           emoji: "🎄",
-          tags: ["Cena de Navidad", "Brindis", "Familia Bakanal"],
-          color: "linear-gradient(135deg,#1a2e0a 0%,#3a5a1a 100%)",
-          description: "La gran celebración del año. Gran cena, brindis, fiesta y sorpresas para todos los socios.",
+          tags: ["Club Bakanal", "Cena de Navidad", "Brindis de Gala"],
+          color: "linear-gradient(135deg,#1f1309 0%,#7a1a1a 100%)",
+          description: "El evento más esperado del año. Cena de gala, cóctel de bienvenida, cotillón exclusivo y fiesta hasta el amanecer.",
           whatsappUrl: "https://wa.me/34659505501?text=Hola%20Bakanal%2C%20quiero%20reservar%20para%20la%20Cena%20de%20Navidad",
-          webUrl: "https://www.bakanalsw.com/eventos.php"
+          webUrl: "https://www.bakanalsw.com/eventos.php",
+          vipRegisterUrl: "https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html"
         }
       ]
     });
