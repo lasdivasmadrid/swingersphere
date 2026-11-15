@@ -802,7 +802,7 @@ function renderHome() {
 function buildHomeBanners() {
   const AD_BANNERS_HOME = [
     { id:'b_bk', tag:'CLUB PARTNER OFICIAL', color:'#ffd700', bg:'linear-gradient(135deg,rgba(31,19,9,0.96) 0%,rgba(74,41,16,0.92) 50%,rgba(196,129,58,0.25) 100%)', border:'rgba(212,175,55,0.45)',
-      icon:'🏰', title:'Bakanal Swinger Club', sub:'Humanes de Madrid · 4.6 ★ (282 reseñas) · Piscina & Spa',
+      img:'img/clubs/bakanal-apple-icon.png', title:'Bakanal Swinger Club', sub:'Humanes de Madrid · 4.6 ★ (282 reseñas) · Piscina & Spa',
       desc:'Club privado referente en Madrid. Piscina climatizada, terraza chill-out de 300m² y eventos temáticos sincronizados.', cta:'Ver Espacio Club', onclick:"showBakanalModal()" },
     { id:'b1', tag:'PUBLICIDAD', color:'#c4813a', bg:'rgba(196,129,58,0.08)', border:'rgba(196,129,58,0.3)',
       icon:'🏛️', title:'Privee Club Madrid', sub:'Club Verificado • TS 98',
@@ -826,7 +826,8 @@ function buildHomeBanners() {
         color: '#c4813a',
         bg: 'rgba(196,129,58,0.08)',
         border: 'rgba(196,129,58,0.3)',
-        icon: parsed.icon || '???',
+        icon: parsed.icon || '🏛️',
+        img: parsed.img || null,
         title: parsed.title || 'Tu Club Custom',
         sub: parsed.sub || 'Club Verificado • TS 99',
         desc: parsed.desc || 'Descripción de tu anuncio.',
@@ -838,10 +839,14 @@ function buildHomeBanners() {
 
   const idx = Math.floor(Date.now() / 15000) % AD_BANNERS_HOME.length;
   const b = AD_BANNERS_HOME[idx];
+  const iconMarkup = b.img 
+    ? '<img src="'+b.img+'" alt="'+b.title+'" style="width:100%;height:100%;object-fit:cover;border-radius:10px;">' 
+    : (b.icon || '🏛️');
+
   return '<div style="background:'+b.bg+';border:1px solid '+b.border+';border-radius:16px;padding:0.875rem;margin-bottom:0.25rem;cursor:pointer;position:relative;overflow:hidden;" onclick="'+b.onclick+'">' +
     '<div style="position:absolute;top:0.5rem;right:0.625rem;font-size:0.52rem;font-weight:700;color:'+b.color+';background:'+b.bg+';border:1px solid '+b.border+';border-radius:4px;padding:1px 5px;letter-spacing:0.08em;">'+b.tag+'</div>' +
     '<div style="display:flex;align-items:center;gap:0.625rem;">' +
-      '<div style="width:44px;height:44px;border-radius:12px;background:'+b.bg+';border:1px solid '+b.border+';display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">'+b.icon+'</div>' +
+      '<div style="width:44px;height:44px;border-radius:12px;background:'+b.bg+';border:1px solid '+b.border+';display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;overflow:hidden;">'+iconMarkup+'</div>' +
       '<div style="flex:1;min-width:0;">' +
         '<div style="font-size:0.875rem;font-weight:700;color:#f2f2f7;margin-bottom:0.1rem;">'+b.title+'</div>' +
         '<div style="font-size:0.65rem;color:'+b.color+';">'+b.sub+'</div>' +
@@ -849,8 +854,8 @@ function buildHomeBanners() {
     '</div>' +
     '<div style="font-size:0.75rem;color:#aeaeb2;margin:0.5rem 0 0.625rem;">'+b.desc+'</div>' +
     '<div style="display:flex;align-items:center;justify-content:space-between;">' +
-      '<button onclick="event.stopPropagation();showVenuePricing?showVenuePricing():showToast(\'Ver planes de publicidad\',\'copper\')" style="font-size:0.62rem;color:var(--silver-dark);background:none;border:none;cursor:pointer;padding:0;">Anunciate aqui ?</button>' +
-      '<button onclick="event.stopPropagation();'+b.onclick+'" style="font-size:0.72rem;font-weight:600;color:'+b.color+';background:'+b.bg+';border:1px solid '+b.border+';border-radius:8px;padding:4px 12px;cursor:pointer;">'+b.cta+' ?</button>' +
+      '<button onclick="event.stopPropagation();showVenuePricing?showVenuePricing():showToast(\'Ver planes de publicidad\',\'copper\')" style="font-size:0.62rem;color:var(--silver-dark);background:none;border:none;cursor:pointer;padding:0;">Anúnciate aquí →</button>' +
+      '<button onclick="event.stopPropagation();'+b.onclick+'" style="font-size:0.72rem;font-weight:600;color:'+b.color+';background:'+b.bg+';border:1px solid '+b.border+';border-radius:8px;padding:4px 12px;cursor:pointer;">'+b.cta+' →</button>' +
     '</div>' +
   '</div>';
 }
@@ -1358,8 +1363,8 @@ function renderEvents() {
       <!-- VIP Club Partner Spotlight: BAKANAL SWINGER CLUB -->
       <div class="vip-club-card animate-in" onclick="showBakanalModal()" style="background:linear-gradient(135deg,rgba(31,19,9,0.96) 0%,rgba(74,41,16,0.92) 50%,rgba(196,129,58,0.25) 100%); border:1px solid rgba(212,175,55,0.45); border-radius:18px; padding:0.9rem 1.15rem; display:flex; align-items:center; justify-content:space-between; gap:0.75rem; cursor:pointer; box-shadow:0 8px 25px rgba(196,129,58,0.25); transition:transform 0.2s ease;">
         <div style="display:flex; align-items:center; gap:0.875rem;">
-          <div style="width:46px; height:46px; border-radius:14px; background:#0c0a09; border:2px solid var(--copper); display:flex; align-items:center; justify-content:center; font-size:1.6rem; flex-shrink:0; box-shadow:0 4px 12px rgba(196,129,58,0.4);">
-            🏰
+          <div style="width:48px; height:48px; border-radius:14px; background:#0c0a09; border:2px solid var(--gold); overflow:hidden; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 4px 14px rgba(0,0,0,0.7);">
+            <img src="img/clubs/bakanal-apple-icon.png" alt="Bakanal Monograma Oficial" style="width:100%; height:100%; object-fit:cover;">
           </div>
           <div>
             <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
@@ -1377,7 +1382,7 @@ function renderEvents() {
       <div class="flex items-center justify-between">
         <div class="events-view-toggle">
           <button class="view-toggle-btn active" data-v="list">📋 ${t('view_list')}</button>
-          <button class="view-toggle-btn" data-v="clubs">🏰 Clubes VIP</button>
+          <button class="view-toggle-btn" data-v="clubs"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;vertical-align:-1px;margin-right:3px;"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>Clubes VIP</button>
           <button class="view-toggle-btn" data-v="map">🗺️ ${t('view_map')}</button>
           <button class="view-toggle-btn" data-v="calendar">📅 ${t('view_calendar')}</button>
         </div>
@@ -1593,16 +1598,16 @@ function showBakanalModal() {
   ov.style.display='flex';
   ov.innerHTML=`
     <div class="modal center-modal" style="max-width:440px; padding:0; overflow:hidden; border-radius:24px; border:1px solid rgba(212,175,55,0.45); background:#0c0a09; box-shadow:0 24px 60px rgba(0,0,0,0.95); max-height:90vh; display:flex; flex-direction:column;">
-      <!-- Header Banner -->
-      <div style="position:relative; height:150px; background:linear-gradient(135deg,#1f1309 0%,#4a2910 50%,#b8742b 100%); display:flex; align-items:flex-end; padding:1.2rem; flex-shrink:0;">
-        <button onclick="document.getElementById('ev-overlay').style.display='none'" style="position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.25); color:#fff; width:32px; height:32px; border-radius:50%; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
+      <!-- Header Banner with Real Pool Photography -->
+      <div style="position:relative; height:160px; background:linear-gradient(180deg, rgba(12,10,9,0.3) 0%, rgba(12,10,9,0.95) 100%), url('img/clubs/bakanal-pool.webp') center/cover no-repeat; display:flex; align-items:flex-end; padding:1.2rem; flex-shrink:0;">
+        <button onclick="document.getElementById('ev-overlay').style.display='none'" style="position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.7); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,0.25); color:#fff; width:32px; height:32px; border-radius:50%; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
         <div style="display:flex; align-items:center; gap:0.875rem;">
-          <div style="width:58px; height:58px; border-radius:16px; background:#0c0a09; border:2px solid var(--gold); display:flex; align-items:center; justify-content:center; font-size:2rem; box-shadow:0 4px 16px rgba(0,0,0,0.6);">
-            🏰
+          <div style="width:58px; height:58px; border-radius:16px; background:#0c0a09; border:2px solid var(--gold); overflow:hidden; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 20px rgba(0,0,0,0.85); flex-shrink:0;">
+            <img src="img/clubs/bakanal-apple-icon.png" alt="Bakanal Monograma Oficial" style="width:100%; height:100%; object-fit:cover;">
           </div>
           <div>
             <div style="display:flex; align-items:center; gap:0.4rem;">
-              <h2 style="font-size:1.35rem; font-weight:900; color:#fff; margin:0;">Bakanal SW Club</h2>
+              <h2 style="font-size:1.35rem; font-weight:900; color:#fff; margin:0; text-shadow:0 2px 8px rgba(0,0,0,0.9);">Bakanal SW Club</h2>
             </div>
             <div style="display:flex; align-items:center; gap:0.4rem; margin-top:2px; flex-wrap:wrap;">
               <span style="color:#ffd700; font-size:0.75rem; font-weight:700;">4.6 ★★★★★</span>
@@ -1617,28 +1622,33 @@ function showBakanalModal() {
         <!-- Location & Intro -->
         <div>
           <div style="font-size:0.85rem; color:#f2f2f7; font-weight:600; display:flex; align-items:center; gap:0.4rem;">
-            <span>📍</span> Avenida de la Industria, 50, Humanes de Madrid (Madrid)
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Avenida de la Industria, 50, Humanes de Madrid (Madrid)
           </div>
           <p style="font-size:0.78rem; color:var(--silver); line-height:1.5; margin-top:0.4rem;">
-            Club privado liberal y swinger referente en la Comunidad de Madrid. Más de 600 m² de lujo y privacidad: piscina climatizada con iluminación azul y spa con el emblema BK, terraza chill-out exterior de 300 m² con piscina de verano, barra de copas premium, sonido envolvente y playrooms temáticos.
+            Club privado liberal y swinger referente en la Comunidad de Madrid. Más de 600 m² de confort y privacidad: piscina climatizada con iluminación azul y spa con el emblema BK, terraza chill-out exterior de 300 m² con piscina de verano, barra de copas premium, sonido envolvente y playrooms temáticos.
           </p>
         </div>
 
-        <!-- Instalaciones -->
+        <!-- Instalaciones con Iconos Vectoriales Premium -->
         <div>
           <div style="font-size:0.75rem; font-weight:700; color:var(--copper); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.4rem;">Instalaciones & Servicios</div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; font-size:0.72rem;">
-            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.5rem 0.75rem; color:var(--silver-light);">
-              🏊 <strong>Piscina Climatizada</strong><br><span style="font-size:0.68rem; color:var(--silver);">Iluminación azul & spa</span>
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.6rem 0.75rem; color:var(--silver-light);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px;display:block;"><path d="M2 12c1.5 0 2-1 3.5-1s2 1 3.5 1 2-1 3.5-1 2 1 3.5 1 2-1 3.5-1 2 1 3.5 1"/><path d="M2 17c1.5 0 2-1 3.5-1s2 1 3.5 1 2-1 3.5-1 2 1 3.5 1 2-1 3.5-1 2 1 3.5 1"/><path d="M15 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="m9 10 3-4 3 2 4-2"/></svg>
+              <strong>Piscina Climatizada</strong><br><span style="font-size:0.68rem; color:var(--silver);">Iluminación azul & spa BK</span>
             </div>
-            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.5rem 0.75rem; color:var(--silver-light);">
-              🌴 <strong>Terraza Chill-Out</strong><br><span style="font-size:0.68rem; color:var(--silver);">300m² con piscina ext.</span>
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.6rem 0.75rem; color:var(--silver-light);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px;display:block;"><path d="M4 18h16"/><path d="M6 14h12"/><path d="M18 10a6 6 0 0 0-12 0"/><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+              <strong>Terraza Chill-Out</strong><br><span style="font-size:0.68rem; color:var(--silver);">300m² con piscina exterior</span>
             </div>
-            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.5rem 0.75rem; color:var(--silver-light);">
-              🍸 <strong>Barra Bar & Copas</strong><br><span style="font-size:0.68rem; color:var(--silver);">Bebidas de primeras marcas</span>
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.6rem 0.75rem; color:var(--silver-light);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px;display:block;"><path d="m8 22 8 0"/><path d="M12 11v11"/><path d="m19 3-7 8-7-8h14Z"/></svg>
+              <strong>Barra Bar & Copas</strong><br><span style="font-size:0.68rem; color:var(--silver);">Primeras marcas premium</span>
             </div>
-            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.5rem 0.75rem; color:var(--silver-light);">
-              🛋️ <strong>Playrooms & Zonas</strong><br><span style="font-size:0.68rem; color:var(--silver);">Discreción & confort</span>
+            <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.6rem 0.75rem; color:var(--silver-light);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px;display:block;"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m11 12 8-8"/><path d="m15 4 4 4"/><path d="m18 7 3-3"/></svg>
+              <strong>Playrooms & Zonas</strong><br><span style="font-size:0.68rem; color:var(--silver);">Discreción & confort</span>
             </div>
           </div>
         </div>
@@ -1654,19 +1664,23 @@ function showBakanalModal() {
         <!-- Botones de Acción -->
         <div style="display:flex; flex-direction:column; gap:0.5rem;">
           <a href="https://wa.me/34659505501?text=Hola%20Bakanal%2C%20vengo%20desde%20SwingerSphere%20y%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20y%20solicitar%20acceso%20al%20club." target="_blank" rel="noopener" style="display:flex; align-items:center; justify-content:center; gap:0.5rem; padding:0.85rem; background:#25D366; border-radius:12px; color:#fff; text-decoration:none; font-weight:800; font-size:0.88rem; box-shadow:0 4px 14px rgba(37,211,102,0.35);">
-            💬 Contactar por WhatsApp (+34 659 50 55 01)
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+            Contactar por WhatsApp (+34 659 50 55 01)
           </a>
 
           <a href="https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html" target="_blank" rel="noopener" style="display:flex; align-items:center; justify-content:center; gap:0.5rem; padding:0.85rem; background:linear-gradient(135deg,var(--gold) 0%,var(--copper) 100%); border-radius:12px; color:#fff; text-decoration:none; font-weight:800; font-size:0.88rem; box-shadow:0 4px 16px rgba(196,129,58,0.35);">
-            👑 Registro Cliente VIP Bakanal
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+            Registro Cliente VIP Bakanal
           </a>
 
           <div style="display:flex; gap:0.5rem;">
             <a href="https://maps.app.goo.gl/dN3YDywLAzNB2XnQ9" target="_blank" rel="noopener" style="flex:1; display:flex; align-items:center; justify-content:center; gap:0.4rem; padding:0.65rem; background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:10px; color:#fff; text-decoration:none; font-size:0.75rem; font-weight:600;">
-              🗺️ Cómo Llegar
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Cómo Llegar
             </a>
             <a href="https://www.bakanalsw.com/" target="_blank" rel="noopener" style="flex:1; display:flex; align-items:center; justify-content:center; gap:0.4rem; padding:0.65rem; background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:10px; color:#fff; text-decoration:none; font-size:0.75rem; font-weight:600;">
-              🌐 Web Oficial
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              Web Oficial
             </a>
           </div>
         </div>
@@ -2192,22 +2206,25 @@ function buildClubsShowroom() {
           <h3 style="font-size:1.15rem; font-weight:900; color:#fff; margin:0.25rem 0 0.35rem;">Espacios VIP & Locales Verificados</h3>
           <p style="font-size:0.75rem; color:var(--silver); margin:0; line-height:1.4;">Espacios publicitarios exclusivos con sincronización en vivo de eventos y reserva directa.</p>
         </div>
-        <div style="font-size:2.2rem; flex-shrink:0;">🏰</div>
+        <div style="width:48px; height:48px; border-radius:14px; background:#0c0a09; border:1px solid rgba(212,175,55,0.4); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+        </div>
       </div>
 
       <!-- MAIN FEATURED CLUB: BAKANAL SWINGER CLUB -->
       <div style="background:linear-gradient(135deg,#150d06 0%,#241307 50%,#0c0a09 100%); border:1px solid rgba(212,175,55,0.45); border-radius:22px; overflow:hidden; box-shadow:0 16px 40px rgba(0,0,0,0.85);">
-        <!-- Club Header Banner -->
-        <div style="position:relative; height:150px; background:linear-gradient(135deg,#2e1706 0%,#6d3c13 50%,#c4813a 100%); display:flex; align-items:flex-end; padding:1.25rem;">
-          <div style="position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); border:1px solid rgba(212,175,55,0.4); border-radius:10px; padding:4px 10px; font-size:0.68rem; font-weight:800; color:#ffd700; display:flex; align-items:center; gap:4px;">
-            <span>🏆</span> CLUB PARTNER OFICIAL
+        <!-- Club Header Banner with Real Photography -->
+        <div style="position:relative; height:160px; background:linear-gradient(180deg, rgba(12,10,9,0.25) 0%, rgba(12,10,9,0.95) 100%), url('img/clubs/bakanal-pool.webp') center/cover no-repeat; display:flex; align-items:flex-end; padding:1.25rem;">
+          <div style="position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); border:1px solid rgba(212,175,55,0.4); border-radius:10px; padding:4px 10px; font-size:0.68rem; font-weight:800; color:#ffd700; display:flex; align-items:center; gap:5px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2.5"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            CLUB PARTNER OFICIAL
           </div>
           <div style="display:flex; align-items:center; gap:0.9rem;">
-            <div style="width:64px; height:64px; border-radius:18px; background:#0c0a09; border:2px solid var(--gold); display:flex; align-items:center; justify-content:center; font-size:2.2rem; box-shadow:0 6px 18px rgba(0,0,0,0.65);">
-              🏰
+            <div style="width:64px; height:64px; border-radius:18px; background:#0c0a09; border:2px solid var(--gold); overflow:hidden; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(0,0,0,0.85); flex-shrink:0;">
+              <img src="img/clubs/bakanal-apple-icon.png" alt="Bakanal Monograma Oficial" style="width:100%; height:100%; object-fit:cover;">
             </div>
             <div>
-              <h2 style="font-size:1.35rem; font-weight:900; color:#fff; margin:0;">Bakanal Swinger Club</h2>
+              <h2 style="font-size:1.35rem; font-weight:900; color:#fff; margin:0; text-shadow:0 2px 8px rgba(0,0,0,0.9);">Bakanal Swinger Club</h2>
               <div style="display:flex; align-items:center; gap:0.5rem; margin-top:3px; flex-wrap:wrap;">
                 <span style="color:#ffd700; font-size:0.78rem; font-weight:700;">4.6 ★★★★★</span>
                 <span style="color:var(--silver); font-size:0.72rem;">(282 reseñas Google)</span>
@@ -2220,28 +2237,28 @@ function buildClubsShowroom() {
         <!-- Club Body & Material Publicitario -->
         <div style="padding:1.25rem; display:flex; flex-direction:column; gap:1rem;">
           <div style="font-size:0.8rem; color:var(--silver-light); line-height:1.5;">
-            Club privado liberal referente en la Comunidad de Madrid. Más de 600 m² diseñados con discreción, lujo y máxima libertad.
+            Club privado liberal referente en la Comunidad de Madrid. Más de 600 m² diseñados con discreción, confort y máxima libertad.
           </div>
 
-          <!-- Instalaciones Grid -->
+          <!-- Instalaciones Grid con Iconos Vectoriales Premium -->
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem;">
             <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:0.65rem 0.8rem;">
-              <div style="font-size:1.1rem; margin-bottom:0.2rem;">🏊</div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:0.25rem;display:block;"><path d="M2 12c1.5 0 2-1 3.5-1s2 1 3.5 1 2-1 3.5-1 2 1 3.5 1 2-1 3.5-1 2 1 3.5 1"/><path d="M2 17c1.5 0 2-1 3.5-1s2 1 3.5 1 2-1 3.5-1 2 1 3.5 1 2-1 3.5-1 2 1 3.5 1"/><path d="M15 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="m9 10 3-4 3 2 4-2"/></svg>
               <strong style="font-size:0.75rem; color:#fff; display:block;">Piscina Climatizada</strong>
               <span style="font-size:0.68rem; color:var(--silver);">Iluminación azul & spa BK</span>
             </div>
             <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:0.65rem 0.8rem;">
-              <div style="font-size:1.1rem; margin-bottom:0.2rem;">🌴</div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:0.25rem;display:block;"><path d="M4 18h16"/><path d="M6 14h12"/><path d="M18 10a6 6 0 0 0-12 0"/><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
               <strong style="font-size:0.75rem; color:#fff; display:block;">Terraza Chill-Out</strong>
               <span style="font-size:0.68rem; color:var(--silver);">300m² con piscina exterior</span>
             </div>
             <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:0.65rem 0.8rem;">
-              <div style="font-size:1.1rem; margin-bottom:0.2rem;">🍸</div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:0.25rem;display:block;"><path d="m8 22 8 0"/><path d="M12 11v11"/><path d="m19 3-7 8-7-8h14Z"/></svg>
               <strong style="font-size:0.75rem; color:#fff; display:block;">Barra Bar Premium</strong>
               <span style="font-size:0.68rem; color:var(--silver);">Copas y primeras marcas</span>
             </div>
             <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:0.65rem 0.8rem;">
-              <div style="font-size:1.1rem; margin-bottom:0.2rem;">🛋️</div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:0.25rem;display:block;"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m11 12 8-8"/><path d="m15 4 4 4"/><path d="m18 7 3-3"/></svg>
               <strong style="font-size:0.75rem; color:#fff; display:block;">Playrooms Temáticos</strong>
               <span style="font-size:0.68rem; color:var(--silver);">Discreción total & confort</span>
             </div>
@@ -2262,14 +2279,19 @@ function buildClubsShowroom() {
           <!-- Próximos Eventos Sincronizados de Bakanal -->
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-              <span style="font-size:0.78rem; font-weight:800; color:#fff; text-transform:uppercase;">🎉 Cartelera en Vivo Bakanal:</span>
+              <span style="font-size:0.78rem; font-weight:800; color:#fff; text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffd700" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Cartelera en Vivo Bakanal:
+              </span>
               <span style="font-size:0.68rem; color:#ffd700;">● Directo desde bakanalsw.com</span>
             </div>
             <div style="display:flex; flex-direction:column; gap:0.4rem;">
               ${bakanalEvents.slice(0, 4).map(e => `
                 <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.6rem 0.8rem; display:flex; align-items:center; justify-content:space-between; cursor:pointer;" onclick="showBakanalModal()">
                   <div style="display:flex; align-items:center; gap:0.6rem;">
-                    <span style="font-size:1.1rem;">${e.emoji || '🎉'}</span>
+                    <div style="width:28px; height:28px; border-radius:8px; background:rgba(212,175,55,0.15); border:1px solid rgba(212,175,55,0.3); display:flex; align-items:center; justify-content:center;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
                     <div>
                       <div style="font-size:0.78rem; font-weight:700; color:#fff;">${e.title}</div>
                       <div style="font-size:0.68rem; color:var(--silver);">${e.date} · ${e.time}</div>
@@ -2284,14 +2306,17 @@ function buildClubsShowroom() {
           <!-- CTAs Bakanal -->
           <div style="display:flex; flex-direction:column; gap:0.5rem; margin-top:0.25rem;">
             <a href="https://wa.me/34659505501?text=Hola%20Bakanal%2C%20vengo%20desde%20SwingerSphere%20y%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20y%20solicitar%20acceso%20al%20club." target="_blank" rel="noopener" style="display:flex; align-items:center; justify-content:center; gap:0.5rem; padding:0.85rem; background:#25D366; border-radius:12px; color:#fff; text-decoration:none; font-weight:800; font-size:0.88rem; box-shadow:0 4px 14px rgba(37,211,102,0.35);">
-              💬 Contactar por WhatsApp (+34 659 50 55 01)
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+              Contactar por WhatsApp (+34 659 50 55 01)
             </a>
             <div style="display:flex; gap:0.5rem;">
-              <a href="https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html" target="_blank" rel="noopener" class="btn btn-primary" style="flex:1; text-decoration:none; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700;">
-                👑 Registro Cliente VIP
+              <a href="https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html" target="_blank" rel="noopener" class="btn btn-primary" style="flex:1; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:5px; font-size:0.78rem; font-weight:700;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+                Registro Cliente VIP
               </a>
-              <a href="https://maps.app.goo.gl/dN3YDywLAzNB2XnQ9" target="_blank" rel="noopener" class="btn btn-secondary" style="flex:1; text-decoration:none; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700;">
-                🗺️ Cómo Llegar
+              <a href="https://maps.app.goo.gl/dN3YDywLAzNB2XnQ9" target="_blank" rel="noopener" class="btn btn-secondary" style="flex:1; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:5px; font-size:0.78rem; font-weight:700;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Cómo Llegar
               </a>
             </div>
           </div>
@@ -2300,13 +2325,16 @@ function buildClubsShowroom() {
 
       <!-- B2B BANNER: "TU CLUB AQUÍ" (Servicio Publicitario para Nuevos Locales) -->
       <div style="background:linear-gradient(135deg,rgba(196,129,58,0.12) 0%,rgba(31,19,9,0.7) 100%); border:1px solid rgba(196,129,58,0.35); border-radius:18px; padding:1.25rem; text-align:center;">
-        <div style="font-size:2rem; margin-bottom:0.35rem;">📢</div>
+        <div style="width:48px; height:48px; border-radius:14px; background:rgba(212,175,55,0.12); border:1px solid rgba(212,175,55,0.35); display:inline-flex; align-items:center; justify-content:center; margin-bottom:0.6rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+        </div>
         <h4 style="font-size:1.05rem; font-weight:800; color:#fff; margin-bottom:0.35rem;">¿Tienes un Club o Local Swinger?</h4>
         <p style="font-size:0.78rem; color:var(--silver); line-height:1.5; margin-bottom:1rem; max-width:340px; margin-left:auto; margin-right:auto;">
           Montamos tu espacio publicitario exclusivo en SwingerSphere: sincronización automática de tus eventos desde tu web, venta de entradas y visibilidad preferente ante miles de parejas verificadas.
         </p>
-        <button class="btn btn-primary" style="padding:0.65rem 1.25rem; font-size:0.82rem; font-weight:700;" onclick="showVenuePricing ? showVenuePricing() : showToast('Abriendo planes publicitarios...','copper')">
-          🚀 Solicitar Espacio para mi Club
+        <button class="btn btn-primary" style="padding:0.65rem 1.25rem; font-size:0.82rem; font-weight:700; display:inline-flex; align-items:center; gap:6px;" onclick="showVenuePricing ? showVenuePricing() : showToast('Abriendo planes publicitarios...','copper')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Solicitar Espacio para mi Club
         </button>
       </div>
     </div>

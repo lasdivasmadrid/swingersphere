@@ -120,6 +120,8 @@ export default async function handler(req, res) {
       club: {
         name: "Bakanal Swinger Club",
         slug: "bakanal",
+        logoUrl: "img/clubs/bakanal-apple-icon.png",
+        heroImageUrl: "img/clubs/bakanal-pool.webp",
         location: "Avenida de la Industria, 50, 28970 Humanes de Madrid",
         coords: { lat: 40.2544, lng: -3.8267 },
         rating: 4.6,

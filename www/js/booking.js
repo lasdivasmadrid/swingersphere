@@ -29,7 +29,7 @@ var BOOKING_LISTINGS = [
   {id:'evt-004', category:'events', name:'Noche Tematica Valencia',     location:'Valencia, Espana',   price:25,  priceUnit:'persona', rating:4.4, reviews:52,  certified:false, image:'🎭', description:'Noche tematica mensual en local privado del centro. Cada edicion con tematica diferente: mascaras, neon, white party y mas.', dates:['2026-07-03','2026-07-17','2026-08-07','2026-08-21','2026-09-04','2026-09-18'], capacity:50},
 
   // ─ Tickets ─
-  {id:'tkt-bakanal', category:'tickets', name:'Bakanal Swinger Club Madrid', location:'Humanes de Madrid (Madrid)', price:30, priceUnit:'pareja', rating:4.8, reviews:282, certified:true, image:'🏰', description:'Club privado liberal referente en Madrid. Piscina interior climatizada con iluminación azul, terraza chill-out de 300m² con piscina exterior, fuentes, barra bar, zona de aguas, jacuzzi y playrooms. Eventos temáticos cada fin de semana.', dates:['2026-11-13','2026-11-14','2026-11-15','2026-11-20','2026-11-21','2026-11-22','2026-11-27','2026-11-28'], capacity:200, website:'https://www.bakanalsw.com/', whatsapp:'https://wa.me/34659505501', vipUrl:'https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html'},
+  {id:'tkt-bakanal', category:'tickets', name:'Bakanal Swinger Club Madrid', location:'Humanes de Madrid (Madrid)', price:30, priceUnit:'pareja', rating:4.8, reviews:282, certified:true, image:'img/clubs/bakanal-apple-icon.png', description:'Club privado liberal referente en Madrid. Piscina interior climatizada con iluminación azul, terraza chill-out de 300m² con piscina exterior, fuentes, barra bar, zona de aguas, jacuzzi y playrooms. Eventos temáticos cada fin de semana.', dates:['2026-11-13','2026-11-14','2026-11-15','2026-11-20','2026-11-21','2026-11-22','2026-11-27','2026-11-28'], capacity:200, website:'https://www.bakanalsw.com/', whatsapp:'https://wa.me/34659505501', vipUrl:'https://bakanalsmartcontrol.com/reg_cliente/registro_cliente.html'},
   {id:'tkt-001', category:'tickets', name:'Entrada Privee Madrid',    location:'Madrid, Espana',    price:25,  priceUnit:'pareja',  rating:4.5, reviews:203, certified:true,  image:'🔑', description:'Acceso al club lifestyle mas exclusivo de Madrid. Instalaciones premium con multiples ambientes, terraza y barra libre incluida.', dates:['2026-06-20','2026-06-21','2026-06-27','2026-06-28','2026-07-04','2026-07-05'], capacity:100},
   {id:'tkt-002', category:'tickets', name:'Kit Kat Berlin',           location:'Berlin, Alemania',  price:20,  priceUnit:'persona', rating:4.8, reviews:478, certified:true,  image:'🖤', description:'El club alternativo mas famoso de Europa. Multiples salas, piscina interior y la mejor musica techno de Berlin. Dress code creativo obligatorio.', dates:['2026-06-20','2026-06-21','2026-06-27','2026-06-28','2026-07-04','2026-07-05'], capacity:200},
   {id:'tkt-003', category:'tickets', name:'Les Chandelles Paris',     location:'Paris, Francia',    price:80,  priceUnit:'pareja',  rating:4.7, reviews:156, certified:true,  image:'🕯️', description:'Club privado legendario en el corazon de Paris. Ambiente elegante en un hotel particular del siglo XVIII. Cena opcional con champagne.', dates:['2026-06-20','2026-06-21','2026-06-27','2026-06-28','2026-07-04','2026-07-05'], capacity:80},
@@ -281,8 +281,17 @@ function _bkRenderFeatured(container) {
       banner.style.cssText = 'width:100%;height:100px;background:' + catColor + ';display:flex;align-items:center;justify-content:center;position:relative;border-bottom:1px solid rgba(255,255,255,0.03);';
       
       var emojiEl = document.createElement('div');
-      emojiEl.style.cssText = 'font-size:2.8rem;filter:drop-shadow(0 6px 16px rgba(0,0,0,0.6));';
-      emojiEl.textContent = listing.image;
+      if (listing.image && (listing.image.indexOf('/') !== -1 || listing.image.indexOf('.') !== -1)) {
+        emojiEl.style.cssText = 'width:62px;height:62px;border-radius:16px;overflow:hidden;border:2px solid var(--gold);box-shadow:0 6px 18px rgba(0,0,0,0.65);';
+        var imgEl = document.createElement('img');
+        imgEl.src = listing.image;
+        imgEl.alt = listing.name;
+        imgEl.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+        emojiEl.appendChild(imgEl);
+      } else {
+        emojiEl.style.cssText = 'font-size:2.8rem;filter:drop-shadow(0 6px 16px rgba(0,0,0,0.6));';
+        emojiEl.textContent = listing.image;
+      }
       banner.appendChild(emojiEl);
 
       if (listing.certified) {
@@ -372,8 +381,17 @@ function _bkRenderFilteredListings(container, listings) {
       thumb.style.cssText = 'width:100%;height:80px;border-radius:12px;background:' + catColor + ';display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:0.6rem;overflow:hidden;border:1px solid rgba(255,255,255,0.03);';
       
       var emojiEl = document.createElement('span');
-      emojiEl.style.cssText = 'font-size:2.2rem;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.5));';
-      emojiEl.textContent = listing.image;
+      if (listing.image && (listing.image.indexOf('/') !== -1 || listing.image.indexOf('.') !== -1)) {
+        emojiEl.style.cssText = 'width:44px;height:44px;border-radius:12px;overflow:hidden;border:2px solid var(--gold);display:inline-block;box-shadow:0 4px 12px rgba(0,0,0,0.5);';
+        var imgEl = document.createElement('img');
+        imgEl.src = listing.image;
+        imgEl.alt = listing.name;
+        imgEl.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+        emojiEl.appendChild(imgEl);
+      } else {
+        emojiEl.style.cssText = 'font-size:2.2rem;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.5));';
+        emojiEl.textContent = listing.image;
+      }
       thumb.appendChild(emojiEl);
 
       if (listing.certified) {
@@ -440,8 +458,17 @@ window.showBookingDetail = function(listingId) {
   hdr.style.cssText = 'background:linear-gradient(135deg,rgba(196,129,58,0.12),rgba(196,129,58,0.04));border-bottom:1px solid rgba(196,129,58,0.2);padding:1.25rem;text-align:center;position:sticky;top:0;z-index:2;backdrop-filter:blur(10px);';
 
   var emojiH = document.createElement('div');
-  emojiH.style.cssText = 'font-size:2.2rem;margin-bottom:0.35rem;';
-  emojiH.textContent = listing.image;
+  if (listing.image && (listing.image.indexOf('/') !== -1 || listing.image.indexOf('.') !== -1)) {
+    emojiH.style.cssText = 'width:64px;height:64px;border-radius:18px;overflow:hidden;border:2px solid var(--gold);margin:0 auto 0.5rem;box-shadow:0 6px 18px rgba(0,0,0,0.65);';
+    var imgH = document.createElement('img');
+    imgH.src = listing.image;
+    imgH.alt = listing.name;
+    imgH.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+    emojiH.appendChild(imgH);
+  } else {
+    emojiH.style.cssText = 'font-size:2.2rem;margin-bottom:0.35rem;';
+    emojiH.textContent = listing.image;
+  }
   hdr.appendChild(emojiH);
 
   var nameH = document.createElement('h2');
