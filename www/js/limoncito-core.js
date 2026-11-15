@@ -216,7 +216,7 @@ Responde de forma sabia, útil y concisa (máximo 3 párrafos).`;
     try {
       let apiServer = localStorage.getItem('lmcito_api_server') || '';
       if (!apiServer && (location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
-        apiServer = 'https://swingersphere.vercel.app';
+        apiServer = 'https://www.swingersphere.com';
       }
       const apiUrl = apiServer ? `${apiServer.replace(/\/$/, '')}/api/limoncito` : '/api/limoncito';
 

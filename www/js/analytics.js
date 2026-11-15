@@ -12,7 +12,7 @@ window.Analytics = (function() {
     if (window.location.protocol.startsWith('http')) {
       return '';
     }
-    return 'https://swingersphere.vercel.app';
+    return 'https://www.swingersphere.com';
   }
 
   function _hasConsent() {

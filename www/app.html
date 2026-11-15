@@ -1248,7 +1248,7 @@ async function loadDynamicEvents() {
 
   // Sincronización en tiempo real con Bakanal Swinger Club (www.bakanalsw.com)
   try {
-    const apiHost = window.location.protocol.startsWith('http') ? '' : 'https://swingersphere.vercel.app';
+    const apiHost = window.location.protocol.startsWith('http') ? '' : 'https://www.swingersphere.com';
     const bkRes = await fetch(apiHost + '/api/bakanal-events').catch(() => null);
     if (bkRes && bkRes.ok) {
       const bkData = await bkRes.json().catch(() => null);
@@ -3414,8 +3414,8 @@ function showLimocitoConfig() {
     '<h3 style="font-weight:700;margin-bottom:0.25rem;">Configurar Shadow IA</h3>' +
     '<p style="font-size:0.75rem;color:var(--silver);">Personaliza la conexión del asistente inteligente</p></div>' +
     '<div style="display:flex;flex-direction:column;gap:0.875rem;">' +
-      '<div><div style="font-size:0.72rem;color:var(--silver-dark);margin-bottom:0.3rem;">Servidor API de Vercel (móviles/local)</div>' +
-        '<input id="lm-server" type="text" value="' + serverVal + '" placeholder="https://swingersphere.vercel.app" style="width:100%;box-sizing:border-box;background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px;padding:0.6rem 0.75rem;color:var(--fg-primary);font-size:0.82rem;">' +
+      '<div><div style="font-size:0.72rem;color:var(--silver-dark);margin-bottom:0.3rem;">Servidor API Central (móviles/local)</div>' +
+        '<input id="lm-server" type="text" value="' + serverVal + '" placeholder="https://www.swingersphere.com" style="width:100%;box-sizing:border-box;background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px;padding:0.6rem 0.75rem;color:var(--fg-primary);font-size:0.82rem;">' +
       '</div>' +
       '<div style="border-top:1px dashed var(--border);margin:0.5rem 0;"></div>' +
       '<div><div style="font-size:0.72rem;color:var(--silver-dark);margin-bottom:0.3rem;">Proveedor de IA Propio (Opcional)</div>' +
