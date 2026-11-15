@@ -1,64 +1,29 @@
 /* ═══════════════════════════════════════════════════════════════════
-   SWINGERSPHERE — ADVERTISING & VENUES SYSTEM v1.1
-   Precios de publicidad para locales, clubs y negocios
-   Planes por 45 dias · Precios competitivos
+   SWINGERSPHERE — ADVERTISING & VENUES SYSTEM v1.2
+   Tarifa Plana Única para Clubes y Locales Friendly: 50 € / mes
+   Sin comisiones de entrada (Opción A) · Sin permanencia
    ═══════════════════════════════════════════════════════════════════ */
 
 'use strict';
 
 var AD_PLANS = [
   {
-    id: 'basic',
-    name: 'Basico',
-    icon: '🏷️',
-    price: 40,
-    period: '45 dias',
-    color: '#aeaeb2',
-    features: [
-      'Ficha del local en directorio',
-      'Nombre + direccion + horario',
-      'Contacto visible para usuarios PRO',
-      'Badge "Verificado" en directorio',
-    ],
-    limits: { photos:3, events:1, featured:false, analytics:false, banner:false, landing:false },
-  },
-  {
-    id: 'premium',
-    name: 'Premium',
-    icon: '⭐',
-    price: 100,
-    period: '45 dias',
-    color: '#c4813a',
+    id: 'club_flat_50',
+    name: 'Tarifa Plana Club',
+    icon: '🏛️',
+    price: 50,
+    period: 'mes',
+    color: '#ffd700',
     popular: true,
     features: [
-      'Todo lo del plan Basico',
-      'Hasta 10 fotos del local',
-      'Hasta 4 eventos publicados (45 dias)',
-      'Aparicion en "Destacados" de tu ciudad',
-      'Estadisticas basicas (visitas, clicks)',
-      'Badge "Premium ⭐" destacado',
-      'Enlace directo a reservas/web',
-    ],
-    limits: { photos:10, events:4, featured:true, analytics:true, banner:false, landing:false },
-  },
-  {
-    id: 'elite',
-    name: 'Elite',
-    icon: '💎',
-    price: 200,
-    period: '45 dias',
-    color: '#635bff',
-    features: [
-      'Todo lo del plan Premium',
-      'Fotos ilimitadas + video promo',
-      'Eventos ilimitados',
-      'Banner publicitario en pantalla Home (1 semana incluida)',
-      'Posicion #1 en busquedas de tu ciudad',
-      'Estadisticas avanzadas (demograficas, horarios)',
-      'Shadow recomienda tu local en consultas',
-      'Landing page personalizada dentro de la app',
-      'Descuentos automaticos para usuarios PRO',
-      'Soporte prioritario + account manager',
+      'Micro-site exclusivo con fotos HD, instalaciones y GPS',
+      'Sincronización automática de eventos desde tu web oficial',
+      '0% comisiones en entradas (Opción A: WhatsApp o pasarela propia)',
+      'Filtro de puerta TrustScore™ con parejas verificadas',
+      'Expositor oficial de mesa con QR Universal para barra/recepción',
+      'Presencia destacada geolocalizada en el Radar de la app',
+      'Sellos Passport Lifestyle™ para fidelizar visitas recurrentes',
+      'Sin permanencia ni costes ocultos · Cancela cuando quieras',
     ],
     limits: { photos:999, events:999, featured:true, analytics:true, banner:true, landing:true },
   },
@@ -89,8 +54,8 @@ window.showVenuePricing = function() {
   var hdr = document.createElement('div');
   hdr.style.cssText = 'background:linear-gradient(135deg,rgba(196,129,58,0.12),rgba(196,129,58,0.04));border-bottom:1px solid rgba(196,129,58,0.2);padding:1.25rem;text-align:center;position:sticky;top:0;z-index:2;backdrop-filter:blur(10px);';
   hdr.innerHTML = '<div style="font-size:1.5rem;margin-bottom:0.3rem;">🏛️</div>' +
-    '<h2 style="font-size:1.1rem;font-weight:800;background:linear-gradient(135deg,#f2f2f7,#c4813a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.25rem;">Publicidad para locales</h2>' +
-    '<p style="font-size:0.72rem;color:#aeaeb2;">Llega a miles de usuarios lifestyle verificados · Planes de 45 dias</p>';
+    '<h2 style="font-size:1.1rem;font-weight:800;background:linear-gradient(135deg,#f2f2f7,#c4813a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.25rem;">Alianza Oficial para Clubes</h2>' +
+    '<p style="font-size:0.72rem;color:#aeaeb2;">Tarifa plana única de 50 €/mes · 0% comisiones en entradas</p>';
 
   var closeBtn = document.createElement('button');
   closeBtn.style.cssText = 'position:absolute;top:1rem;right:1rem;background:none;border:none;color:#aeaeb2;font-size:1.1rem;cursor:pointer;padding:4px;';
@@ -143,8 +108,8 @@ window.showVenuePricing = function() {
 
       // Price per day calculation
       var perDay = document.createElement('div');
-      perDay.style.cssText = 'font-size:0.62rem;color:#636366;text-align:center;margin-bottom:0.5rem;';
-      perDay.textContent = 'Solo ' + (plan.price / 45).toFixed(2) + ' EUR/dia';
+      perDay.style.cssText = 'font-size:0.68rem;color:#30d158;font-weight:700;text-align:center;margin-bottom:0.5rem;';
+      perDay.innerHTML = '⚡ Solo 1,66 €/día · 1 sola pareja amortiza el 100%';
       card.appendChild(perDay);
 
       var cta = document.createElement('button');
