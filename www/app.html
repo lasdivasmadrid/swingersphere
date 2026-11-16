@@ -644,7 +644,7 @@ const ORACULO_RES = {
 };
 
 /* ── UTILS ─────────────────────────────────────────────── */
-function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;').replace(/\//g,'&#x2F;'); }
 function getUserById(id) { return USERS.find(u=>u.id===id)||USERS[0]; }
 
 /* ── STATE & NAV ─────────────────────────────────────────── */
@@ -1161,7 +1161,7 @@ function buildGlobalChat() {
       <div class="divider-label" style="margin:0.5rem 0;"><span>Hoy</span></div>
       ${CHAT_MSGS.filter(msg => !isUserBlocked(msg.userId)).map(msg=>{
         const u=getUserById(msg.userId)||USERS[0];
-        if(msg.mine)return `<div class="chat-message" style="flex-direction:row-reverse;"><div><div class="chat-bubble mine">${msg.text}</div><div class="chat-time" style="text-align:right;">${msg.time}</div></div></div>`;
+        if(msg.mine)return `<div class="chat-message" style="flex-direction:row-reverse;"><div><div class="chat-bubble mine">${escHtml(msg.text)}</div><div class="chat-time" style="text-align:right;">${msg.time}</div></div></div>`;
         
         let translatedBadge = '';
         if (msg.translatedFrom) {
@@ -1169,7 +1169,7 @@ function buildGlobalChat() {
         }
 
         return `<div class="chat-message"><div class="avatar-placeholder" style="width:30px;height:30px;border-radius:50%;font-size:0.6rem;font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,${u.colorAccent}33,${u.colorAccent}66);color:${u.colorAccent};">${u.initials}</div>
-          <div><div style="font-size:9px;color:var(--silver-dark);margin-bottom:2px;display:flex;justify-content:space-between;align-items:center;"><span>${u.name}</span></div>${translatedBadge}<div class="chat-bubble theirs" ${msg.originalText ? `title="Original: ${msg.originalText}"` : ''}>${msg.text}</div><div class="chat-time">${msg.time}</div></div></div>`;
+          <div><div style="font-size:9px;color:var(--silver-dark);margin-bottom:2px;display:flex;justify-content:space-between;align-items:center;"><span>${escHtml(u.name)}</span></div>${translatedBadge}<div class="chat-bubble theirs" ${msg.originalText ? `title="Original: ${escHtml(msg.originalText)}"` : ''}>${escHtml(msg.text)}</div><div class="chat-time">${msg.time}</div></div></div>`;
       }).join('')}
       <div style="text-align:center;padding:0.4rem;font-size:0.65rem;color:var(--silver-dark);">🤖 Moderado por IA · SwingerSphere</div>
     </div>
